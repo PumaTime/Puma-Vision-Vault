@@ -19,6 +19,7 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            justify-content: space-between;
             height: 100vh;
         }
 
@@ -43,11 +44,10 @@
             text-align: center;
             font-size: 3rem;
             font-weight: bold;
-            margin: auto;
-            flex-grow: 1;
+            margin: 0;
         }
 
-        .center-icon {
+        .main-content {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -107,14 +107,20 @@
         <input type="text" placeholder="Enter your thoughts about the future in 2040">
     </div>
 
-    <div class="title">
-        Puma Vision Vault
+    <div class="main-content">
+        <div class="title">
+            Puma Vision Vault
+        </div>
     </div>
 
     <div class="bottom-bar">
         <input type="date" min="2040-01-01">
         <input type="email" placeholder="Enter your email">
         <button>Save to Vault</button>
+    </div>
+</body>
+</html>
+
     </div>
 </body>
 </html>
