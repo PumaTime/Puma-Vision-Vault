@@ -32,9 +32,10 @@
             box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
         }
 
-        .top-bar input[type="text"] {
-            width: 80%;
+        .top-bar input[type="text"], .top-bar input[type="email"] {
+            width: 35%;
             padding: 10px;
+            margin: 0 10px;
             border: 2px solid #000;
             border-radius: 5px;
             font-size: 16px;
@@ -54,7 +55,7 @@
             align-items: center;
             flex-grow: 1;
             position: relative;
-            overflow: auto;
+            overflow: hidden;
             padding: 20px;
         }
 
@@ -69,7 +70,14 @@
             border-radius: 50%;
             width: 100px;
             height: 100px;
+            background-color: #ff7eb3;
             animation: float 5s infinite ease-in-out;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .bubble:hover {
+            transform: scale(1.5);
+            z-index: 10;
         }
 
         @keyframes float {
@@ -88,14 +96,6 @@
             background: #f0f8ff;
             padding: 20px;
             box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .bottom-bar input {
-            margin: 0 10px;
-            padding: 10px;
-            border: 2px solid #000;
-            border-radius: 5px;
-            font-size: 16px;
         }
 
         .bottom-bar button {
@@ -118,7 +118,7 @@
                 font-size: 2.5rem;
             }
 
-            .top-bar input[type="text"], .bottom-bar input {
+            .top-bar input[type="text"], .top-bar input[type="email"] {
                 width: 70%;
             }
         }
@@ -127,6 +127,7 @@
 <body>
     <div class="top-bar">
         <input id="thoughtInput" type="text" placeholder="Enter your thoughts about the future in 2040">
+        <input id="emailInput" type="email" placeholder="Enter your email">
     </div>
 
     <div class="main-content" id="bubbleContainer">
@@ -142,9 +143,10 @@
     <script>
         function addBubble() {
             const thoughtInput = document.getElementById('thoughtInput');
+            const emailInput = document.getElementById('emailInput');
 
-            if (thoughtInput.value.trim() === '') {
-                alert('Please enter your thoughts.');
+            if (thoughtInput.value.trim() === '' || emailInput.value.trim() === '') {
+                alert('Please enter your thoughts and email address.');
                 return;
             }
 
@@ -157,11 +159,22 @@
             bubble.style.left = `${Math.random() * 80}%`;
 
             const userId = Math.floor(Math.random() * 900000) + 100000; // Generates a random 6-digit ID
-            bubble.textContent = `${userId}\n01-01-2040`;
+            bubble.innerHTML = `${thoughtInput.value}<br>${emailInput.value}<br>01-01-2040`;
 
             bubbleContainer.appendChild(bubble);
 
+            const bubbles = document.querySelectorAll('.bubble');
+
+            if (bubbles.length > 50) {
+                bubbles.forEach((bubble) => {
+                    bubble.style.width = '50px';
+                    bubble.style.height = '50px';
+                    bubble.style.fontSize = '10px';
+                });
+            }
+
             thoughtInput.value = '';
+            emailInput.value = '';
         }
     </script>
 </body>
