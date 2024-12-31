@@ -49,14 +49,36 @@
 
         .main-content {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             flex-grow: 1;
+            position: relative;
+            overflow: auto;
+            padding: 20px;
         }
 
-        .center-icon img {
-            max-width: 300px;
-            opacity: 0.8;
+        .bubble {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            color: #fff;
+            text-align: center;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            animation: float 5s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
         }
 
         .bottom-bar {
@@ -104,24 +126,43 @@
 </head>
 <body>
     <div class="top-bar">
-        <input type="text" placeholder="Enter your thoughts about the future in 2040">
+        <input id="thoughtInput" type="text" placeholder="Enter your thoughts about the future in 2040">
     </div>
 
-    <div class="main-content">
+    <div class="main-content" id="bubbleContainer">
         <div class="title">
             Puma Vision Vault
         </div>
     </div>
 
     <div class="bottom-bar">
-        <input type="date" min="2040-01-01">
-        <input type="email" placeholder="Enter your email">
-        <button>Save to Vault</button>
+        <button onclick="addBubble()">Save to Vault</button>
     </div>
-</body>
-</html>
 
+    <script>
+        function addBubble() {
+            const thoughtInput = document.getElementById('thoughtInput');
 
-    </div>
+            if (thoughtInput.value.trim() === '') {
+                alert('Please enter your thoughts.');
+                return;
+            }
+
+            const bubbleContainer = document.getElementById('bubbleContainer');
+
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            bubble.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 60%)`;
+            bubble.style.top = `${Math.random() * 80}%`;
+            bubble.style.left = `${Math.random() * 80}%`;
+
+            const userId = Math.floor(Math.random() * 900000) + 100000; // Generates a random 6-digit ID
+            bubble.textContent = `${userId}\n01-01-2040`;
+
+            bubbleContainer.appendChild(bubble);
+
+            thoughtInput.value = '';
+        }
+    </script>
 </body>
 </html>
