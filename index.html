@@ -59,7 +59,7 @@
             padding: 20px;
         }
 
-        .blob {
+        .bar {
             position: absolute;
             display: flex;
             justify-content: center;
@@ -67,17 +67,15 @@
             font-size: 14px;
             color: #fff;
             text-align: center;
-            border-radius: 50%;
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, #ff7eb3, #ff65a3);
-            clip-path: polygon(50% 0%, 85% 25%, 100% 60%, 75% 100%, 25% 100%, 0% 60%, 15% 25%);
+            border-radius: 20px;
+            height: 40px;
+            background: linear-gradient(135deg, hsl(220, 70%, 70%), hsl(180, 70%, 50%));
             animation: float 5s infinite ease-in-out;
-            transition: transform 0.2s ease-in-out;
+            transition: transform 0.2s ease-in-out, width 0.2s ease-in-out;
         }
 
-        .blob:hover {
-            transform: scale(1.5);
+        .bar:hover {
+            transform: scale(1.1);
             z-index: 10;
         }
 
@@ -86,7 +84,7 @@
                 transform: translateY(0);
             }
             50% {
-                transform: translateY(-20px);
+                transform: translateY(-10px);
             }
         }
 
@@ -131,18 +129,18 @@
         <input id="emailInput" type="email" placeholder="Enter your email">
     </div>
 
-    <div class="main-content" id="blobContainer">
+    <div class="main-content" id="barContainer">
         <div class="title">
             Puma Vision Vault
         </div>
     </div>
 
     <div class="bottom-bar">
-        <button onclick="addBlob()">Save to Vault</button>
+        <button onclick="addBar()">Save to Vault</button>
     </div>
 
     <script>
-        function addBlob() {
+        function addBar() {
             const thoughtInput = document.getElementById('thoughtInput');
             const emailInput = document.getElementById('emailInput');
 
@@ -151,26 +149,24 @@
                 return;
             }
 
-            const blobContainer = document.getElementById('blobContainer');
+            const barContainer = document.getElementById('barContainer');
 
-            const blob = document.createElement('div');
-            blob.className = 'blob';
-            blob.style.background = `linear-gradient(135deg, hsl(${Math.random() * 360}, 70%, 70%), hsl(${Math.random() * 360}, 70%, 50%))`;
-            blob.style.top = `${Math.random() * 80}%`;
-            blob.style.left = `${Math.random() * 80}%`;
+            const bar = document.createElement('div');
+            bar.className = 'bar';
+            const textLength = thoughtInput.value.length;
+            bar.style.width = `${Math.min(300, 100 + textLength * 10)}px`;
+            bar.style.top = `${Math.random() * 80}%`;
+            bar.style.left = `${Math.random() * 80}%`;
 
-            const userId = Math.floor(Math.random() * 900000) + 100000; // Generates a random 6-digit ID
-            blob.innerHTML = `${thoughtInput.value}<br>${emailInput.value}<br>01-01-2040`;
+            bar.innerHTML = `${thoughtInput.value}<br>${emailInput.value}<br>01-01-2040`;
 
-            blobContainer.appendChild(blob);
+            barContainer.appendChild(bar);
 
-            const blobs = document.querySelectorAll('.blob');
+            const bars = document.querySelectorAll('.bar');
 
-            if (blobs.length > 50) {
-                blobs.forEach((blob) => {
-                    blob.style.width = '50px';
-                    blob.style.height = '50px';
-                    blob.style.fontSize = '10px';
+            if (bars.length > 50) {
+                bars.forEach((bar) => {
+                    bar.style.fontSize = '10px';
                 });
             }
 
