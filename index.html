@@ -32,12 +32,12 @@
             box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
         }
 
-        .top-bar input[type="text"], .top-bar input[type="email"] {
-            width: 35%;
+        .top-bar input[type="text"] {
+            width: 80%;
             padding: 10px;
             margin: 0 10px;
             border: 2px solid #000;
-            border-radius: 5px;
+            border-radius: 20px;
             font-size: 16px;
         }
 
@@ -90,11 +90,19 @@
 
         .bottom-bar {
             display: flex;
-            justify-content: center;
+            justify-content: space-evenly;
             align-items: center;
             background: #f0f8ff;
             padding: 20px;
             box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .bottom-bar input {
+            padding: 10px;
+            margin: 0 10px;
+            border: 2px solid #000;
+            border-radius: 20px;
+            font-size: 16px;
         }
 
         .bottom-bar button {
@@ -102,7 +110,7 @@
             border: none;
             background: #000;
             color: #fff;
-            border-radius: 5px;
+            border-radius: 20px;
             cursor: pointer;
             font-size: 16px;
             transition: background 0.3s;
@@ -117,7 +125,7 @@
                 font-size: 2.5rem;
             }
 
-            .top-bar input[type="text"], .top-bar input[type="email"] {
+            .top-bar input[type="text"], .bottom-bar input {
                 width: 70%;
             }
         }
@@ -126,7 +134,6 @@
 <body>
     <div class="top-bar">
         <input id="thoughtInput" type="text" placeholder="Enter your thoughts about the future in 2040">
-        <input id="emailInput" type="email" placeholder="Enter your email">
     </div>
 
     <div class="main-content" id="barContainer">
@@ -136,16 +143,17 @@
     </div>
 
     <div class="bottom-bar">
+        <input id="emailInput" type="email" placeholder="Enter your email">
+        <input id="dobInput" type="date" placeholder="Enter your date of birth">
         <button onclick="addBar()">Save to Vault</button>
     </div>
 
     <script>
         function addBar() {
             const thoughtInput = document.getElementById('thoughtInput');
-            const emailInput = document.getElementById('emailInput');
 
-            if (thoughtInput.value.trim() === '' || emailInput.value.trim() === '') {
-                alert('Please enter your thoughts and email address.');
+            if (thoughtInput.value.trim() === '') {
+                alert('Please enter your thoughts.');
                 return;
             }
 
@@ -158,7 +166,7 @@
             bar.style.top = `${Math.random() * 80}%`;
             bar.style.left = `${Math.random() * 80}%`;
 
-            bar.innerHTML = `${thoughtInput.value}<br>${emailInput.value}<br>01-01-2040`;
+            bar.innerHTML = `${thoughtInput.value}`;
 
             barContainer.appendChild(bar);
 
@@ -171,7 +179,6 @@
             }
 
             thoughtInput.value = '';
-            emailInput.value = '';
         }
     </script>
 </body>
