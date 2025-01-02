@@ -138,16 +138,13 @@
             text-align: center;
         }
 
-        .bottom-bar .dob-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .bottom-bar #dobInput {
+            position: relative;
         }
 
-        .bottom-bar .dob-container label {
-            margin-right: 10px;
+        .bottom-bar #dobInput::placeholder {
+            content: 'DOB';
             font-size: 16px;
-            color: #fff;
         }
 
         .bottom-bar button {
@@ -184,10 +181,7 @@
     <div class="bottom-bar">
         <input id="emailInput" type="email" placeholder="Enter your email">
         <button onclick="addBar()">Save to VisionVault</button>
-        <div class="dob-container">
-            <label for="dobInput">DOB:</label>
-            <input id="dobInput" type="date">
-        </div>
+        <input id="dobInput" type="date" placeholder="DOB">
     </div>
 
     <script>
