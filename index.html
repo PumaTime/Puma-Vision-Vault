@@ -10,6 +10,11 @@
             src: url('AvantGarde.woff2') format('woff2');
         }
 
+        @font-face {
+            font-family: 'DigitalFont';
+            src: url('digital-7.ttf') format('truetype');
+        }
+
         body {
             font-family: 'AvantGarde', sans-serif;
             margin: 0;
@@ -59,6 +64,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
             font-size: 14px;
             text-align: center;
             border-radius: 20px;
@@ -85,6 +91,12 @@
         .bar:nth-child(4n+4) {
             background: #FFFFFF; /* White */
             color: #000; /* Black text */
+        }
+
+        .bar .timestamp {
+            font-family: 'DigitalFont', sans-serif;
+            font-size: 12px;
+            margin-top: 5px;
         }
 
         .bar:hover {
@@ -176,7 +188,16 @@
             bar.style.top = `${Math.random() * 80}%`;
             bar.style.left = `${Math.random() * 80}%`;
 
-            bar.innerHTML = `${thoughtInput.value}`;
+            const timestamp = new Date();
+            const formattedTimestamp = timestamp
+                .toISOString()
+                .slice(0, 19)
+                .replace('T', ' ') // Format as YYYY-MM-DD HH:MM:SS
+                .slice(2, 16)
+                .replace('-', '')
+                .replace(':', ''); // Remove separators for the requested format
+
+            bar.innerHTML = `${thoughtInput.value}<div class="timestamp">${formattedTimestamp}</div>`;
 
             barContainer.appendChild(bar);
 
