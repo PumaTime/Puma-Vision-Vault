@@ -41,13 +41,6 @@
             font-size: 16px;
         }
 
-        .title {
-            text-align: center;
-            font-size: 3rem;
-            font-weight: bold;
-            margin: 0;
-        }
-
         .main-content {
             display: flex;
             flex-direction: column;
@@ -69,7 +62,7 @@
             text-align: center;
             border-radius: 20px;
             height: 40px;
-            background: linear-gradient(135deg, hsl(${Math.random() * 360}, 70%, 70%), hsl(${Math.random() * 360}, 70%, 50%));
+            background: hsl(${Math.random() * 360}, 70%, 50%);
             animation: float 5s infinite ease-in-out;
             transition: transform 0.2s ease-in-out, width 0.2s ease-in-out;
         }
@@ -121,10 +114,6 @@
         }
 
         @media (max-width: 768px) {
-            .title {
-                font-size: 2.5rem;
-            }
-
             .top-bar input[type="text"], .bottom-bar input {
                 width: 70%;
             }
@@ -137,9 +126,6 @@
     </div>
 
     <div class="main-content" id="barContainer">
-        <div class="title">
-            Puma Vision Vault
-        </div>
     </div>
 
     <div class="bottom-bar">
@@ -165,7 +151,7 @@
             bar.style.width = `${Math.min(300, 100 + textLength * 10)}px`;
             bar.style.top = `${Math.random() * 80}%`;
             bar.style.left = `${Math.random() * 80}%`;
-            bar.style.background = `linear-gradient(135deg, hsl(${Math.random() * 360}, 70%, 70%), hsl(${Math.random() * 360}, 70%, 50%))`;
+            bar.style.background = `hsl(${Math.random() * 360}, 70%, 50%)`;
 
             bar.innerHTML = `${thoughtInput.value}`;
 
