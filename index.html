@@ -59,7 +59,7 @@
             padding: 20px;
         }
 
-        .bubble {
+        .blob {
             position: absolute;
             display: flex;
             justify-content: center;
@@ -70,12 +70,13 @@
             border-radius: 50%;
             width: 100px;
             height: 100px;
-            background-color: #ff7eb3;
+            background: linear-gradient(135deg, #ff7eb3, #ff65a3);
+            clip-path: polygon(50% 0%, 85% 25%, 100% 60%, 75% 100%, 25% 100%, 0% 60%, 15% 25%);
             animation: float 5s infinite ease-in-out;
             transition: transform 0.2s ease-in-out;
         }
 
-        .bubble:hover {
+        .blob:hover {
             transform: scale(1.5);
             z-index: 10;
         }
@@ -130,18 +131,18 @@
         <input id="emailInput" type="email" placeholder="Enter your email">
     </div>
 
-    <div class="main-content" id="bubbleContainer">
+    <div class="main-content" id="blobContainer">
         <div class="title">
             Puma Vision Vault
         </div>
     </div>
 
     <div class="bottom-bar">
-        <button onclick="addBubble()">Save to Vault</button>
+        <button onclick="addBlob()">Save to Vault</button>
     </div>
 
     <script>
-        function addBubble() {
+        function addBlob() {
             const thoughtInput = document.getElementById('thoughtInput');
             const emailInput = document.getElementById('emailInput');
 
@@ -150,26 +151,26 @@
                 return;
             }
 
-            const bubbleContainer = document.getElementById('bubbleContainer');
+            const blobContainer = document.getElementById('blobContainer');
 
-            const bubble = document.createElement('div');
-            bubble.className = 'bubble';
-            bubble.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 60%)`;
-            bubble.style.top = `${Math.random() * 80}%`;
-            bubble.style.left = `${Math.random() * 80}%`;
+            const blob = document.createElement('div');
+            blob.className = 'blob';
+            blob.style.background = `linear-gradient(135deg, hsl(${Math.random() * 360}, 70%, 70%), hsl(${Math.random() * 360}, 70%, 50%))`;
+            blob.style.top = `${Math.random() * 80}%`;
+            blob.style.left = `${Math.random() * 80}%`;
 
             const userId = Math.floor(Math.random() * 900000) + 100000; // Generates a random 6-digit ID
-            bubble.innerHTML = `${thoughtInput.value}<br>${emailInput.value}<br>01-01-2040`;
+            blob.innerHTML = `${thoughtInput.value}<br>${emailInput.value}<br>01-01-2040`;
 
-            bubbleContainer.appendChild(bubble);
+            blobContainer.appendChild(blob);
 
-            const bubbles = document.querySelectorAll('.bubble');
+            const blobs = document.querySelectorAll('.blob');
 
-            if (bubbles.length > 50) {
-                bubbles.forEach((bubble) => {
-                    bubble.style.width = '50px';
-                    bubble.style.height = '50px';
-                    bubble.style.fontSize = '10px';
+            if (blobs.length > 50) {
+                blobs.forEach((blob) => {
+                    blob.style.width = '50px';
+                    blob.style.height = '50px';
+                    blob.style.fontSize = '10px';
                 });
             }
 
