@@ -40,7 +40,7 @@
         }
 
         .top-bar input[type="text"] {
-            width: 45%;
+            width: 60%;
             padding: 10px;
             margin: 0 10px;
             border: 2px solid #000;
@@ -79,7 +79,7 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            border-radius: 5px;
+            border-radius: 0;
             padding: 5px;
             animation: float 5s infinite ease-in-out;
             transition: transform 0.3s ease-in-out, background 0.3s ease-in-out, width 0.3s ease-in-out, height 0.3s ease-in-out, z-index 0.3s ease-in-out;
@@ -102,24 +102,22 @@
             overflow: visible;
         }
 
-        .timestamp-like {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            height: 100%;
-            width: 100%;
-        }
-
         .timestamp {
             font-family: 'DigitalFont', sans-serif;
             font-size: 14px;
             color: #000;
+            position: absolute;
+            top: 10px;
+            left: 10px;
             text-align: center;
             white-space: nowrap;
+            margin-right: 10px;
         }
 
         .like-container {
+            position: absolute;
+            top: 10px;
+            right: 10px;
             display: flex;
             align-items: center;
             cursor: pointer;
@@ -149,22 +147,6 @@
             white-space: normal;
         }
 
-        .tags-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            margin-top: 5px;
-        }
-
-        .tag {
-            background-color: #f0f0f0;
-            color: #000;
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
         .bar img {
             max-width: 100%;
             max-height: 150px;
@@ -173,7 +155,7 @@
             transition: opacity 0.3s ease-in-out;
         }
 
-        .bar:hover .timestamp-like {
+        .bar:hover .timestamp {
             display: none;
         }
 
@@ -240,7 +222,6 @@
 <body>
     <div class="top-bar">
         <input id="thoughtInput" type="text" placeholder="Enter your thoughts about the future in 2040">
-        <input id="tagsInput" type="text" placeholder="Add tags (comma-separated)">
         <label for="imageUpload" class="upload-label">Upload Image</label>
         <input id="imageUpload" type="file" accept="image/*">
     </div>
@@ -264,7 +245,6 @@
 
         function addBar() {
             const thoughtInput = document.getElementById('thoughtInput');
-            const tagsInput = document.getElementById('tagsInput');
             const imageUpload = document.getElementById('imageUpload');
 
             if (thoughtInput.value.trim() === '' && !imageUpload.files[0]) {
@@ -279,9 +259,6 @@
             bar.style.background = getRandomColor();
             bar.style.top = `${Math.random() * 80}%`;
             bar.style.left = `${Math.random() * 80}%`;
-
-            const timestampLikeContainer = document.createElement('div');
-            timestampLikeContainer.className = 'timestamp-like';
 
             const timestampDiv = document.createElement('div');
             const timestamp = new Date();
@@ -309,24 +286,9 @@
                 likeCount.textContent = parseInt(likeCount.textContent) + 1;
             });
 
-            timestampLikeContainer.appendChild(timestampDiv);
-            timestampLikeContainer.appendChild(likeContainer);
-
             const thoughtContent = document.createElement('div');
             thoughtContent.className = 'bar-content';
             thoughtContent.textContent = thoughtInput.value;
-
-            const tagsDiv = document.createElement('div');
-            tagsDiv.className = 'tags-container';
-            const tags = tagsInput.value.split(',').map(tag => tag.trim());
-            tags.forEach(tag => {
-                if (tag) {
-                    const tagElement = document.createElement('span');
-                    tagElement.className = 'tag';
-                    tagElement.textContent = `#${tag}`;
-                    tagsDiv.appendChild(tagElement);
-                }
-            });
 
             if (imageUpload.files[0]) {
                 const img = document.createElement('img');
@@ -334,14 +296,13 @@
                 bar.appendChild(img);
             }
 
-            bar.appendChild(timestampLikeContainer);
+            bar.appendChild(timestampDiv);
+            bar.appendChild(likeContainer);
             bar.appendChild(thoughtContent);
-            bar.appendChild(tagsDiv);
 
             barContainer.appendChild(bar);
 
             thoughtInput.value = '';
-            tagsInput.value = '';
             imageUpload.value = '';
         }
     </script>
