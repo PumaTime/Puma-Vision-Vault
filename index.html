@@ -76,12 +76,12 @@
             align-items: center;
             flex-direction: column;
             border-radius: 0;
-            padding: 10px;
+            padding: 5px 10px;
             animation: float 5s infinite ease-in-out;
             transition: transform 0.3s ease-in-out, background 0.3s ease-in-out, width 0.3s ease-in-out, height 0.3s ease-in-out;
             overflow: hidden;
             word-break: break-word;
-            max-width: 300px;
+            background: none;
         }
 
         .timestamp {
@@ -93,11 +93,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100%;
-            width: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
         }
 
         .bar-content {
@@ -124,6 +119,7 @@
             padding: 20px;
             white-space: normal;
             overflow: visible;
+            background: inherit;
         }
 
         .bar:hover .bar-content {
@@ -228,8 +224,9 @@
             const bar = document.createElement('div');
             bar.className = 'bar';
             bar.style.background = getRandomColor();
-            bar.style.width = `${Math.random() * 200 + 100}px`;
-            bar.style.height = `${Math.random() * 50 + 30}px`;
+            bar.style.width = 'auto';
+            bar.style.height = 'auto';
+            bar.style.padding = '5px 10px';
             bar.style.top = `${Math.random() * 80}%`;
             bar.style.left = `${Math.random() * 80}%`;
 
