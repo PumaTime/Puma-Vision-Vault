@@ -19,7 +19,7 @@
             font-family: 'DINCondensedBold', sans-serif;
             margin: 0;
             padding: 0;
-            background: #CCCCCC; /* Light grey */
+            background: #CCCCCC;
             color: #000;
             overflow: hidden;
             display: flex;
@@ -32,7 +32,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: #000; /* Black */
+            background: #000;
             padding: 20px;
             border-radius: 50px;
             margin: 10px;
@@ -65,7 +65,7 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            border-radius: 0; /* Rectangle with sharp edges */
+            border-radius: 0;
             height: auto;
             padding: 10px;
             animation: float 5s infinite ease-in-out;
@@ -92,11 +92,11 @@
         }
 
         .bar:hover .timestamp {
-            opacity: 0; /* Hide timestamp on hover */
+            opacity: 0;
         }
 
         .bar:hover .bar-content {
-            opacity: 1; /* Show thought content on hover */
+            opacity: 1;
         }
 
         .bar:hover {
@@ -116,7 +116,7 @@
             display: flex;
             justify-content: space-evenly;
             align-items: center;
-            background: #000; /* Black */
+            background: #000;
             padding: 20px;
             border-radius: 50px;
             margin: 10px;
@@ -180,9 +180,9 @@
 
     <script>
         function getRandomColor() {
-            const hue = Math.random() * 360; // Random hue
-            const saturation = 70 + Math.random() * 30; // Saturation between 70% and 100%
-            const lightness = 50 + Math.random() * 20; // Lightness between 50% and 70%
+            const hue = Math.random() * 360;
+            const saturation = 70 + Math.random() * 30;
+            const lightness = 50 + Math.random() * 20;
             return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
         }
 
@@ -198,13 +198,12 @@
 
             const bar = document.createElement('div');
             bar.className = 'bar';
-            bar.style.background = getRandomColor(); // Apply random color
-            bar.style.width = `${Math.random() * 200 + 100}px`; // Random width
-            bar.style.height = `${Math.random() * 50 + 30}px`; // Random height
+            bar.style.background = getRandomColor();
+            bar.style.width = `${Math.random() * 200 + 100}px`;
+            bar.style.height = `${Math.random() * 50 + 30}px`;
             bar.style.top = `${Math.random() * 80}%`;
             bar.style.left = `${Math.random() * 80}%`;
 
-            // Add the timestamp
             const timestampDiv = document.createElement('div');
             const timestamp = new Date();
             const formattedTimestamp = timestamp
@@ -215,24 +214,14 @@
             timestampDiv.className = 'timestamp';
             timestampDiv.textContent = formattedTimestamp;
 
-            // Add the thought content
             const thoughtContent = document.createElement('div');
             thoughtContent.className = 'bar-content';
             thoughtContent.textContent = thoughtInput.value;
 
-            // Append timestamp and content to the bar
             bar.appendChild(timestampDiv);
             bar.appendChild(thoughtContent);
 
             barContainer.appendChild(bar);
-
-            const bars = document.querySelectorAll('.bar');
-
-            if (bars.length > 50) {
-                bars.forEach((bar) => {
-                    bar.style.opacity = '0.8'; // Adjust appearance as bubbles fill up
-                });
-            }
 
             thoughtInput.value = '';
         }
