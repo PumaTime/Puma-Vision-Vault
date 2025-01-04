@@ -93,11 +93,28 @@
             font-size: 14px;
             color: #000;
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            top: 10px;
+            left: 10px;
             text-align: center;
             white-space: nowrap;
+        }
+
+        .like-container {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .like-icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 5px;
+            background-color: red;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
         }
 
         .bar-content {
@@ -221,11 +238,28 @@
             timestampDiv.className = 'timestamp';
             timestampDiv.textContent = formattedTimestamp;
 
+            const likeContainer = document.createElement('div');
+            likeContainer.className = 'like-container';
+
+            const likeIcon = document.createElement('div');
+            likeIcon.className = 'like-icon';
+
+            const likeCount = document.createElement('span');
+            likeCount.textContent = '0';
+
+            likeContainer.appendChild(likeIcon);
+            likeContainer.appendChild(likeCount);
+
+            likeContainer.addEventListener('click', () => {
+                likeCount.textContent = parseInt(likeCount.textContent) + 1;
+            });
+
             const thoughtContent = document.createElement('div');
             thoughtContent.className = 'bar-content';
             thoughtContent.textContent = thoughtInput.value;
 
             bar.appendChild(timestampDiv);
+            bar.appendChild(likeContainer);
             bar.appendChild(thoughtContent);
 
             barContainer.appendChild(bar);
