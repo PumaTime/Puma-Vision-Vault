@@ -73,6 +73,14 @@
             overflow: hidden;
         }
 
+        .timestamp {
+            font-family: 'DigitalFont', sans-serif;
+            font-size: 12px;
+            text-align: center;
+            color: inherit;
+            transition: opacity 0.3s ease-in-out;
+        }
+
         .bar-content {
             opacity: 0;
             transition: opacity 0.3s ease-in-out;
@@ -80,23 +88,19 @@
             font-weight: bold;
             text-align: center;
             text-transform: uppercase;
+            color: inherit;
         }
 
-        .bar:hover {
-            background: rgba(0, 0, 0, 0.8); /* Dark background on hover */
-            transform: scale(1.1);
+        .bar:hover .timestamp {
+            opacity: 0; /* Hide timestamp on hover */
         }
 
         .bar:hover .bar-content {
-            opacity: 1;
+            opacity: 1; /* Show thought content on hover */
         }
 
-        .timestamp {
-            font-family: 'DigitalFont', sans-serif;
-            font-size: 12px;
-            text-align: center;
-            margin-top: 5px;
-            color: #fff;
+        .bar:hover {
+            transform: scale(1.1);
         }
 
         .bar:nth-child(6n+1) {
