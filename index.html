@@ -68,13 +68,24 @@
             border-radius: 0;
             padding: 5px;
             animation: float 5s infinite ease-in-out;
-            transition: transform 0.3s ease-in-out, background 0.3s ease-in-out, width 0.3s ease-in-out, height 0.3s ease-in-out;
+            transition: transform 0.3s ease-in-out, background 0.3s ease-in-out, width 0.3s ease-in-out, height 0.3s ease-in-out, z-index 0.3s ease-in-out;
             overflow: hidden;
             word-break: break-word;
             width: 120px;
             height: 50px;
             background: lightgray;
             text-align: center;
+            z-index: 1;
+        }
+
+        .bar:hover {
+            z-index: 10;
+            width: auto;
+            height: auto;
+            max-width: 90%;
+            padding: 20px;
+            white-space: normal;
+            overflow: visible;
         }
 
         .timestamp {
@@ -104,15 +115,6 @@
 
         .bar:hover .timestamp {
             display: none;
-        }
-
-        .bar:hover {
-            width: auto;
-            height: auto;
-            max-width: 90%;
-            padding: 20px;
-            white-space: normal;
-            overflow: visible;
         }
 
         .bar:hover .bar-content {
@@ -233,4 +235,3 @@
     </script>
 </body>
 </html>
-
