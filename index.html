@@ -85,7 +85,7 @@
         }
 
         .bar-content {
-            display: none;
+            opacity: 0;
             transition: opacity 0.3s ease-in-out;
             font-size: 14px;
             font-weight: bold;
@@ -98,11 +98,23 @@
         }
 
         .bar:hover .timestamp {
-            display: none;
+            opacity: 0;
+        }
+
+        .bar:hover {
+            width: auto;
+            height: auto;
+            max-width: 90%;
+            max-height: 90%;
+            padding: 20px;
+            white-space: normal;
+            overflow: visible;
         }
 
         .bar:hover .bar-content {
-            display: block;
+            opacity: 1;
+            white-space: normal;
+            overflow-wrap: break-word;
         }
 
         @keyframes float {
@@ -219,5 +231,3 @@
     </script>
 </body>
 </html>
-
- 
