@@ -80,16 +80,12 @@
             font-family: 'DigitalFont', sans-serif;
             font-size: 14px;
             color: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: 100%;
             text-align: center;
+            margin: 0 auto;
         }
 
         .bar-content {
-            opacity: 0;
+            display: none;
             transition: opacity 0.3s ease-in-out;
             font-size: 14px;
             font-weight: bold;
@@ -102,22 +98,11 @@
         }
 
         .bar:hover .timestamp {
-            opacity: 0;
-        }
-
-        .bar:hover {
-            width: auto;
-            height: auto;
-            max-width: 90%;
-            padding: 20px;
-            white-space: normal;
-            overflow: visible;
+            display: none;
         }
 
         .bar:hover .bar-content {
-            opacity: 1;
-            white-space: normal;
-            overflow-wrap: break-word;
+            display: block;
         }
 
         @keyframes float {
@@ -234,3 +219,5 @@
     </script>
 </body>
 </html>
+
+ 
