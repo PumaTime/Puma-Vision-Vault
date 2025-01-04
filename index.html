@@ -75,10 +75,11 @@
 
         .timestamp {
             font-family: 'DigitalFont', sans-serif;
-            font-size: 12px;
+            font-size: 16px;
             text-align: center;
             color: inherit;
             transition: opacity 0.3s ease-in-out;
+            font-weight: normal; /* Make timestamp not bold */
         }
 
         .bar-content {
@@ -88,7 +89,6 @@
             font-weight: bold;
             text-align: center;
             text-transform: uppercase;
-            color: inherit;
         }
 
         .bar:hover .timestamp {
@@ -126,6 +126,10 @@
         .bar:nth-child(6n+5) {
             background: #000000; /* Black */
             color: #fff;
+        }
+
+        .bar-content {
+            color: inherit; /* Match text color to bubble color */
         }
 
         @keyframes float {
@@ -239,6 +243,10 @@
             thoughtContent.className = 'bar-content';
             thoughtContent.textContent = thoughtInput.value;
 
+            // Adjust text color based on background
+            const isLightColor = bar.style.background.includes('360') || bar.style.background.includes('75%');
+            thoughtContent.style.color = isLightColor ? '#000' : '#FFF';
+
             // Append timestamp and content to the bar
             bar.appendChild(timestampDiv);
             bar.appendChild(thoughtContent);
@@ -258,3 +266,4 @@
     </script>
 </body>
 </html>
+
