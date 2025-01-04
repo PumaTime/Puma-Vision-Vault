@@ -26,16 +26,6 @@
             flex-direction: column;
             justify-content: space-between;
             height: 100vh;
-            animation: zoomOut 2s ease-in-out;
-        }
-
-        @keyframes zoomOut {
-            0% {
-                transform: scale(1.2);
-            }
-            100% {
-                transform: scale(1);
-            }
         }
 
         .top-bar {
@@ -81,21 +71,20 @@
             transition: transform 0.3s ease-in-out, background 0.3s ease-in-out, width 0.3s ease-in-out, height 0.3s ease-in-out;
             overflow: hidden;
             word-break: break-word;
-            width: 100px; /* Initial size to fit timestamp */
-            height: 40px; /* Initial size to fit timestamp */
+            width: 120px;
+            height: 50px;
+            background: lightgray;
             text-align: center;
         }
 
         .timestamp {
             font-family: 'DigitalFont', sans-serif;
             font-size: 14px;
-            text-align: center;
-            color: inherit;
+            color: #000;
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 100%;
-            height: 100%;
+            text-align: center;
         }
 
         .bar-content {
@@ -112,7 +101,7 @@
         }
 
         .bar:hover .timestamp {
-            opacity: 0;
+            display: none;
         }
 
         .bar:hover {
@@ -126,8 +115,6 @@
 
         .bar:hover .bar-content {
             opacity: 1;
-            white-space: normal;
-            overflow-wrap: break-word;
         }
 
         @keyframes float {
@@ -157,15 +144,6 @@
             font-size: 16px;
             width: 30%;
             text-align: center;
-        }
-
-        .bottom-bar #dobInput {
-            position: relative;
-        }
-
-        .bottom-bar #dobInput::placeholder {
-            content: 'DOB';
-            font-size: 16px;
         }
 
         .bottom-bar button {
