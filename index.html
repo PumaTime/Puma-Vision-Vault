@@ -65,50 +65,42 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            font-size: 14px;
-            text-align: center;
-            font-weight: bold;
-            text-transform: uppercase;
             border-radius: 20px;
-            height: 40px;
+            height: auto;
+            padding: 10px;
             animation: float 5s infinite ease-in-out;
-            transition: transform 0.2s ease-in-out, width 0.2s ease-in-out;
+            transition: transform 0.2s ease-in-out;
         }
 
         .bar:nth-child(6n+1) {
             background: #FF00FF; /* Bright magenta */
-            color: #fff; /* White text */
         }
 
         .bar:nth-child(6n+2) {
             background: #FF0000; /* Bright red */
-            color: #fff; /* White text */
         }
 
         .bar:nth-child(6n+3) {
             background: #FFFFFF; /* White */
-            color: #000; /* Black text */
         }
 
         .bar:nth-child(6n+4) {
             background: #0000FF; /* Bright blue */
-            color: #fff; /* White text */
         }
 
         .bar:nth-child(6n+5) {
             background: #000000; /* Black */
-            color: #fff; /* White text */
         }
 
-        .bar .timestamp {
-            font-family: 'DigitalFont', sans-serif;
-            font-size: 12px;
-            margin-top: 5px;
-        }
-
-        .bar:hover {
-            transform: scale(1.1);
-            z-index: 10;
+        .bar::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border: 10px solid transparent;
+            border-top-color: inherit;
         }
 
         @keyframes float {
@@ -199,10 +191,12 @@
 
             const bar = document.createElement('div');
             bar.className = 'bar';
-            const textLength = thoughtInput.value.length;
-            bar.style.width = `${Math.min(300, 100 + textLength * 10)}px`;
+            bar.style.width = `${Math.random() * 200 + 100}px`; // Random width
+            bar.style.height = `${Math.random() * 50 + 30}px`; // Random height
             bar.style.top = `${Math.random() * 80}%`;
             bar.style.left = `${Math.random() * 80}%`;
+            bar.style.borderRadius = `${Math.random() * 50 + 20}px`; // Random border radius for unique shapes
+            bar.style.background = `hsl(${Math.random() * 360}, 100%, 75%)`; // Random color
 
             const timestamp = new Date();
             const formattedTimestamp = timestamp
@@ -211,9 +205,13 @@
                 .replace('T', ' ') // Format as YYYY-MM-DD HH:MM:SS
                 .slice(2, 16)
                 .replace('-', '')
-                .replace(':', ''); // Remove separators for the requested format
+                .replace(':', ''); // Format timestamp
 
-            bar.innerHTML = `${thoughtInput.value}<div class="timestamp">${formattedTimestamp}</div>`;
+            const timestampDiv = document.createElement('div');
+            timestampDiv.className = 'timestamp';
+            timestampDiv.textContent = formattedTimestamp;
+
+            bar.appendChild(timestampDiv);
 
             barContainer.appendChild(bar);
 
@@ -221,7 +219,7 @@
 
             if (bars.length > 50) {
                 bars.forEach((bar) => {
-                    bar.style.fontSize = '10px';
+                    bar.style.opacity = '0.8'; // Adjust appearance as bubbles fill up
                 });
             }
 
