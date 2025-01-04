@@ -102,22 +102,22 @@
             overflow: visible;
         }
 
+        .timestamp-like {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
         .timestamp {
             font-family: 'DigitalFont', sans-serif;
             font-size: 14px;
             color: #000;
-            position: absolute;
-            top: 10px;
-            left: 10px;
             text-align: center;
             white-space: nowrap;
-            margin-right: 10px;
         }
 
         .like-container {
-            position: absolute;
-            top: 10px;
-            right: 10px;
             display: flex;
             align-items: center;
             cursor: pointer;
@@ -155,7 +155,7 @@
             transition: opacity 0.3s ease-in-out;
         }
 
-        .bar:hover .timestamp {
+        .bar:hover .timestamp-like {
             display: none;
         }
 
@@ -260,6 +260,9 @@
             bar.style.top = `${Math.random() * 80}%`;
             bar.style.left = `${Math.random() * 80}%`;
 
+            const timestampLikeContainer = document.createElement('div');
+            timestampLikeContainer.className = 'timestamp-like';
+
             const timestampDiv = document.createElement('div');
             const timestamp = new Date();
             const formattedTimestamp = timestamp
@@ -286,6 +289,9 @@
                 likeCount.textContent = parseInt(likeCount.textContent) + 1;
             });
 
+            timestampLikeContainer.appendChild(timestampDiv);
+            timestampLikeContainer.appendChild(likeContainer);
+
             const thoughtContent = document.createElement('div');
             thoughtContent.className = 'bar-content';
             thoughtContent.textContent = thoughtInput.value;
@@ -296,8 +302,7 @@
                 bar.appendChild(img);
             }
 
-            bar.appendChild(timestampDiv);
-            bar.appendChild(likeContainer);
+            bar.appendChild(timestampLikeContainer);
             bar.appendChild(thoughtContent);
 
             barContainer.appendChild(bar);
