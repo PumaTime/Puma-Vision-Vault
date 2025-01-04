@@ -79,7 +79,7 @@
             font-size: 14px;
             font-weight: bold;
             text-align: center;
-            color: #fff;
+            text-transform: uppercase;
         }
 
         .bar:hover {
@@ -91,24 +91,37 @@
             opacity: 1;
         }
 
+        .timestamp {
+            font-family: 'DigitalFont', sans-serif;
+            font-size: 12px;
+            text-align: center;
+            margin-top: 5px;
+            color: #fff;
+        }
+
         .bar:nth-child(6n+1) {
             background: #FF00FF; /* Bright magenta */
+            color: #fff;
         }
 
         .bar:nth-child(6n+2) {
             background: #FF0000; /* Bright red */
+            color: #fff;
         }
 
         .bar:nth-child(6n+3) {
             background: #FFFFFF; /* White */
+            color: #000;
         }
 
         .bar:nth-child(6n+4) {
             background: #0000FF; /* Bright blue */
+            color: #fff;
         }
 
         .bar:nth-child(6n+5) {
             background: #000000; /* Black */
+            color: #fff;
         }
 
         @keyframes float {
@@ -206,12 +219,24 @@
             bar.style.borderRadius = `${Math.random() * 50 + 20}px`; // Random border radius
             bar.style.background = `hsl(${Math.random() * 360}, 100%, 75%)`; // Random color
 
+            // Add the timestamp
+            const timestampDiv = document.createElement('div');
+            const timestamp = new Date();
+            const formattedTimestamp = timestamp
+                .toISOString()
+                .slice(2, 10)
+                .replace(/-/g, '') +
+                timestamp.toTimeString().slice(0, 5).replace(/:/g, '');
+            timestampDiv.className = 'timestamp';
+            timestampDiv.textContent = formattedTimestamp;
+
             // Add the thought content
             const thoughtContent = document.createElement('div');
             thoughtContent.className = 'bar-content';
             thoughtContent.textContent = thoughtInput.value;
 
-            // Append content to the bar
+            // Append timestamp and content to the bar
+            bar.appendChild(timestampDiv);
             bar.appendChild(thoughtContent);
 
             barContainer.appendChild(bar);
