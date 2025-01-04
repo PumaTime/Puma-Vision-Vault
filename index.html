@@ -65,23 +65,19 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            border-radius: 0; /* Rectangle with sharp edges */
+            border-radius: 20px;
             height: auto;
             padding: 10px;
-            width: auto;
-            min-width: 150px; /* Minimum width for rectangle */
-            max-width: 300px; /* Maximum width for rectangle */
-            background: #FFF; /* Default background */
             animation: float 5s infinite ease-in-out;
-            transition: transform 0.3s ease-in-out, background 0.3s ease-in-out, width 0.3s ease-in-out, height 0.3s ease-in-out;
+            transition: transform 0.3s ease-in-out, background 0.3s ease-in-out;
             overflow: hidden;
         }
 
         .timestamp {
             font-family: 'DigitalFont', sans-serif;
-            font-size: 18px;
+            font-size: 12px;
             text-align: center;
-            color: #000; /* Always black */
+            color: inherit;
             transition: opacity 0.3s ease-in-out;
         }
 
@@ -95,18 +91,16 @@
             color: inherit;
         }
 
-        .bar:hover {
-            transform: scale(1.1);
-            width: auto; /* Expand width to fit content */
-            max-width: 500px; /* Allow more space for content */
-        }
-
         .bar:hover .timestamp {
             opacity: 0; /* Hide timestamp on hover */
         }
 
         .bar:hover .bar-content {
             opacity: 1; /* Show thought content on hover */
+        }
+
+        .bar:hover {
+            transform: scale(1.1);
         }
 
         .bar:nth-child(6n+1) {
@@ -132,10 +126,6 @@
         .bar:nth-child(6n+5) {
             background: #000000; /* Black */
             color: #fff;
-        }
-
-        .bar-content {
-            color: inherit; /* Match text color to bubble color */
         }
 
         @keyframes float {
@@ -226,6 +216,12 @@
 
             const bar = document.createElement('div');
             bar.className = 'bar';
+            bar.style.width = `${Math.random() * 200 + 100}px`; // Random width
+            bar.style.height = `${Math.random() * 50 + 30}px`; // Random height
+            bar.style.top = `${Math.random() * 80}%`;
+            bar.style.left = `${Math.random() * 80}%`;
+            bar.style.borderRadius = `${Math.random() * 50 + 20}px`; // Random border radius
+            bar.style.background = `hsl(${Math.random() * 360}, 100%, 75%)`; // Random color
 
             // Add the timestamp
             const timestampDiv = document.createElement('div');
@@ -248,6 +244,14 @@
             bar.appendChild(thoughtContent);
 
             barContainer.appendChild(bar);
+
+            const bars = document.querySelectorAll('.bar');
+
+            if (bars.length > 50) {
+                bars.forEach((bar) => {
+                    bar.style.opacity = '0.8'; // Adjust appearance as bubbles fill up
+                });
+            }
 
             thoughtInput.value = '';
         }
