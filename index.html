@@ -69,41 +69,27 @@
             height: auto;
             padding: 10px;
             animation: float 5s infinite ease-in-out;
-            transition: transform 0.5s;
-            transform-style: preserve-3d;
-            perspective: 1000px;
+            transition: transform 0.2s ease-in-out;
         }
 
-        .bar-content {
-            position: absolute;
-            backface-visibility: hidden;
+        .bar:nth-child(6n+1) {
+            background: #FF00FF; /* Bright magenta */
         }
 
-        .bar-front {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #FFF;
-            color: #000;
-            width: 100%;
-            height: 100%;
-            border-radius: inherit;
+        .bar:nth-child(6n+2) {
+            background: #FF0000; /* Bright red */
         }
 
-        .bar-back {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #000;
-            color: #FFF;
-            width: 100%;
-            height: 100%;
-            border-radius: inherit;
-            transform: rotateY(180deg);
+        .bar:nth-child(6n+3) {
+            background: #FFFFFF; /* White */
         }
 
-        .bar:hover {
-            transform: rotateY(180deg);
+        .bar:nth-child(6n+4) {
+            background: #0000FF; /* Bright blue */
+        }
+
+        .bar:nth-child(6n+5) {
+            background: #000000; /* Black */
         }
 
         @keyframes float {
@@ -198,22 +184,23 @@
             bar.style.height = `${Math.random() * 50 + 30}px`; // Random height
             bar.style.top = `${Math.random() * 80}%`;
             bar.style.left = `${Math.random() * 80}%`;
-            bar.style.borderRadius = `${Math.random() * 50 + 20}px`; // Random border radius
+            bar.style.borderRadius = `${Math.random() * 50 + 20}px`; // Random border radius for unique shapes
             bar.style.background = `hsl(${Math.random() * 360}, 100%, 75%)`; // Random color
 
-            // Create front content
-            const front = document.createElement('div');
-            front.className = 'bar-front bar-content';
-            front.textContent = 'Hover to Flip';
+            const timestamp = new Date();
+            const formattedTimestamp = timestamp
+                .toISOString()
+                .slice(0, 19)
+                .replace('T', ' ') // Format as YYYY-MM-DD HH:MM:SS
+                .slice(2, 16)
+                .replace('-', '')
+                .replace(':', ''); // Format timestamp
 
-            // Create back content
-            const back = document.createElement('div');
-            back.className = 'bar-back bar-content';
-            back.textContent = thoughtInput.value;
+            const timestampDiv = document.createElement('div');
+            timestampDiv.className = 'timestamp';
+            timestampDiv.textContent = formattedTimestamp;
 
-            // Append front and back to the bar
-            bar.appendChild(front);
-            bar.appendChild(back);
+            bar.appendChild(timestampDiv);
 
             barContainer.appendChild(bar);
 
@@ -221,7 +208,7 @@
 
             if (bars.length > 50) {
                 bars.forEach((bar) => {
-                    bar.style.opacity = '0.8';
+                    bar.style.opacity = '0.8'; // Adjust appearance as bubbles fill up
                 });
             }
 
