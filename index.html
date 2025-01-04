@@ -65,25 +65,23 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            border-radius: 20px;
+            border-radius: 10px;
             height: auto;
             padding: 10px;
-            animation: float 5s infinite ease-in-out;
-            transition: transform 0.3s ease-in-out, background 0.3s ease-in-out;
+            background: #FFF; /* Default background */
+            border: 1px solid #000;
+            transition: all 0.3s ease-in-out;
             overflow: hidden;
+            color: #000;
+            min-width: 100px;
         }
 
         .timestamp {
             font-family: 'DigitalFont', sans-serif;
-            font-size: 18px;
+            font-size: 16px;
             text-align: center;
-            color: inherit;
+            color: #000; /* Always black */
             transition: opacity 0.3s ease-in-out;
-            font-weight: normal; /* Make timestamp not bold */
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%); /* Center timestamp */
         }
 
         .bar-content {
@@ -93,10 +91,15 @@
             font-weight: bold;
             text-align: center;
             text-transform: uppercase;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%); /* Center content */
+            color: inherit;
+            white-space: pre-wrap;
+        }
+
+        .bar:hover {
+            transform: scale(1.1);
+            min-width: 200px; /* Expand to fit the thought */
+            height: auto; /* Adjust height dynamically */
+            padding: 20px;
         }
 
         .bar:hover .timestamp {
@@ -105,39 +108,6 @@
 
         .bar:hover .bar-content {
             opacity: 1; /* Show thought content on hover */
-        }
-
-        .bar:hover {
-            transform: scale(1.1);
-        }
-
-        .bar:nth-child(6n+1) {
-            background: #FF00FF; /* Bright magenta */
-            color: #fff;
-        }
-
-        .bar:nth-child(6n+2) {
-            background: #FF0000; /* Bright red */
-            color: #fff;
-        }
-
-        .bar:nth-child(6n+3) {
-            background: #FFFFFF; /* White */
-            color: #000;
-        }
-
-        .bar:nth-child(6n+4) {
-            background: #0000FF; /* Bright blue */
-            color: #fff;
-        }
-
-        .bar:nth-child(6n+5) {
-            background: #000000; /* Black */
-            color: #fff;
-        }
-
-        .bar-content {
-            color: inherit; /* Match text color to bubble color */
         }
 
         @keyframes float {
@@ -228,12 +198,6 @@
 
             const bar = document.createElement('div');
             bar.className = 'bar';
-            bar.style.width = `${Math.random() * 200 + 100}px`; // Random width
-            bar.style.height = `${Math.random() * 50 + 30}px`; // Random height
-            bar.style.top = `${Math.random() * 80}%`;
-            bar.style.left = `${Math.random() * 80}%`;
-            bar.style.borderRadius = `${Math.random() * 50 + 20}px`; // Random border radius
-            bar.style.background = `hsl(${Math.random() * 360}, 100%, 75%)`; // Random color
 
             // Add the timestamp
             const timestampDiv = document.createElement('div');
@@ -251,23 +215,11 @@
             thoughtContent.className = 'bar-content';
             thoughtContent.textContent = thoughtInput.value;
 
-            // Adjust text color based on background
-            const isLightColor = bar.style.background.includes('360') || bar.style.background.includes('75%');
-            thoughtContent.style.color = isLightColor ? '#000' : '#FFF';
-
             // Append timestamp and content to the bar
             bar.appendChild(timestampDiv);
             bar.appendChild(thoughtContent);
 
             barContainer.appendChild(bar);
-
-            const bars = document.querySelectorAll('.bar');
-
-            if (bars.length > 50) {
-                bars.forEach((bar) => {
-                    bar.style.opacity = '0.8'; // Adjust appearance as bubbles fill up
-                });
-            }
 
             thoughtInput.value = '';
         }
