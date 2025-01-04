@@ -67,23 +67,12 @@
             flex-direction: column;
             font-size: 14px;
             text-align: center;
+            font-weight: bold;
+            text-transform: uppercase;
             border-radius: 20px;
-            background: white;
-            padding: 10px 20px;
+            height: 40px;
             animation: float 5s infinite ease-in-out;
             transition: transform 0.2s ease-in-out, width 0.2s ease-in-out;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-
-        .bar::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 20px;
-            width: 0;
-            height: 0;
-            border: 10px solid transparent;
-            border-top-color: white;
         }
 
         .bar:nth-child(6n+1) {
@@ -91,17 +80,9 @@
             color: #fff; /* White text */
         }
 
-        .bar:nth-child(6n+1)::after {
-            border-top-color: #FF00FF;
-        }
-
         .bar:nth-child(6n+2) {
             background: #FF0000; /* Bright red */
             color: #fff; /* White text */
-        }
-
-        .bar:nth-child(6n+2)::after {
-            border-top-color: #FF0000;
         }
 
         .bar:nth-child(6n+3) {
@@ -109,26 +90,14 @@
             color: #000; /* Black text */
         }
 
-        .bar:nth-child(6n+3)::after {
-            border-top-color: #FFFFFF;
-        }
-
         .bar:nth-child(6n+4) {
             background: #0000FF; /* Bright blue */
             color: #fff; /* White text */
         }
 
-        .bar:nth-child(6n+4)::after {
-            border-top-color: #0000FF;
-        }
-
         .bar:nth-child(6n+5) {
             background: #000000; /* Black */
             color: #fff; /* White text */
-        }
-
-        .bar:nth-child(6n+5)::after {
-            border-top-color: #000000;
         }
 
         .bar .timestamp {
