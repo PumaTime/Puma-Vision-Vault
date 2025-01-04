@@ -66,7 +66,6 @@
             align-items: center;
             flex-direction: column;
             border-radius: 0;
-            height: auto;
             padding: 10px;
             animation: float 5s infinite ease-in-out;
             transition: transform 0.3s ease-in-out, background 0.3s ease-in-out, width 0.3s ease-in-out, height 0.3s ease-in-out;
@@ -97,7 +96,7 @@
             text-align: center;
             text-transform: uppercase;
             color: inherit;
-            white-space: nowrap;
+            word-wrap: break-word;
         }
 
         .bar:hover .timestamp {
@@ -105,14 +104,16 @@
         }
 
         .bar:hover {
-            width: 300px;
-            height: 100px;
+            width: auto;
+            height: auto;
+            max-width: 300px;
+            max-height: 100px;
+            white-space: normal;
         }
 
         .bar:hover .bar-content {
             opacity: 1;
             white-space: normal;
-            word-wrap: break-word;
         }
 
         @keyframes float {
