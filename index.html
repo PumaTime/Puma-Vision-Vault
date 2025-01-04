@@ -75,11 +75,15 @@
 
         .timestamp {
             font-family: 'DigitalFont', sans-serif;
-            font-size: 16px;
+            font-size: 18px;
             text-align: center;
             color: inherit;
             transition: opacity 0.3s ease-in-out;
             font-weight: normal; /* Make timestamp not bold */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Center timestamp */
         }
 
         .bar-content {
@@ -89,6 +93,10 @@
             font-weight: bold;
             text-align: center;
             text-transform: uppercase;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Center content */
         }
 
         .bar:hover .timestamp {
