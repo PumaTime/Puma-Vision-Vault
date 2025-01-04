@@ -74,6 +74,7 @@
             width: 120px;
             height: 50px;
             background: lightgray;
+            text-align: center;
         }
 
         .timestamp {
@@ -81,7 +82,8 @@
             font-size: 14px;
             color: #000;
             text-align: center;
-            margin: 0 auto;
+            margin: auto;
+            display: block;
         }
 
         .bar-content {
@@ -98,14 +100,13 @@
         }
 
         .bar:hover .timestamp {
-            opacity: 0;
+            display: none;
         }
 
         .bar:hover {
             width: auto;
             height: auto;
             max-width: 90%;
-            max-height: 90%;
             padding: 20px;
             white-space: normal;
             overflow: visible;
@@ -113,8 +114,6 @@
 
         .bar:hover .bar-content {
             opacity: 1;
-            white-space: normal;
-            overflow-wrap: break-word;
         }
 
         @keyframes float {
