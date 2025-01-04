@@ -69,7 +69,26 @@
             height: auto;
             padding: 10px;
             animation: float 5s infinite ease-in-out;
-            transition: transform 0.2s ease-in-out;
+            transition: transform 0.3s ease-in-out, background 0.3s ease-in-out;
+            overflow: hidden;
+        }
+
+        .bar-content {
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            color: #fff;
+        }
+
+        .bar:hover {
+            background: rgba(0, 0, 0, 0.8); /* Dark background on hover */
+            transform: scale(1.1);
+        }
+
+        .bar:hover .bar-content {
+            opacity: 1;
         }
 
         .bar:nth-child(6n+1) {
@@ -184,23 +203,16 @@
             bar.style.height = `${Math.random() * 50 + 30}px`; // Random height
             bar.style.top = `${Math.random() * 80}%`;
             bar.style.left = `${Math.random() * 80}%`;
-            bar.style.borderRadius = `${Math.random() * 50 + 20}px`; // Random border radius for unique shapes
+            bar.style.borderRadius = `${Math.random() * 50 + 20}px`; // Random border radius
             bar.style.background = `hsl(${Math.random() * 360}, 100%, 75%)`; // Random color
 
-            const timestamp = new Date();
-            const formattedTimestamp = timestamp
-                .toISOString()
-                .slice(0, 19)
-                .replace('T', ' ') // Format as YYYY-MM-DD HH:MM:SS
-                .slice(2, 16)
-                .replace('-', '')
-                .replace(':', ''); // Format timestamp
+            // Add the thought content
+            const thoughtContent = document.createElement('div');
+            thoughtContent.className = 'bar-content';
+            thoughtContent.textContent = thoughtInput.value;
 
-            const timestampDiv = document.createElement('div');
-            timestampDiv.className = 'timestamp';
-            timestampDiv.textContent = formattedTimestamp;
-
-            bar.appendChild(timestampDiv);
+            // Append content to the bar
+            bar.appendChild(thoughtContent);
 
             barContainer.appendChild(bar);
 
