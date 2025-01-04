@@ -40,12 +40,26 @@
         }
 
         .top-bar input[type="text"] {
-            width: 80%;
+            width: 60%;
             padding: 10px;
             margin: 0 10px;
             border: 2px solid #000;
             border-radius: 20px;
             font-size: 16px;
+        }
+
+        .top-bar input[type="file"] {
+            display: none;
+        }
+
+        .upload-label {
+            background-color: #000;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-left: 10px;
         }
 
         .main-content {
@@ -133,6 +147,12 @@
             white-space: normal;
         }
 
+        .bar img {
+            max-width: 100%;
+            max-height: 150px;
+            margin-top: 10px;
+        }
+
         .bar:hover .timestamp {
             display: none;
         }
@@ -196,6 +216,8 @@
 <body>
     <div class="top-bar">
         <input id="thoughtInput" type="text" placeholder="Enter your thoughts about the future in 2040">
+        <label for="imageUpload" class="upload-label">Upload Image</label>
+        <input id="imageUpload" type="file" accept="image/*">
     </div>
 
     <div class="main-content" id="barContainer">
@@ -217,9 +239,10 @@
 
         function addBar() {
             const thoughtInput = document.getElementById('thoughtInput');
+            const imageUpload = document.getElementById('imageUpload');
 
-            if (thoughtInput.value.trim() === '') {
-                alert('Please enter your thoughts.');
+            if (thoughtInput.value.trim() === '' && !imageUpload.files[0]) {
+                alert('Please enter your thoughts or upload an image.');
                 return;
             }
 
@@ -261,6 +284,12 @@
             thoughtContent.className = 'bar-content';
             thoughtContent.textContent = thoughtInput.value;
 
+            if (imageUpload.files[0]) {
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(imageUpload.files[0]);
+                bar.appendChild(img);
+            }
+
             bar.appendChild(timestampDiv);
             bar.appendChild(likeContainer);
             bar.appendChild(thoughtContent);
@@ -268,6 +297,7 @@
             barContainer.appendChild(bar);
 
             thoughtInput.value = '';
+            imageUpload.value = '';
         }
     </script>
 </body>
