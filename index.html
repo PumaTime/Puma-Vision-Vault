@@ -65,7 +65,7 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            border-radius: 20px;
+            border-radius: 0; /* Rectangle with sharp edges */
             height: auto;
             padding: 10px;
             animation: float 5s infinite ease-in-out;
@@ -101,31 +101,6 @@
 
         .bar:hover {
             transform: scale(1.1);
-        }
-
-        .bar:nth-child(6n+1) {
-            background: #FF00FF; /* Bright magenta */
-            color: #fff;
-        }
-
-        .bar:nth-child(6n+2) {
-            background: #FF0000; /* Bright red */
-            color: #fff;
-        }
-
-        .bar:nth-child(6n+3) {
-            background: #FFFFFF; /* White */
-            color: #000;
-        }
-
-        .bar:nth-child(6n+4) {
-            background: #0000FF; /* Bright blue */
-            color: #fff;
-        }
-
-        .bar:nth-child(6n+5) {
-            background: #000000; /* Black */
-            color: #fff;
         }
 
         @keyframes float {
@@ -204,6 +179,13 @@
     </div>
 
     <script>
+        function getRandomColor() {
+            const hue = Math.random() * 360; // Random hue
+            const saturation = 70 + Math.random() * 30; // Saturation between 70% and 100%
+            const lightness = 50 + Math.random() * 20; // Lightness between 50% and 70%
+            return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+        }
+
         function addBar() {
             const thoughtInput = document.getElementById('thoughtInput');
 
@@ -216,12 +198,11 @@
 
             const bar = document.createElement('div');
             bar.className = 'bar';
+            bar.style.background = getRandomColor(); // Apply random color
             bar.style.width = `${Math.random() * 200 + 100}px`; // Random width
             bar.style.height = `${Math.random() * 50 + 30}px`; // Random height
             bar.style.top = `${Math.random() * 80}%`;
             bar.style.left = `${Math.random() * 80}%`;
-            bar.style.borderRadius = `${Math.random() * 50 + 20}px`; // Random border radius
-            bar.style.background = `hsl(${Math.random() * 360}, 100%, 75%)`; // Random color
 
             // Add the timestamp
             const timestampDiv = document.createElement('div');
