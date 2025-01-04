@@ -71,6 +71,7 @@
             transition: transform 0.3s ease-in-out, background 0.3s ease-in-out, width 0.3s ease-in-out, height 0.3s ease-in-out;
             overflow: hidden;
             word-break: break-word;
+            max-width: 300px;
         }
 
         .timestamp {
@@ -110,7 +111,6 @@
             width: auto;
             height: auto;
             max-width: 90%;
-            max-height: none;
             padding: 20px;
             white-space: normal;
             overflow: visible;
@@ -119,6 +119,7 @@
         .bar:hover .bar-content {
             opacity: 1;
             white-space: normal;
+            overflow-wrap: break-word;
         }
 
         @keyframes float {
