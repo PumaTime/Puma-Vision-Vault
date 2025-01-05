@@ -92,6 +92,12 @@
             z-index: 1;
         }
 
+        .bar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         .bar:hover {
             z-index: 10;
             width: auto;
@@ -164,14 +170,6 @@
             font-weight: bold;
         }
 
-        .bar img {
-            max-width: 100%;
-            max-height: 150px;
-            margin-top: 10px;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-        }
-
         .bar:hover .timestamp-like {
             display: none;
         }
@@ -181,7 +179,7 @@
         }
 
         .bar:hover img {
-            opacity: 1;
+            opacity: 0;
         }
 
         @keyframes float {
@@ -279,6 +277,12 @@
             bar.style.top = `${Math.random() * 80}%`;
             bar.style.left = `${Math.random() * 80}%`;
 
+            if (imageUpload.files[0]) {
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(imageUpload.files[0]);
+                bar.appendChild(img);
+            }
+
             const timestampLikeContainer = document.createElement('div');
             timestampLikeContainer.className = 'timestamp-like';
 
@@ -327,12 +331,6 @@
                 }
             });
 
-            if (imageUpload.files[0]) {
-                const img = document.createElement('img');
-                img.src = URL.createObjectURL(imageUpload.files[0]);
-                bar.appendChild(img);
-            }
-
             bar.appendChild(timestampLikeContainer);
             bar.appendChild(thoughtContent);
             bar.appendChild(tagsDiv);
@@ -346,3 +344,4 @@
     </script>
 </body>
 </html>
+
