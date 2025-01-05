@@ -159,6 +159,8 @@
             flex-wrap: wrap;
             gap: 5px;
             margin-top: 5px;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
         }
 
         .tag {
@@ -175,6 +177,10 @@
         }
 
         .bar:hover .bar-content {
+            opacity: 1;
+        }
+
+        .bar:hover .tags-container {
             opacity: 1;
         }
 
