@@ -109,7 +109,6 @@
             gap: 10px;
             height: auto;
             width: 100%;
-            margin-bottom: 10px;
         }
 
         .timestamp {
@@ -151,7 +150,7 @@
         }
 
         .tags-container {
-            display: none;
+            display: flex;
             flex-wrap: wrap;
             gap: 5px;
             margin-top: 5px;
@@ -175,15 +174,11 @@
         }
 
         .bar:hover .timestamp-like {
-            display: flex;
+            display: none;
         }
 
         .bar:hover .bar-content {
             opacity: 1;
-        }
-
-        .bar:hover .tags-container {
-            display: flex;
         }
 
         .bar:hover img {
