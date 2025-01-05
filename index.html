@@ -74,24 +74,23 @@
         }
 
         .bar {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    border-radius: 2;
-    padding: 20px 10px 20px 10px; /* Increased bottom padding for more space */
-    animation: float 5s infinite ease-in-out;
-    transition: transform 0.3s ease-in-out, background 0.3s ease-in-out, width 0.3s ease-in-out, height 0.3s ease-in-out, z-index 0.3s ease-in-out;
-    overflow: hidden;
-    word-break: break-word;
-    width: 120px;
-    height: 0px; /* Adjusted height for better spacing */
-    background: lightgray;
-    text-align: center;
-    z-index: 1;
-}
-
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            border-radius: 2;
+            padding: 20px 10px 20px 10px; /* Increased bottom padding for more space */
+            animation: float 5s infinite ease-in-out;
+            transition: transform 0.3s ease-in-out, background 0.3s ease-in-out, width 0.3s ease-in-out, height 0.3s ease-in-out, z-index 0.3s ease-in-out;
+            overflow: hidden;
+            word-break: break-word;
+            width: 120px;
+            height: 0px; /* Adjusted height for better spacing */
+            background: lightgray;
+            text-align: center;
+            z-index: 1;
+        }
 
         .bar img {
             width: 100%;
@@ -120,7 +119,7 @@
             max-width: 90%;
             padding: 30px;
             white-space: normal;
-            overflow: visible;
+            overflow: auto; /* Enables scrolling if content overflows */
         }
 
         .timestamp-like {
