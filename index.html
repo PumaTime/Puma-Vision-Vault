@@ -259,6 +259,7 @@
             const thoughtInput = document.getElementById('thoughtInput');
             const tagsInput = document.getElementById('tagsInput');
             const imageUpload = document.getElementById('imageUpload');
+            const dobInput = document.getElementById('dobInput');
 
             if (thoughtInput.value.trim() === '' && !imageUpload.files[0]) {
                 alert('Please enter your thoughts or upload an image.');
@@ -326,6 +327,14 @@
                     tagsDiv.appendChild(tagElement);
                 }
             });
+
+            // Automatically add the year of birth as a tag
+            if (dobInput.value.trim() !== '') {
+                const dobTag = document.createElement('span');
+                dobTag.className = 'tag';
+                dobTag.textContent = `#${dobInput.value}`;
+                tagsDiv.appendChild(dobTag);
+            }
 
             bar.appendChild(timestampLikeContainer);
             bar.appendChild(thoughtContent);
