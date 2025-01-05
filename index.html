@@ -265,9 +265,7 @@
     </div>
 
     <div class="bottom-bar">
-        <button onclick="viewTopIdeas()">View Top 5 Most Liked Ideas</button>
-</div>
-<div id="topIdeas" style="display: none; margin: 20px; text-align: center;"></div>
+        <input id="emailInput" type="email" placeholder="Enter your email">
         <button onclick="addBar()">Save to VisionVault</button>
         <input id="dobInput" type="number" placeholder="Year of Birth">
     </div>
@@ -371,37 +369,6 @@
             tagsInput.value = '';
             imageUpload.value = '';
         }
-        
-        function viewTopIdeas() {
-    const bars = Array.from(document.querySelectorAll('.bar'));
-    const ideasWithLikes = bars.map(bar => {
-        const likeCount = parseInt(bar.querySelector('.like-container span').textContent, 10);
-        const thought = bar.querySelector('.bar-content')?.textContent || 'No content';
-        const tags = Array.from(bar.querySelectorAll('.tags-container .tag'))
-            .map(tag => tag.textContent)
-            .join(', ');
-        return { thought, likeCount, tags };
-    });
-
-           // Sort ideas by likes and get the top 5
-            const topIdeas = ideasWithLikes
-                .sort((a, b) => b.likeCount - a.likeCount)
-                .slice(0, 5);
-
-            // Display the top 5 ideas
-            const topIdeasContainer = document.getElementById('topIdeas');
-            topIdeasContainer.innerHTML = topIdeas.map(idea => `
-                <div style="margin-bottom: 10px; padding: 10px; background: #f0f0f0; border-radius: 10px;">
-                    <p><strong>Thought:</strong> ${idea.thought}</p>
-                    <p><strong>Likes:</strong> ${idea.likeCount}</p>
-                    <p><strong>Tags:</strong> ${idea.tags || 'No tags'}</p>
-                </div>
-            `).join('');
-            topIdeasContainer.style.display = 'block';
-        }
-    </script>
-</body>
-</html>
     </script>
 </body>
 </html>
