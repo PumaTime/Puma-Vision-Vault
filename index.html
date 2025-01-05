@@ -224,8 +224,31 @@
         }
 
         @media (max-width: 768px) {
-            .top-bar input[type="text"], .bottom-bar input {
-                width: 70%;
+    .top-bar input[type="text"], .bottom-bar input {
+        width: 70%; /* Adjust input field width for smaller screens */
+        font-size: 14px; /* Scale down font size */
+    }
+
+    .bar {
+        width: 90%; /* Allow thought bubbles to adapt to smaller screens */
+        max-width: 90%; /* Ensure they don't exceed screen width */
+        padding: 15px; /* Adjust padding for compact layout */
+    }
+
+    .top-bar, .bottom-bar {
+        flex-direction: column; /* Stack elements vertically on smaller screens */
+        padding: 15px; /* Reduce padding */
+    }
+
+    .bottom-bar button {
+        width: 100%; /* Full-width buttons for mobile */
+        font-size: 14px; /* Scale down button text size */
+    }
+
+    .timestamp-like {
+        font-size: 12px; /* Smaller text for timestamp and like icon */
+    }
+}
             }
         }
     </style>
