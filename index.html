@@ -113,19 +113,15 @@
         }
 
         .bar:hover {
-    z-index: 10;
-    width: auto;
-    max-width: 90%;
-    max-height: 90%; /* Ensure height can grow */
-    padding: 30px;
-    white-space: normal;
-    overflow: auto;
-}
-
-.bar img {
-    max-width: 100%; /* Ensure images don't overflow horizontally */
-    max-height: 100%; /* Ensure images don't overflow vertically */
-}
+            
+            z-index: 10;
+            width: auto;
+            height: auto;
+            max-width: 90%;
+            padding: 30px;
+            white-space: normal;
+            overflow: auto; /* Enables scrolling if content overflows */
+        }
 
         .timestamp-like {
             display: flex;
