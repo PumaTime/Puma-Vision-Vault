@@ -29,59 +29,6 @@
         }
 
         /* Opening Screen Styles */
-
-        .time-counter {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background: #000;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000; /* Ensures it overlays the main content */
-    animation: fadeOut 2s 10s forwards; /* Fades out after the countdown */
-}
-
-.logo-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-    transition: transform 0.3s ease-in-out;
-}
-
-.logo {
-    width: 100px;
-    margin: 0 10px;
-    transition: transform 1s ease-in-out, opacity 1s ease-in-out;
-}
-
-.counter {
-    font-size: 5rem;
-    font-family: 'DigitalFont', sans-serif;
-    animation: flash 0.5s ease-in-out 1 10s; /* Flash animation for Vision Vault */
-}
-
-@keyframes flash {
-    0%, 100% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0;
-    }
-}
-
-@keyframes fadeOut {
-    to {
-        opacity: 0;
-        visibility: hidden;
-    }
-}
-
         .opening-screen {
             position: fixed;
             top: 0;
@@ -350,16 +297,6 @@
     </style>
 </head>
 <body>
-<div class="time-counter" id="timeCounter">
-    <div class="logo-container">
-        <img src="logo1.png" alt="Logo 1" class="logo logo1">
-        <img src="logo2.png" alt="Logo 2" class="logo logo2">
-        <img src="logo3.png" alt="Logo 3" class="logo logo3">
-        <img src="logo4.png" alt="Logo 4" class="logo logo4">
-    </div>
-    <div class="counter" id="counter">1948</div>
-</div>
-
     <!-- Opening Screen -->
     <div class="opening-screen" id="openingScreen">
         <div class="counter" id="counter">1948</div>
@@ -517,53 +454,6 @@
             const lightness = 50 + Math.random() * 20;
             return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
         }
-        function startCounter() {
-    const counter = document.getElementById("counter");
-    const logoContainer = document.querySelector(".logo-container");
-    const logos = document.querySelectorAll(".logo");
-
-    let year = 1948;
-    const interval = setInterval(() => {
-        if (year < 2040) {
-            year++;
-            counter.textContent = year;
-
-            // Gradually scale down logos to one
-            if (year > 2000) {
-                logos.forEach((logo, index) => {
-                    logo.style.transform = `scale(${1 - (year - 2000) / 100})`;
-                    logo.style.opacity = `${1 - (year - 2000) / 100}`;
-                });
-            }
-
-            if (year === 2040) {
-                // Flash Puma Vision Vault
-                setTimeout(() => {
-                    counter.textContent = "Puma's Vision Vault";
-                }, 500);
-
-                setTimeout(() => {
-                    counter.textContent = "2040";
-                }, 1500);
-
-                // Set single logo
-                logos.forEach((logo, index) => {
-                    if (index > 0) {
-                        logo.style.display = "none";
-                    }
-                });
-
-                clearInterval(interval);
-            }
-        }
-    }, 50); // Adjust speed as needed
-}
-
-// Start the counter when the page loads
-window.onload = function () {
-    startCounter();
-};
-
     </script>
 </body>
 </html>
