@@ -322,7 +322,8 @@
             const openingScreen = document.getElementById('openingScreen');
             let currentNumber = 1948;
             const endNumber = 2040;
-
+    // Show 1948 for 5 seconds before starting the count
+    setTimeout(() => {
             const interval = setInterval(() => {
                 counter.textContent = currentNumber;
 
@@ -333,6 +334,7 @@
                     currentNumber++;
                 }
             }, 50);
+         }, 5000); // 5 seconds delay
         }
 
         function flashText() {
