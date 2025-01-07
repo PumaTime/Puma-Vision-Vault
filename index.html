@@ -322,6 +322,7 @@
             const openingScreen = document.getElementById('openingScreen');
             let currentNumber = 1948;
             const endNumber = 2040;
+            
     // Show 1948 for 3 seconds before starting the count
     setTimeout(() => {
             const interval = setInterval(() => {
@@ -329,7 +330,7 @@
 
                 if (currentNumber === endNumber) {
                     clearInterval(interval);
-                    flashText();
+                    flashLogo();
                 } else {
                     currentNumber++;
                 }
@@ -337,15 +338,19 @@
          }, 3000); // 3 seconds delay
         }
 
-        function flashText() {
+        function flashLogo() {
             const counter = document.getElementById('counter');
             const openingScreen = document.getElementById('openingScreen');
             let toggle = true;
 
             const flashInterval = setInterval(() => {
-                counter.textContent = toggle ? "Puma VisionVault" : "2040";
-                toggle = !toggle;
-            }, 1000);
+            if (toggle) {
+                counter.innerHTML = '<img src="path/to/logo.png" alt="PUMA Logo" style="width: 200px; height: auto;">';
+            } else {
+                counter.textContent = "2040";
+            }
+            toggle = !toggle;
+        }, 1000);
 
             setTimeout(() => {
                 clearInterval(flashInterval);
