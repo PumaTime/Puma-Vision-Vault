@@ -316,6 +316,8 @@
     <div class="opening-screen" id="openingScreen">
         <div class="counter" id="counter">1948</div>
         <div class="image-container" id="imageContainer"></div>
+         <img id="hoverImage" src="" alt="Yearly Highlight">
+            <div class="hover-text" id="hoverText"></div>
     </div>
 
     <div class="top-bar">
@@ -331,13 +333,14 @@
         <input id="dobInput" type="number" placeholder="Year of Birth">
         <button onclick="addBar()">Save to VisionVault</button>
     </div>
+ </div>
 
     <script>
         const imagesByYear = {
-    2008: '2008.png',
-    2011: '2011.png',
-    2018: '2018.png',
-    2020: '2020.png',
+    2008: '2008.png', text: '2008 - A remarkable year!' },
+    2011: '2011.png', text: '2011 - Another milestone!' },
+    2018: '2018.png', text: '2018 - Innovation at its peak!' },
+    2020: '2020.png', text: '2020 - Recent achievements!' },
 };
 
 let isHovering = false;
@@ -346,12 +349,14 @@ let isHovering = false;
             const counter = document.getElementById('counter');
             const openingScreen = document.getElementById('openingScreen');
             const imageContainer = document.getElementById('imageContainer');
+            const hoverImage = document.getElementById('hoverImage');
+            const hoverText = document.getElementById('hoverText');
+            
             let currentNumber = 1948;
             const endNumber = 2040;
-
-             const interval = setInterval(() => {
-        if (!isHovering) {
-            counter.textContent = currentNumber;
+            
+            const interval = setInterval(() => {
+                counter.textContent = currentNumber;
             
              // Display associated image if it exists
             if (imagesByYear[currentNumber]) {
@@ -372,14 +377,14 @@ let isHovering = false;
         }
         
  // Add hover event to stop and display image
-    counter.addEventListener('mouseover', () => {
-        isHovering = true;
-    });
+  counter.addEventListener('mouseenter', () => {
+    isHovering = true;
+});
 
-    counter.addEventListener('mouseout', () => {
-        isHovering = false;
-    });
-}
+counter.addEventListener('mouseleave', () => {
+    isHovering = false;
+});
+        
         function flashText() {
             const counter = document.getElementById('counter');
             const openingScreen = document.getElementById('openingScreen');
