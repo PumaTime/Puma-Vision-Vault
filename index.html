@@ -49,6 +49,21 @@
             font-size: 6rem;
             font-weight: bold;
         }
+        
+        .image-container {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    border: 2px solid #fff;
+    border-radius: 10px;
+}
 
         .opening-screen.flashing {
             animation: flashText 1s ease-in-out infinite alternate;
@@ -300,6 +315,7 @@
     <!-- Opening Screen -->
     <div class="opening-screen" id="openingScreen">
         <div class="counter" id="counter">1948</div>
+        <div class="image-container" id="imageContainer"></div>
     </div>
 
     <div class="top-bar">
@@ -317,31 +333,60 @@
     </div>
 
     <script>
+        const imagesByYear = {
+    1950: 'path/to/image1950.jpg',
+    1985: 'path/to/image1985.jpg',
+    2000: 'path/to/image2000.jpg',
+    2040: 'path/to/image2040.jpg',
+};
+
+let isHovering = false;
+
         function startCounting() {
             const counter = document.getElementById('counter');
             const openingScreen = document.getElementById('openingScreen');
+            const imageContainer = document.getElementById('imageContainer');
             let currentNumber = 1948;
             const endNumber = 2040;
 
-            const interval = setInterval(() => {
-                counter.textContent = currentNumber;
+             const interval = setInterval(() => {
+        if (!isHovering) {
+            counter.textContent = currentNumber;
+            
+             // Display associated image if it exists
+            if (imagesByYear[currentNumber]) {
+                imageContainer.style.backgroundImage = `url(${imagesByYear[currentNumber]})`;
+                imageContainer.style.opacity = '1';
+            } else {
+                imageContainer.style.opacity = '0';
+            }
 
-                if (currentNumber === endNumber) {
-                    clearInterval(interval);
-                    flashText();
-                } else {
-                    currentNumber++;
-                }
+               if (currentNumber === endNumber) {
+                clearInterval(interval);
+                flashText();
+            } else {
+                currentNumber++;
+            }
+            
             }, 50);
         }
+        
+ // Add hover event to stop and display image
+    counter.addEventListener('mouseover', () => {
+        isHovering = true;
+    });
 
+    counter.addEventListener('mouseout', () => {
+        isHovering = false;
+    });
+}
         function flashText() {
             const counter = document.getElementById('counter');
             const openingScreen = document.getElementById('openingScreen');
             let toggle = true;
 
             const flashInterval = setInterval(() => {
-                counter.textContent = toggle ? "PUMA'S VISION VAULT" : "2040";
+                counter.textContent = toggle ? "PumaVisionVault" : "2040";
                 toggle = !toggle;
             }, 1000);
 
