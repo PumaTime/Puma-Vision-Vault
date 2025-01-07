@@ -336,14 +336,12 @@
  </div>
 
     <script>
-        const imagesByYear = {
+    const imageMap = {
     2008: '2008.png', text: '2008 - A remarkable year!' },
     2011: '2011.png', text: '2011 - Another milestone!' },
     2018: '2018.png', text: '2018 - Innovation at its peak!' },
     2020: '2020.png', text: '2020 - Recent achievements!' },
 };
-
-let isHovering = false;
 
         function startCounting() {
             const counter = document.getElementById('counter');
@@ -358,22 +356,23 @@ let isHovering = false;
             const interval = setInterval(() => {
                 counter.textContent = currentNumber;
             
-             // Display associated image if it exists
-            if (imagesByYear[currentNumber]) {
-                imageContainer.style.backgroundImage = `url(${imagesByYear[currentNumber]})`;
-                imageContainer.style.opacity = '1';
-            } else {
-                imageContainer.style.opacity = '0';
-            }
+             // Check if the current number matches any year in the imageMap
+                if (imageMap[currentNumber]) {
+                    hoverImage.src = imageMap[currentNumber].src;
+                    hoverText.textContent = imageMap[currentNumber].text;
+                    imageContainer.style.display = 'flex';
+                } else {
+                    imageContainer.style.display = 'none';
+                }
 
-               if (currentNumber === endNumber) {
-                clearInterval(interval);
-                flashText();
-            } else {
-                currentNumber++;
-            }
-            
-            }, 50);
+                // Stop the counting at the endNumber and start flashing
+                if (currentNumber === endNumber) {
+                    clearInterval(interval);
+                    flashText();
+                } else {
+                    currentNumber++;
+                }
+            }, 50); // Adjust speed as needed
         }
         
  // Add hover event to stop and display image
@@ -405,7 +404,8 @@ counter.addEventListener('mouseleave', () => {
             }, 5000);
         }
 
-        startCounting();
+        // Start the counter when the page loads
+        window.onload = startCounting;
 
         function addBar() {
             const thoughtInput = document.getElementById('thoughtInput');
