@@ -268,29 +268,6 @@
             background: #cc0000;
         }
 
-        .carousel-button {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    background-color: #ff0000;
-    color: white;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    font-size: 24px;
-}
-
-.carousel-button:hover {
-    background-color: #cc0000;
-}
-
         .carousel-container {
     display: none;
     position: fixed;
@@ -400,7 +377,7 @@
     
 <!-- Carousel Container -->
 <div class="carousel-container" id="carouselContainer">
-<button class="carousel-button" onclick="showCarousel()">❤️</button>
+    <button class="carousel-close" onclick="toggleCarousel()">×</button>
     <h3>Top 5 Most Liked Thoughts</h3>
     <div class="carousel" id="carousel">
         <!-- Carousel items will be dynamically added -->
@@ -602,17 +579,6 @@ function updateCarousel() {
         carouselItem.appendChild(likes);
 
         carousel.appendChild(carouselItem);
-        
-        function showCarousel() {
-    const carousel = document.getElementById('carousel');
-    if (carousel.style.display === 'none' || !carousel.style.display) {
-        updateCarousel();
-        carousel.style.display = 'flex';
-    } else {
-        carousel.style.display = 'none';
-    }
-}
-
     });
 }
     </script>
