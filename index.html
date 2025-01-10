@@ -268,6 +268,65 @@
             background: #cc0000;
         }
 
+        .carousel-container {
+    display: none;
+    position: fixed;
+    bottom: 10%;
+    left: 5%;
+    width: 90%;
+    max-width: 600px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    text-align: center;
+}
+
+.carousel {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding: 10px;
+}
+
+.carousel-item {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 150px;
+    background: #fff;
+    color: #000;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.carousel-item img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.carousel-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #ff0000;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 30px;
+}
+
         @media (max-width: 768px) {
             .top-bar input[type="text"], .bottom-bar input {
                 width: 70%;
@@ -315,6 +374,18 @@
         <input id="dobInput" type="number" placeholder="Year of Birth">
         <button onclick="addBar()">Save to VisionVault</button>
     </div>
+    
+<!-- Carousel Container -->
+<div class="carousel-container" id="carouselContainer">
+    <button class="carousel-close" onclick="toggleCarousel()">×</button>
+    <h3>Top 5 Most Liked Thoughts</h3>
+    <div class="carousel" id="carousel">
+        <!-- Carousel items will be dynamically added -->
+    </div>
+</div>
+
+<!-- Add a button to show the carousel -->
+<button style="position: fixed; bottom: 10px; left: 10px; z-index: 1000; padding: 10px 20px; background: #000; color: #fff; border: none; border-radius: 10px; cursor: pointer;" onclick="toggleCarousel()">Top 5 Thoughts</button>
 
     <script>
         function startCounting() {
@@ -461,6 +532,55 @@
             const lightness = 50 + Math.random() * 20;
             return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
         }
+
+        function toggleCarousel() {
+    const carouselContainer = document.getElementById('carouselContainer');
+    if (carouselContainer.style.display === 'none' || carouselContainer.style.display === '') {
+        updateCarousel();
+        carouselContainer.style.display = 'block';
+    } else {
+        carouselContainer.style.display = 'none';
+    }
+}
+
+function updateCarousel() {
+    const carousel = document.getElementById('carousel');
+    carousel.innerHTML = ''; // Clear existing items
+
+    // Fetch all the thoughts and sort them by likes
+    const bars = Array.from(document.querySelectorAll('.bar'));
+    const topBars = bars
+        .map(bar => {
+            const likeCount = parseInt(bar.querySelector('.like-container span').textContent, 10);
+            const content = bar.querySelector('.bar-content')?.textContent || '';
+            const imgSrc = bar.querySelector('img')?.src || '';
+            return { likeCount, content, imgSrc };
+        })
+        .sort((a, b) => b.likeCount - a.likeCount)
+        .slice(0, 5); // Take top 5
+
+    // Populate carousel with the top 5 items
+    topBars.forEach(item => {
+        const carouselItem = document.createElement('div');
+        carouselItem.className = 'carousel-item';
+
+        if (item.imgSrc) {
+            const img = document.createElement('img');
+            img.src = item.imgSrc;
+            carouselItem.appendChild(img);
+        }
+
+        const text = document.createElement('p');
+        text.textContent = item.content;
+        carouselItem.appendChild(text);
+
+        const likes = document.createElement('p');
+        likes.textContent = `❤️ ${item.likeCount} likes`;
+        carouselItem.appendChild(likes);
+
+        carousel.appendChild(carouselItem);
+    });
+}
     </script>
 </body>
 </html>
