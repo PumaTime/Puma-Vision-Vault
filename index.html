@@ -268,6 +268,31 @@
             background: #cc0000;
         }
 
+        .carousel-button {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #ff0000;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-size: 24px;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.carousel-button:hover {
+    background-color: #cc0000;
+    transform: scale(1.1);
+}
+
         .carousel-container {
     display: none;
     position: fixed;
@@ -385,7 +410,7 @@
 </div>
 
 <!-- Add a button to show the carousel -->
-<button style="position: fixed; bottom: 10px; left: 10px; z-index: 1000; padding: 10px 20px; background: #000; color: #fff; border: none; border-radius: 10px; cursor: pointer;" onclick="toggleCarousel()">Top 5 Thoughts</button>
+<button class="carousel-button" onclick="showCarousel()">❤️</button>
 
     <script>
         function startCounting() {
@@ -533,6 +558,15 @@
             return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
         }
 
+        function showCarousel() {
+    const carousel = document.getElementById('carousel');
+    if (carousel.style.display === 'none' || !carousel.style.display) {
+        updateCarousel();
+        carousel.style.display = 'flex';
+    } else {
+        carousel.style.display = 'none';
+    }
+}
         function toggleCarousel() {
     const carouselContainer = document.getElementById('carouselContainer');
     if (carouselContainer.style.display === 'none' || carouselContainer.style.display === '') {
