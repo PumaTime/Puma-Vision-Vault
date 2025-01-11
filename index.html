@@ -405,14 +405,6 @@
     <button class="carousel-close" onclick="toggleCarousel()">×</button>
     <h3>Top 5 Most Liked Thoughts</h3>
     <div class="carousel" id="carousel">
-        
-                    }).sort((a, b) => b.likeCount - a.likeCount); // Sort by likes in descending order
-
-            // Update the global topThoughts array with the top 5 thoughts
-            topThoughts.length = 0;
-            topThoughts.push(...thoughtsWithLikes.slice(0, 5));
-        }
-
         <!-- Carousel items will be dynamically added -->
     </div>
 </div>
@@ -566,44 +558,14 @@
             return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
         }
 
-              function showCarousel() {
-            const carousel = document.getElementById('carousel');
-            const carouselContent = document.getElementById('carouselContent');
-            if (topThoughts.length === 0) {
-                carouselContent.textContent = "No thoughts to display.";
-            } else {
-                currentIndex = 0; // Reset to the first slide
-                updateCarouselContent();
-            }
-            carousel.style.display = 'flex';
-        }
-
-        function hideCarousel() {
-            const carousel = document.getElementById('carousel');
-            carousel.style.display = 'none';
-        }
-
-        function updateCarouselContent() {
-            const carouselContent = document.getElementById('carouselContent');
-            if (topThoughts[currentIndex]) {
-                const { content, likeCount } = topThoughts[currentIndex];
-                carouselContent.textContent = `"${content}" - ${likeCount} likes`;
-            }
-        }
-
-        function nextSlide() {
-            if (currentIndex < topThoughts.length - 1) {
-                currentIndex++;
-                updateCarouselContent();
-            }
-        }
-
-        function previousSlide() {
-            if (currentIndex > 0) {
-                currentIndex--;
-                updateCarouselContent();
-            }
-        }
+        function showCarousel() {
+    const carousel = document.getElementById('carousel');
+    if (carousel.style.display === 'none' || !carousel.style.display) {
+        updateCarousel();
+        carousel.style.display = 'flex';
+    } else {
+        carousel.style.display = 'none';
+    }
 }
         function toggleCarousel() {
     const carouselContainer = document.getElementById('carouselContainer');
@@ -614,6 +576,10 @@
         carouselContainer.style.display = 'none';
     }
 }
+
+function updateCarousel() {
+    const carousel = document.getElementById('carousel');
+    carousel.innerHTML = ''; // Clear existing items
 
     // Fetch all the thoughts and sort them by likes
     const bars = Array.from(document.querySelectorAll('.bar'));
