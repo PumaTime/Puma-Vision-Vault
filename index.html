@@ -294,29 +294,46 @@
 }
 
         .carousel-container {
-    display: none; /* Initially hidden */
+    display: none;
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    bottom: 10%;
+    left: 5%;
     width: 90%;
     max-width: 600px;
     background: rgba(0, 0, 0, 0.8);
-    color: white;
+    color: #fff;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     z-index: 1000;
     text-align: center;
 }
 
-.carousel-content {
+.carousel {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 10px;
+    overflow-x: auto;
+    gap: 20px;
     padding: 10px;
+}
+
+.carousel-item {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 150px;
+    background: #fff;
+    color: #000;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.carousel-item img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
 }
 
 .carousel-close {
@@ -324,7 +341,7 @@
     top: 10px;
     right: 10px;
     background: #ff0000;
-    color: white;
+    color: #fff;
     border: none;
     border-radius: 50%;
     width: 30px;
@@ -332,8 +349,8 @@
     font-size: 18px;
     cursor: pointer;
     text-align: center;
+    line-height: 30px;
 }
-
 
         @media (max-width: 768px) {
             .top-bar input[type="text"], .bottom-bar input {
@@ -387,12 +404,13 @@
 <div class="carousel-container" id="carouselContainer">
     <button class="carousel-close" onclick="toggleCarousel()">×</button>
     <h3>Top 5 Most Liked Thoughts</h3>
-    <div class="carousel-content" id="carouselContent">No thoughts to display.</div>
+    <div class="carousel" id="carousel">
+        <!-- Carousel items will be dynamically added -->
+    </div>
 </div>
 
-<!-- Heart Button -->
-<button class="carousel-button" onclick="toggleCarousel()">❤️</button>
-
+<!-- Add a button to show the carousel -->
+<button class="carousel-button" onclick="showCarousel()">❤️</button>
 
     <script>
         function startCounting() {
@@ -549,68 +567,54 @@
         carousel.style.display = 'none';
     }
 }
-        let topThoughts = [];
-
-function toggleCarousel() {
-    const carouselContainer = document.getElementById("carouselContainer");
-    if (carouselContainer.style.display === "block") {
-        carouselContainer.style.display = "none";
+        function toggleCarousel() {
+    const carouselContainer = document.getElementById('carouselContainer');
+    if (carouselContainer.style.display === 'none' || carouselContainer.style.display === '') {
+        updateCarousel();
+        carouselContainer.style.display = 'block';
     } else {
-        updateTopThoughts(); // Update carousel before showing
-        carouselContainer.style.display = "block";
+        carouselContainer.style.display = 'none';
     }
 }
 
-function updateTopThoughts() {
-    const bars = Array.from(document.querySelectorAll(".bar"));
-    const thoughtsWithLikes = bars
+function updateCarousel() {
+    const carousel = document.getElementById('carousel');
+    carousel.innerHTML = ''; // Clear existing items
+
+    // Fetch all the thoughts and sort them by likes
+    const bars = Array.from(document.querySelectorAll('.bar'));
+    const topBars = bars
         .map(bar => {
-            const likeCount = parseInt(bar.querySelector(".like-container span").textContent);
-            const content = bar.querySelector(".bar-content").textContent;
-            const imgSrc = bar.querySelector("img")?.src || "";
-            return { content, likeCount, imgSrc };
+            const likeCount = parseInt(bar.querySelector('.like-container span').textContent, 10);
+            const content = bar.querySelector('.bar-content')?.textContent || '';
+            const imgSrc = bar.querySelector('img')?.src || '';
+            return { likeCount, content, imgSrc };
         })
-        .sort((a, b) => b.likeCount - a.likeCount) // Sort by likes, descending
+        .sort((a, b) => b.likeCount - a.likeCount)
         .slice(0, 5); // Take top 5
 
-    topThoughts = thoughtsWithLikes; // Store the top thoughts globally
+    // Populate carousel with the top 5 items
+    topBars.forEach(item => {
+        const carouselItem = document.createElement('div');
+        carouselItem.className = 'carousel-item';
 
-    const carouselContent = document.getElementById("carouselContent");
-    carouselContent.innerHTML = ""; // Clear old content
-
-    if (thoughtsWithLikes.length === 0) {
-        carouselContent.textContent = "No thoughts to display.";
-    } else {
-        thoughtsWithLikes.forEach(thought => {
-            const item = document.createElement("div");
-            item.className = "carousel-item";
-
-            if (thought.imgSrc) {
-                const img = document.createElement("img");
-                img.src = thought.imgSrc;
-                item.appendChild(img);
-            }
-
-            const text = document.createElement("p");
-            text.textContent = thought.content;
-            item.appendChild(text);
-
-            const likes = document.createElement("p");
-            likes.textContent = `❤️ ${thought.likeCount} likes`;
-            item.appendChild(likes);
-
-            carouselContent.appendChild(item);
-        });
-    }
-}
-        function addBar() {
-    // Existing logic for creating a bar...
-    barContainer.appendChild(bar);
-
-    // Update carousel after adding a new bar
-    updateTopThoughts();
-}
+        if (item.imgSrc) {
+            const img = document.createElement('img');
+            img.src = item.imgSrc;
+            carouselItem.appendChild(img);
         }
+
+        const text = document.createElement('p');
+        text.textContent = item.content;
+        carouselItem.appendChild(text);
+
+        const likes = document.createElement('p');
+        likes.textContent = `❤️ ${item.likeCount} likes`;
+        carouselItem.appendChild(likes);
+
+        carousel.appendChild(carouselItem);
+    });
+}
     </script>
 </body>
 </html>
