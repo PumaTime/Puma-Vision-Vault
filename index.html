@@ -268,90 +268,6 @@
             background: #cc0000;
         }
 
-        .carousel-button {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    background-color: #ff0000;
-    color: white;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    font-size: 24px;
-    transition: transform 0.2s, background-color 0.2s;
-}
-
-.carousel-button:hover {
-    background-color: #cc0000;
-    transform: scale(1.1);
-}
-
-        .carousel-container {
-    display: none;
-    position: fixed;
-    bottom: 10%;
-    left: 5%;
-    width: 90%;
-    max-width: 600px;
-    background: rgba(0, 0, 0, 0.8);
-    color: #fff;
-    padding: 20px;
-    border-radius: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    z-index: 1000;
-    text-align: center;
-}
-
-.carousel {
-    display: flex;
-    overflow-x: auto;
-    gap: 20px;
-    padding: 10px;
-}
-
-.carousel-item {
-    flex: 0 0 auto;
-    width: 100%;
-    max-width: 150px;
-    background: #fff;
-    color: #000;
-    border-radius: 10px;
-    padding: 10px;
-    text-align: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-.carousel-item img {
-    width: 100%;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 10px;
-}
-
-.carousel-close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: #ff0000;
-    color: #fff;
-    border: none;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    font-size: 18px;
-    cursor: pointer;
-    text-align: center;
-    line-height: 30px;
-}
-
         @media (max-width: 768px) {
             .top-bar input[type="text"], .bottom-bar input {
                 width: 70%;
@@ -397,52 +313,37 @@
 
     <div class="bottom-bar">
         <input id="dobInput" type="number" placeholder="Year of Birth">
-        <button onclick="addBar()">Save to PumaPortal</button>
+        <button onclick="addBar()">Save to VisionVault</button>
     </div>
-    
-<!-- Carousel Container -->
-<div class="carousel-container" id="carouselContainer">
-    <button class="carousel-button" onclick="showCarousel()">❤️</button>
-    <h3>Top 5 Most Liked Thoughts</h3>
-    <div class="carousel" id="carousel">
-        <!-- Carousel items will be dynamically added -->
-    </div>
-</div>
+
     <script>
         function startCounting() {
             const counter = document.getElementById('counter');
             const openingScreen = document.getElementById('openingScreen');
             let currentNumber = 1948;
             const endNumber = 2040;
-            
-    // Show 1948 for 3 seconds before starting the count
-    setTimeout(() => {
+
             const interval = setInterval(() => {
                 counter.textContent = currentNumber;
 
                 if (currentNumber === endNumber) {
                     clearInterval(interval);
-                    flashLogo();
+                    flashText();
                 } else {
                     currentNumber++;
                 }
             }, 50);
-         }, 3000); // 3 seconds delay
         }
 
-        function flashLogo() {
+        function flashText() {
             const counter = document.getElementById('counter');
             const openingScreen = document.getElementById('openingScreen');
             let toggle = true;
 
             const flashInterval = setInterval(() => {
-            if (toggle) {
-                counter.innerHTML = '<img src="Screenshot 2025-01-07 at 16.47.43.png" alt="PUMA Logo" style="width: 500px; height: auto;">';
-            } else {
-                counter.textContent = "2040";
-            }
-            toggle = !toggle;
-        }, 1000);
+                counter.textContent = toggle ? "PUMA'S VISION VAULT" : "2040";
+                toggle = !toggle;
+            }, 1000);
 
             setTimeout(() => {
                 clearInterval(flashInterval);
@@ -553,64 +454,6 @@
             const lightness = 50 + Math.random() * 20;
             return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
         }
-
-        function showCarousel() {
-    const carousel = document.getElementById('carousel');
-    if (carousel.style.display === 'none' || !carousel.style.display) {
-        updateCarousel();
-        carousel.style.display = 'flex';
-    } else {
-        carousel.style.display = 'none';
-    }
-}
-        function toggleCarousel() {
-    const carouselContainer = document.getElementById('carouselContainer');
-    if (carouselContainer.style.display === 'none' || carouselContainer.style.display === '') {
-        updateCarousel();
-        carouselContainer.style.display = 'block';
-    } else {
-        carouselContainer.style.display = 'none';
-    }
-}
-
-function updateCarousel() {
-    const carousel = document.getElementById('carousel');
-    carousel.innerHTML = ''; // Clear existing items
-
-    // Fetch all the thoughts and sort them by likes
-    const bars = Array.from(document.querySelectorAll('.bar'));
-    const topBars = bars
-        .map(bar => {
-            const likeCount = parseInt(bar.querySelector('.like-container span').textContent, 10);
-            const content = bar.querySelector('.bar-content')?.textContent || '';
-            const imgSrc = bar.querySelector('img')?.src || '';
-            return { likeCount, content, imgSrc };
-        })
-        .sort((a, b) => b.likeCount - a.likeCount)
-        .slice(0, 5); // Take top 5
-
-    // Populate carousel with the top 5 items
-    topBars.forEach(item => {
-        const carouselItem = document.createElement('div');
-        carouselItem.className = 'carousel-item';
-
-        if (item.imgSrc) {
-            const img = document.createElement('img');
-            img.src = item.imgSrc;
-            carouselItem.appendChild(img);
-        }
-
-        const text = document.createElement('p');
-        text.textContent = item.content;
-        carouselItem.appendChild(text);
-
-        const likes = document.createElement('p');
-        likes.textContent = `❤️ ${item.likeCount} likes`;
-        carouselItem.appendChild(likes);
-
-        carousel.appendChild(carouselItem);
-    });
-}
     </script>
 </body>
 </html>
