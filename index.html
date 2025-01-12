@@ -397,21 +397,17 @@
 
     <div class="bottom-bar">
         <input id="dobInput" type="number" placeholder="Year of Birth">
-        <button onclick="addBar()">Save to VisionVault</button>
+        <button onclick="addBar()">Save to PumaPortal</button>
     </div>
     
 <!-- Carousel Container -->
 <div class="carousel-container" id="carouselContainer">
-    <button class="carousel-close" onclick="toggleCarousel()">×</button>
+    <button class="carousel-button" onclick="showCarousel()">❤️</button>
     <h3>Top 5 Most Liked Thoughts</h3>
     <div class="carousel" id="carousel">
         <!-- Carousel items will be dynamically added -->
     </div>
 </div>
-
-<!-- Add a button to show the carousel -->
-<button class="carousel-button" onclick="showCarousel()">❤️</button>
-
     <script>
         function startCounting() {
             const counter = document.getElementById('counter');
