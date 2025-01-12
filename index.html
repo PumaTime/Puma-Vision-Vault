@@ -309,17 +309,16 @@
     text-align: center;
 }
 
-.carousel-content {
+.carousel {
     display: flex;
-    flex-direction: row; /* Arrange items horizontally */
+    overflow-x: auto;
     gap: 20px;
-    overflow-x: auto; /* Enable horizontal scrolling */
     padding: 10px;
 }
 
 .carousel-item {
     flex: 0 0 auto;
-    width: 150px; /* Adjust width for carousel items */
+    width: 100%;
     max-width: 150px;
     background: #fff;
     color: #000;
@@ -327,7 +326,6 @@
     padding: 10px;
     text-align: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    cursor: pointer; /* Make it clear that these items are clickable */
 }
 
 .carousel-item img {
@@ -337,50 +335,7 @@
     border-radius: 10px;
     margin-bottom: 10px;
 }
-        
-.carousel-item:hover {
-    transform: scale(1.1); /* Highlight item on hover */
-    transition: transform 0.3s;
-}
-        #thoughtPopup {
-    display: none; /* Initially hidden */
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 80%;
-    max-width: 500px;
-    background: rgba(0, 0, 0, 0.9);
-    color: white;
-    padding: 20px;
-    border-radius: 10px;
-    z-index: 2000;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    text-align: center;
-}
 
-#thoughtPopup img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 10px;
-    margin-bottom: 10px;
-}
-
-#thoughtPopup .close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: #ff0000;
-    color: #fff;
-    border: none;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    font-size: 18px;
-    cursor: pointer;
-    line-height: 30px;
-}
-        
 .carousel-close {
     position: absolute;
     top: 10px;
@@ -455,14 +410,6 @@
 
 <!-- Add a button to show the carousel -->
 <button class="carousel-button" onclick="showCarousel()">❤️</button>
-</div>
-
-    <div id="thoughtPopup">
-    <button class="close-button" onclick="closeThoughtPopup()">×</button>
-    <div id="thoughtPopupContent">
-        <!-- Content dynamically added here -->
-    </div>
-</div>
 
     <script>
         function startCounting() {
@@ -619,7 +566,6 @@
         carouselContainer.style.display = 'none';
     }
 }
-<script>
 function updateCarousel() {
     const carouselContent = document.getElementById('carouselContent');
     carouselContent.innerHTML = ''; // Clear existing items
@@ -655,38 +601,8 @@ function updateCarousel() {
         likes.textContent = `❤️ ${item.likeCount} likes`;
         carouselItem.appendChild(likes);
 
-        // Add click event to open popup
-        carouselItem.addEventListener('click', () => openThoughtPopup(item));
-
         carouselContent.appendChild(carouselItem);
     });
-}
-
-function openThoughtPopup(item) {
-    const popup = document.getElementById('thoughtPopup');
-    const popupContent = document.getElementById('thoughtPopupContent');
-    popupContent.innerHTML = ''; // Clear previous content
-
-    if (item.imgSrc) {
-        const img = document.createElement('img');
-        img.src = item.imgSrc;
-        popupContent.appendChild(img);
-    }
-
-    const text = document.createElement('p');
-    text.textContent = item.content;
-    popupContent.appendChild(text);
-
-    const likes = document.createElement('p');
-    likes.textContent = `❤️ ${item.likeCount} likes`;
-    popupContent.appendChild(likes);
-
-    popup.style.display = 'block';
-}
-
-function closeThoughtPopup() {
-    const popup = document.getElementById('thoughtPopup');
-    popup.style.display = 'none';
 }
     </script>
 </body>
