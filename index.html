@@ -465,26 +465,26 @@
 </div>
 
     <script>
-       function startCounting() {
-    const counter = document.getElementById('counter');
-    const openingScreen = document.getElementById('openingScreen');
-    let currentNumber = 1948;
-    const endNumber = 2040;
-
+        function startCounting() {
+            const counter = document.getElementById('counter');
+            const openingScreen = document.getElementById('openingScreen');
+            let currentNumber = 1948;
+            const endNumber = 2040;
+            
     // Show 1948 for 3 seconds before starting the count
     setTimeout(() => {
-        const interval = setInterval(() => {
-            counter.textContent = currentNumber;
+            const interval = setInterval(() => {
+                counter.textContent = currentNumber;
 
-            if (currentNumber === endNumber) {
-                clearInterval(interval);
-                setTimeout(() => flashLogo(), 500); // Slight delay to start flashLogo
-            } else {
-                currentNumber++;
-            }
-        }, 50);
-    }, 3000); // 3 seconds delay
-}
+                if (currentNumber === endNumber) {
+                    clearInterval(interval);
+                    flashLogo();
+                } else {
+                    currentNumber++;
+                }
+            }, 50);
+         }, 3000); // 3 seconds delay
+        }
 
         function flashLogo() {
             const counter = document.getElementById('counter');
