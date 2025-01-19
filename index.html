@@ -318,7 +318,7 @@
 
 .carousel-item {
     flex: 0 0 auto;
-    width: 100%;
+    width: 150px;
     max-width: 150px;
     background: #fff;
     color: #000;
@@ -326,6 +326,20 @@
     padding: 10px;
     text-align: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column; /* Stack content vertically */
+    align-items: center; /* Center align items horizontally */
+    gap: 10px; /* Space between items */
+}
+        .carousel-item p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px; /* Add space between heart and text */
+    margin: 0;
+    font-size: 16px; /* Adjust font size for better readability */
+    color: #000; /* Set text color */
 }
 
 .carousel-item img {
@@ -334,6 +348,11 @@
     object-fit: cover;
     border-radius: 10px;
     margin-bottom: 10px;
+}
+
+.carousel-item:hover {
+    transform: scale(1.05); /* Slightly enlarge item on hover */
+    transition: transform 0.3s;
 }
 
 .carousel-close {
@@ -406,7 +425,6 @@
     <h3>Top 5 Most Liked Thoughts</h3>
     <div class="carousel-content" id="carouselContent">No thoughts to display.</div>
 </div>
-
 
 <!-- Add a button to show the carousel -->
 <button class="carousel-button" onclick="showCarousel()">❤️</button>
@@ -583,7 +601,7 @@ function updateCarousel() {
         .slice(0, 5); // Take top 5
 
     // Populate carousel with the top 5 items
-    topBars.forEach(item => {
+   topBars.forEach(item => {
         const carouselItem = document.createElement('div');
         carouselItem.className = 'carousel-item';
 
@@ -598,12 +616,14 @@ function updateCarousel() {
         carouselItem.appendChild(text);
 
         const likes = document.createElement('p');
-        likes.textContent = `❤️ ${item.likeCount} likes`;
+        likes.innerHTML = `❤️ ${item.likeCount} likes`;
         carouselItem.appendChild(likes);
+
+        // Add click event to open popup
+        carouselItem.addEventListener('click', () => openThoughtPopup(item));
 
         carouselContent.appendChild(carouselItem);
     });
 }
-    </script>
 </body>
 </html>
