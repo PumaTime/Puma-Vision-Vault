@@ -318,14 +318,17 @@
 
 .carousel-item {
     flex: 0 0 auto;
-    width: 100%;
-    max-width: 150px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
     background: #fff;
     color: #000;
     border-radius: 10px;
     padding: 10px;
-    text-align: center;
+    text-align: left;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
 }
 
 .carousel-item img {
@@ -583,26 +586,40 @@ function updateCarousel() {
         .slice(0, 5); // Take top 5
 
     // Populate carousel with the top 5 items
-    topBars.forEach(item => {
-        const carouselItem = document.createElement('div');
-        carouselItem.className = 'carousel-item';
+topBars.forEach(item => {
+    const carouselItem = document.createElement('div');
+    carouselItem.className = 'carousel-item';
+
+     // Container for horizontal layout
+    const contentContainer = document.createElement('div');
+    contentContainer.style.display = 'flex';
+    contentContainer.style.flexDirection = 'row';
+    contentContainer.style.alignItems = 'center';
+    contentContainer.style.gap = '10px';
 
         if (item.imgSrc) {
-            const img = document.createElement('img');
-            img.src = item.imgSrc;
-            carouselItem.appendChild(img);
-        }
+        const img = document.createElement('img');
+        img.src = item.imgSrc;
+        img.style.width = '50px'; // Adjust image size as needed
+        img.style.height = '50px';
+        img.style.borderRadius = '5px';
+        contentContainer.appendChild(img);
+    }
 
-        const text = document.createElement('p');
-        text.textContent = item.content;
-        carouselItem.appendChild(text);
+       const text = document.createElement('p');
+    text.textContent = item.content;
+    text.style.margin = '0';
+    contentContainer.appendChild(text);
 
-        const likes = document.createElement('p');
-        likes.textContent = `❤️ ${item.likeCount} likes`;
-        carouselItem.appendChild(likes);
+        const likes = document.createElement('span');
+    likes.innerHTML = `❤️ ${item.likeCount}`;
+    likes.style.margin = '0';
+    likes.style.fontWeight = 'bold';
+    contentContainer.appendChild(likes);
 
-        carouselContent.appendChild(carouselItem);
-    });
+        carouselItem.appendChild(contentContainer);
+    carouselContent.appendChild(carouselItem);
+});
 }
     </script>
 </body>
