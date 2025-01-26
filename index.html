@@ -532,7 +532,7 @@
     let currentNumber = 1948;
     const endNumber = 2040;
 
-    // Show 1948 for 3 seconds before starting the count
+   // Show 1948 for 3 seconds before starting the count
     setTimeout(() => {
         startFlashingImages();
 
@@ -563,7 +563,7 @@ function flashLogo() {
         toggle = !toggle;
     }, 1000);
 
-    setTimeout(() => {
+   setTimeout(() => {
         clearInterval(flashInterval);
         counter.textContent = "2040";
         openingScreen.classList.add("fade-out");
@@ -583,7 +583,7 @@ function startFlashingImages() {
         image.style.top = `${y}px`;
     }
 
-    images.forEach(image => {
+    images.forEach((image, index) => {
         function flashImage() {
             moveImageRandomly(image);
             image.style.display = 'block'; // Show image
@@ -592,13 +592,14 @@ function startFlashingImages() {
                 setTimeout(flashImage, 3000); // Move image again after another 3 seconds
             }, 3000);
         }
-        flashImage();
+        setTimeout(flashImage, index * 1000); // Stagger start times based on index
     });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     startCounting();  // Correctly call startCounting function
 });
+        
 function addBar() {
     const thoughtInput = document.getElementById('thoughtInput');
     const tagsInput = document.getElementById('tagsInput');
