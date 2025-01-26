@@ -257,7 +257,8 @@
     margin: 10px;
     box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
 }
-
+        
+.bottom-bar select,
 .bottom-bar input,
 .bottom-bar button {
     padding: 10px;
@@ -492,6 +493,20 @@
 
     <div class="bottom-bar">
     <input id="countryInput" type="text" placeholder="Country">
+        <select id="countrySelect">
+        <option value="" disabled selected>Select Country</option>
+        <option value="USA">United States</option>
+        <option value="CAN">Canada</option>
+        <option value="GBR">United Kingdom</option>
+        <option value="AUS">Australia</option>
+        <option value="DEU">Germany</option>
+        <option value="FRA">France</option>
+        <option value="ITA">Italy</option>
+        <option value="JPN">Japan</option>
+        <option value="CHN">China</option>
+        <option value="IND">India</option>
+        <!-- Add more countries as needed -->
+    </select>
     <input id="dobInput" type="number" placeholder="Year of Birth">
     <button onclick="addBar()">Save to VisionVault</button>
 </div>
@@ -598,7 +613,7 @@ function addBar() {
     const tagsInput = document.getElementById('tagsInput');
     const imageUpload = document.getElementById('imageUpload');
     const dobInput = document.getElementById('dobInput');
-    const countryInput = document.getElementById('countryInput');
+    const countrySelect = document.getElementById('countrySelect'); // Updated to use dropdown
 
     if (thoughtInput.value.trim() === '' && !imageUpload.files[0]) {
         alert('Please enter your thoughts or upload an image.');
@@ -674,10 +689,10 @@ function addBar() {
         tagsDiv.appendChild(dobTag);
     }
 
-    if (countryInput.value.trim() !== '') {
+    if (countrySelect.value !== '') { // Update to use the selected option from the dropdown
         const countryTag = document.createElement('span');
         countryTag.className = 'tag';
-        countryTag.textContent = `#${countryInput.value}`;
+        countryTag.textContent = `#${countrySelect.options[countrySelect.selectedIndex].text}`;
         tagsDiv.appendChild(countryTag);
     }
 
@@ -691,7 +706,7 @@ function addBar() {
     tagsInput.value = '';
     imageUpload.value = '';
     dobInput.value = '';
-    countryInput.value = '';
+    countrySelect.selectedIndex = 0; // Reset the dropdown
 }
         function getRandomColor() {
             const hue = Math.random() * 360;
