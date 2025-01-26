@@ -89,7 +89,6 @@
     height: 100px;
     display: none; /* Initially hidden */
 }
-
         .top-bar {
             display: flex;
             justify-content: center;
@@ -535,6 +534,8 @@
 
     // Show 1948 for 3 seconds before starting the count
     setTimeout(() => {
+        startFlashingImages();
+
         const interval = setInterval(() => {
             counter.textContent = currentNumber;
 
@@ -548,7 +549,7 @@
     }, 3000); // 3 seconds delay
 }
 
-        function flashLogo() {
+function flashLogo() {
     const counter = document.getElementById('counter');
     const openingScreen = document.getElementById('openingScreen');
     let toggle = true;
@@ -571,7 +572,8 @@
         }, 1000);
     }, 5000);
 }
-        function startFlashingImages() {
+
+function startFlashingImages() {
     const images = document.querySelectorAll('.flashing-image');
 
     function moveImageRandomly(image) {
