@@ -525,6 +525,10 @@
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    position: static; /* Ensure they are static within the grid */
+    width: auto; /* Adjust width to fit grid */
+    left: auto;
+    top: auto;
 }
 
         @media (max-width: 768px) {
@@ -940,7 +944,7 @@ function organizeBy(criteria) {
     let sortedBars;
 
     if (criteria === 'dob') {
-        sortedBars = bars.sort((a, b) => getTagValue(a, 'dob') - getTagValue(b, 'dob'));
+        sortedBars = bars.sort((a, b) => parseInt(getTagValue(a, 'dob')) - parseInt(getTagValue(b, 'dob')));
     } else if (criteria === 'country') {
         sortedBars = bars.sort((a, b) => getTagValue(a, 'country').localeCompare(getTagValue(b, 'country')));
     } else if (criteria === 'tags') {
@@ -949,6 +953,10 @@ function organizeBy(criteria) {
 
     sortedBars.forEach(bar => {
         const barClone = bar.cloneNode(true);
+        barClone.style.position = 'static'; // Ensure they are static within the grid
+        barClone.style.width = 'auto'; // Adjust width to fit grid
+        barClone.style.left = 'auto';
+        barClone.style.top = 'auto';
         organizedThoughtsGrid.appendChild(barClone);
     });
 }
@@ -963,14 +971,15 @@ function getTagValue(bar, criteria) {
             value = tagText;
         } else if (criteria === 'country' && isNaN(tagText)) {
             value = tagText;
-        } else if (criteria === 'tags') {
+        } else if (criteria === 'tags' && tagText) {
             value = tagText;
         }
     });
 
     return value;
 }
-        // Example usage to initialize the event listeners
+
+// Example usage to initialize the event listeners
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('.organize-button').addEventListener('click', showOrganizedThoughts);
     document.querySelector('.organize-close').addEventListener('click', closeOrganizedThoughts);
