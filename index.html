@@ -28,7 +28,7 @@
             height: 100vh;
         }
 
-       /* Opening Screen Styles */
+      /* Opening Screen Styles */
 .opening-screen {
     position: fixed;
     top: 0;
@@ -87,25 +87,7 @@
     position: absolute;
     width: 100px; /* Adjust size as needed */
     height: 100px;
-    animation: flash 1s infinite alternate, move 10s infinite;
-}
-
-@keyframes flash {
-    0% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-    }
-}
-
-@keyframes move {
-    0% {
-        transform: translate(0, 0);
-    }
-    100% {
-        transform: translate(calc(100vw - 100px), calc(100vh - 100px));
-    }
+    display: none; /* Initially hidden */
 }
 
         .top-bar {
@@ -595,19 +577,26 @@
     function moveImageRandomly(image) {
         const x = Math.random() * (window.innerWidth - 100); // Adjust for image size
         const y = Math.random() * (window.innerHeight - 100); // Adjust for image size
-        image.style.transform = `translate(${x}px, ${y}px)`;
+        image.style.left = `${x}px`;
+        image.style.top = `${y}px`;
     }
 
     images.forEach(image => {
-        moveImageRandomly(image);
-        setInterval(() => moveImageRandomly(image), 1000); // Move every second
+        function flashImage() {
+            moveImageRandomly(image);
+            image.style.display = 'block'; // Show image
+            setTimeout(() => {
+                image.style.display = 'none'; // Hide image after 3 seconds
+                setTimeout(flashImage, 3000); // Move image again after another 3 seconds
+            }, 3000);
+        }
+        flashImage();
     });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     startCounting();  // Correctly call startCounting function
 });
-
 function addBar() {
     const thoughtInput = document.getElementById('thoughtInput');
     const tagsInput = document.getElementById('tagsInput');
