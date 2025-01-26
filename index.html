@@ -436,7 +436,7 @@
     text-align: center;
     line-height: 30px;
 }
-        .organize-button {
+    .organize-button {
     position: fixed;
     bottom: 20px;
     right: 20px;
@@ -624,7 +624,7 @@
     </div>
     <div class="organized-thoughts-grid" id="organizedThoughtsGrid"></div>
 </div>
-
+    
     <script>
         function startCounting() {
     const counter = document.getElementById('counter');
@@ -963,7 +963,7 @@ function getTagValue(bar, criteria) {
             value = tagText;
         } else if (criteria === 'country' && isNaN(tagText)) {
             value = tagText;
-        } else if (criteria === 'tags' && !isNaN(tagText)) {
+        } else if (criteria === 'tags') {
             value = tagText;
         }
     });
