@@ -505,7 +505,7 @@
     const openingScreen = document.getElementById('openingScreen');
     let currentNumber = 1948;
     const endNumber = 2040;
-    
+
     // Show 1948 for 3 seconds before starting the count
     setTimeout(() => {
         const interval = setInterval(() => {
@@ -522,104 +522,103 @@
 }
 
         function flashLogo() {
-            const counter = document.getElementById('counter');
-            const openingScreen = document.getElementById('openingScreen');
-            let toggle = true;
+    const counter = document.getElementById('counter');
+    const openingScreen = document.getElementById('openingScreen');
+    let toggle = true;
 
-            const flashInterval = setInterval(() => {
-            if (toggle) {
-                counter.innerHTML = '<img src="Screenshot 2025-01-07 at 16.47.43.png" alt="PUMA Logo" style="width: 500px; height: auto;">';
-            } else {
-                counter.textContent = "2040";
-            }
-            toggle = !toggle;
-        }, 1000);
-
-            setTimeout(() => {
-                clearInterval(flashInterval);
-                counter.textContent = "2040";
-                openingScreen.classList.add("fade-out");
-                setTimeout(() => {
-                    openingScreen.style.display = "none";
-                }, 1000);
-            }, 5000);
+    const flashInterval = setInterval(() => {
+        if (toggle) {
+            counter.innerHTML = '<img src="Screenshot 2025-01-07 at 16.47.43.png" alt="PUMA Logo" style="width: 500px; height: auto;">';
+        } else {
+            counter.textContent = "2040";
         }
+        toggle = !toggle;
+    }, 1000);
 
-        startCounting();
+    setTimeout(() => {
+        clearInterval(flashInterval);
+        counter.textContent = "2040";
+        openingScreen.classList.add("fade-out");
+        setTimeout(() => {
+            openingScreen.style.display = "none";
+        }, 1000);
+    }, 5000);
+}
 
-        function addBar() {
-            const thoughtInput = document.getElementById('thoughtInput');
-            const tagsInput = document.getElementById('tagsInput');
-            const imageUpload = document.getElementById('imageUpload');
-            const dobInput = document.getElementById('dobInput');
+        startCounting();  // Correctly call startCounting function
 
-            if (thoughtInput.value.trim() === '' && !imageUpload.files[0]) {
-                alert('Please enter your thoughts or upload an image.');
-                return;
-            }
+function addBar() {
+    const thoughtInput = document.getElementById('thoughtInput');
+    const tagsInput = document.getElementById('tagsInput');
+    const imageUpload = document.getElementById('imageUpload');
+    const dobInput = document.getElementById('dobInput');
 
-            const barContainer = document.getElementById('barContainer');
+    if (thoughtInput.value.trim() === '' && !imageUpload.files[0]) {
+        alert('Please enter your thoughts or upload an image.');
+        return;
+    }
 
-            const bar = document.createElement('div');
-            bar.className = 'bar';
-            bar.style.background = getRandomColor();
-            bar.style.top = `${Math.random() * 80}%`;
-            bar.style.left = `${Math.random() * 80}%`;
+    const barContainer = document.getElementById('barContainer');
 
-            if (imageUpload.files[0]) {
-                const img = document.createElement('img');
-                img.src = URL.createObjectURL(imageUpload.files[0]);
-                bar.appendChild(img);
-            }
+    const bar = document.createElement('div');
+    bar.className = 'bar';
+    bar.style.background = getRandomColor();
+    bar.style.top = `${Math.random() * 80}%`;
+    bar.style.left = `${Math.random() * 80}%`;
 
-            const timestampLikeContainer = document.createElement('div');
-            timestampLikeContainer.className = 'timestamp-like';
+    if (imageUpload.files[0]) {
+        const img = document.createElement('img');
+        img.src = URL.createObjectURL(imageUpload.files[0]);
+        bar.appendChild(img);
+    }
 
-            const timestampDiv = document.createElement('div');
-            const timestamp = new Date();
-            const formattedTimestamp = timestamp
-                .toISOString()
-                .slice(2, 10)
-                .replace(/-/g, '') +
-                timestamp.toTimeString().slice(0, 5).replace(/:/g, '');
-            timestampDiv.className = 'timestamp';
-            timestampDiv.textContent = formattedTimestamp;
+    const timestampLikeContainer = document.createElement('div');
+    timestampLikeContainer.className = 'timestamp-like';
 
-            const likeContainer = document.createElement('div');
-            likeContainer.className = 'like-container';
+    const timestampDiv = document.createElement('div');
+    const timestamp = new Date();
+    const formattedTimestamp = timestamp
+        .toISOString()
+        .slice(2, 10)
+        .replace(/-/g, '') +
+        timestamp.toTimeString().slice(0, 5).replace(/:/g, '');
+    timestampDiv.className = 'timestamp';
+    timestampDiv.textContent = formattedTimestamp;
 
-            const likeIcon = document.createElement('div');
-            likeIcon.className = 'like-icon';
+    const likeContainer = document.createElement('div');
+    likeContainer.className = 'like-container';
 
-            const likeCount = document.createElement('span');
-            likeCount.textContent = '0';
+    const likeIcon = document.createElement('div');
+    likeIcon.className = 'like-icon';
 
-            likeContainer.appendChild(likeIcon);
-            likeContainer.appendChild(likeCount);
+    const likeCount = document.createElement('span');
+    likeCount.textContent = '0';
 
-            likeContainer.addEventListener('click', () => {
-                likeCount.textContent = parseInt(likeCount.textContent) + 1;
-            });
+    likeContainer.appendChild(likeIcon);
+    likeContainer.appendChild(likeCount);
 
-            timestampLikeContainer.appendChild(timestampDiv);
-            timestampLikeContainer.appendChild(likeContainer);
+    likeContainer.addEventListener('click', () => {
+        likeCount.textContent = parseInt(likeCount.textContent) + 1;
+    });
 
-            const thoughtContent = document.createElement('div');
-            thoughtContent.className = 'bar-content';
-            thoughtContent.textContent = thoughtInput.value;
+    timestampLikeContainer.appendChild(timestampDiv);
+    timestampLikeContainer.appendChild(likeContainer);
 
-            const tagsDiv = document.createElement('div');
-            tagsDiv.className = 'tags-container';
-            const tags = tagsInput.value.split(',').map(tag => tag.trim());
-            tags.forEach(tag => {
-                if (tag) {
-                    const tagElement = document.createElement('span');
-                    tagElement.className = 'tag';
-                    tagElement.textContent = `#${tag}`;
-                    tagsDiv.appendChild(tagElement);
-                }
-            });
+    const thoughtContent = document.createElement('div');
+    thoughtContent.className = 'bar-content';
+    thoughtContent.textContent = thoughtInput.value;
 
+    const tagsDiv = document.createElement('div');
+    tagsDiv.className = 'tags-container';
+    const tags = tagsInput.value.split(',').map(tag => tag.trim());
+    tags.forEach(tag => {
+        if (tag) {
+            const tagElement = document.createElement('span');
+            tagElement.className = 'tag';
+            tagElement.textContent = `#${tag}`;
+            tagsDiv.appendChild(tagElement);
+        }
+    });
             if (dobInput.value.trim() !== '') {
                 const dobTag = document.createElement('span');
                 dobTag.className = 'tag';
@@ -705,14 +704,14 @@ function updateCarousel() {
 
         carouselItem.appendChild(contentContainer);
         carouselContent.appendChild(carouselItem);
-    
-        // Add click event to open full thought
-        carouselItem.addEventListener('click', () => {
-            displayFullThought(item.content, item.imgSrc);
         });
     });
 }
-
+        
+ // Add click event to open full thought
+        carouselItem.addEventListener('click', () => {
+            displayFullThought(item.content, item.imgSrc);
+            
 function displayFullThought(content, imgSrc) {
     const modal = document.createElement('div');
     modal.className = 'modal';
