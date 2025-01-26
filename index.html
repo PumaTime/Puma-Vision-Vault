@@ -28,7 +28,7 @@
             height: 100vh;
         }
 
-      /* Opening Screen Styles */
+/* Opening Screen Styles */
 .opening-screen {
     position: fixed;
     top: 0;
@@ -249,7 +249,7 @@
 
         .bottom-bar {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
     background: #000;
     padding: 20px;
@@ -264,9 +264,9 @@
     border: 2px solid #000;
     border-radius: 50px;
     font-size: 16px;
-    width: calc(33.33% - 20px); /* Ensure equal width and spacing */
+    width: 30%; /* Ensure equal width and spacing */
     text-align: center;
-    margin: 0 10px; /* Add margin to space out elements */
+    margin: 0 5px; /* Add margin to space out elements */
 }
 
 .bottom-bar button {
@@ -310,31 +310,6 @@
 
 .carousel-button:hover,
 .extra-button:hover {
-    background-color: #cc0000;
-    transform: scale(1.1);
-}
-        
-        .carousel-button {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    background-color: #ff0000;
-    color: white;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    font-size: 24px;
-    transition: transform 0.2s, background-color 0.2s;
-}
-
-    .carousel-button:hover {
     background-color: #cc0000;
     transform: scale(1.1);
 }
@@ -420,31 +395,6 @@
     cursor: pointer;
     text-align: center;
     line-height: 30px;
-}
-    /* Add this CSS to style the new circular button */
-.extra-button {
-    position: fixed;
-    bottom: 20px;
-    left: 100px; /* Adjust this value if needed to position correctly */
-    background-color: #ff0000;
-    color: white;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    font-size: 24px;
-    transition: transform 0.2s, background-color 0.2s;
-}
-
-.extra-button:hover {
-    background-color: #cc0000;
-    transform: scale(1.1);
 }
         /* Modal styles */
 .modal {
