@@ -690,12 +690,15 @@ function updateCarousel() {
             img.style.borderRadius = '5px';
             contentContainer.appendChild(img);
         }
-
+        
+        // Truncate content to a few words
+        const truncatedContent = item.content.split(' ').slice(0, 5).join(' ') + '...';
         const text = document.createElement('p');
-        text.textContent = item.content;
+        text.textContent = truncatedContent;
         text.style.margin = '0';
         contentContainer.appendChild(text);
 
+        // Add like count
         const likes = document.createElement('span');
         likes.innerHTML = `❤️ ${item.likeCount}`;
         likes.style.margin = '0';
@@ -705,10 +708,10 @@ function updateCarousel() {
         carouselItem.appendChild(contentContainer);
         carouselContent.appendChild(carouselItem);
 
-         // Add click event to open full thought
-    carouselItem.addEventListener('click', () => {
-        displayFullThought(item.content, item.imgSrc);
-      });
+        // Add click event to open full thought
+        carouselItem.addEventListener('click', () => {
+            displayFullThought(item.content, item.imgSrc);
+        });
     });
 }
                                   
