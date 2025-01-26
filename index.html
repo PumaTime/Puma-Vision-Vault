@@ -28,51 +28,85 @@
             height: 100vh;
         }
 
-        /* Opening Screen Styles */
-        .opening-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            color: #fff;
-        }
+       /* Opening Screen Styles */
+.opening-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    color: #fff;
+}
 
-        .opening-screen .counter {
-            font-family: 'DigitalFont', sans-serif;
-            text-align: center;
-            font-size: 6rem;
-            font-weight: bold;
-        }
+.opening-screen .counter {
+    font-family: 'DigitalFont', sans-serif;
+    text-align: center;
+    font-size: 6rem;
+    font-weight: bold;
+}
 
-        .opening-screen.flashing {
-            animation: flashText 1s ease-in-out infinite alternate;
-        }
+.opening-screen.flashing {
+    animation: flashText 1s ease-in-out infinite alternate;
+}
 
-        @keyframes flashText {
-            0% {
-                color: #ff0000;
-            }
-            100% {
-                color: #00ff00;
-            }
-        }
+@keyframes flashText {
+    0% {
+        color: #ff0000;
+    }
+    100% {
+        color: #00ff00;
+    }
+}
 
-        .fade-out {
-            animation: fadeOut 1s ease-in-out forwards;
-        }
+.fade-out {
+    animation: fadeOut 1s ease-in-out forwards;
+}
 
-        @keyframes fadeOut {
-            to {
-                opacity: 0;
-                visibility: hidden;
-            }
-        }
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+.flashing-images {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none; /* Make sure images don't interfere with other elements */
+}
+
+.flashing-image {
+    position: absolute;
+    width: 100px; /* Adjust size as needed */
+    height: 100px;
+    animation: flash 1s infinite alternate, move 10s infinite;
+}
+
+@keyframes flash {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes move {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(calc(100vw - 100px), calc(100vh - 100px));
+    }
+}
 
         .top-bar {
             display: flex;
@@ -470,10 +504,21 @@
 </head>
 <body>
     <!-- Opening Screen -->
-    <div class="opening-screen" id="openingScreen">
-        <div class="counter" id="counter">1948</div>
+    <div id="openingScreen" class="opening-screen">
+    <div id="counter" class="counter">1948</div>
+    <div class="flashing-images">
+        <img src="image1.png" alt="Flashing Image" class="flashing-image">
+        <img src="image2.png" alt="Flashing Image" class="flashing-image">
+        <img src="image3.png" alt="Flashing Image" class="flashing-image">
+        <img src="image4.png" alt="Flashing Image" class="flashing-image">
+        <img src="image5.png" alt="Flashing Image" class="flashing-image">
+        <img src="image6.png" alt="Flashing Image" class="flashing-image">
+        <img src="image7.png" alt="Flashing Image" class="flashing-image">
+        <img src="image8.png" alt="Flashing Image" class="flashing-image">
+        <img src="image9.png" alt="Flashing Image" class="flashing-image">
+        <img src="image10.png" alt="Flashing Image" class="flashing-image">
     </div>
-
+</div>
     <div class="top-bar">
         <input id="thoughtInput" type="text" placeholder="Enter your thoughts about the future in 2040">
         <input id="tagsInput" type="text" placeholder="Add Tags: Zero-Waste Design, Well-Being, Gender Equity, Climate" style="font-style: italic;">
@@ -544,8 +589,24 @@
         }, 1000);
     }, 5000);
 }
+        function startFlashingImages() {
+    const images = document.querySelectorAll('.flashing-image');
 
-        startCounting();  // Correctly call startCounting function
+    function moveImageRandomly(image) {
+        const x = Math.random() * (window.innerWidth - 100); // Adjust for image size
+        const y = Math.random() * (window.innerHeight - 100); // Adjust for image size
+        image.style.transform = `translate(${x}px, ${y}px)`;
+    }
+
+    images.forEach(image => {
+        moveImageRandomly(image);
+        setInterval(() => moveImageRandomly(image), 1000); // Move every second
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    startCounting();  // Correctly call startCounting function
+});
 
 function addBar() {
     const thoughtInput = document.getElementById('thoughtInput');
