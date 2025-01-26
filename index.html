@@ -311,7 +311,7 @@
 }
 
 .carousel {
-   display: flex;
+    display: flex;
     justify-content: center;
     align-items: center;
     gap: 20px;
@@ -675,10 +675,10 @@ function updateCarousel() {
         const carouselItem = document.createElement('div');
         carouselItem.className = 'carousel-item';
 
-        // Container for horizontal layout
+       // Container for vertical stacking of image, text, and likes
         const contentContainer = document.createElement('div');
         contentContainer.style.display = 'flex';
-        contentContainer.style.flexDirection = 'row';
+        contentContainer.style.flexDirection = 'column';
         contentContainer.style.alignItems = 'center';
         contentContainer.style.gap = '10px';
 
