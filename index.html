@@ -575,14 +575,25 @@ function flashLogo() {
 
 function startFlashingImages() {
     const images = document.querySelectorAll('.flashing-image');
+    const counter = document.getElementById('counter');
+    const counterRect = counter.getBoundingClientRect();
 
     function moveImageRandomly(image) {
-        const x = Math.random() * (window.innerWidth - 100); // Adjust for image size
-        const y = Math.random() * (window.innerHeight - 100); // Adjust for image size
+        let x, y;
+
+        // Ensure the image does not overlap with the counter
+        do {
+            x = Math.random() * (window.innerWidth - 100); // Adjust for image size
+            y = Math.random() * (window.innerHeight - 100); // Adjust for image size
+        } while (
+            x < counterRect.right && x + 100 > counterRect.left &&
+            y < counterRect.bottom && y + 100 > counterRect.top
+        );
+
         image.style.left = `${x}px`;
         image.style.top = `${y}px`;
     }
-
+    
     images.forEach((image, index) => {
         function flashImage() {
             moveImageRandomly(image);
