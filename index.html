@@ -970,6 +970,16 @@ function getTagValue(bar, criteria) {
 
     return value;
 }
+        // Example usage to initialize the event listeners
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('.organize-button').addEventListener('click', showOrganizedThoughts);
+    document.querySelector('.organize-close').addEventListener('click', closeOrganizedThoughts);
+    document.querySelectorAll('.organize-tabs button').forEach(button => {
+        button.addEventListener('click', (event) => {
+            organizeBy(event.target.textContent.toLowerCase());
+        });
+    });
+});
     </script>
     
 </body>
