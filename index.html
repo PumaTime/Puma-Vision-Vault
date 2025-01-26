@@ -354,6 +354,31 @@
     text-align: center;
     line-height: 30px;
 }
+    /* Add this CSS to style the new circular button */
+.extra-button {
+    position: fixed;
+    bottom: 20px;
+    left: 100px; /* Adjust this value if needed to position correctly */
+    background-color: #ff0000;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-size: 24px;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.extra-button:hover {
+    background-color: #cc0000;
+    transform: scale(1.1);
+}
 
         @media (max-width: 768px) {
             .top-bar input[type="text"], .bottom-bar input {
@@ -413,6 +438,7 @@
 
 <!-- Add a button to show the carousel -->
 <button class="carousel-button" onclick="showCarousel()">❤️</button>
+<button class="extra-button" onclick="window.open('https://about.puma.com/en/sustainability/our-targets/vision-2030')">🔗</button>
 
     <script>
         function startCounting() {
