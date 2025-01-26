@@ -704,14 +704,14 @@ function updateCarousel() {
 
         carouselItem.appendChild(contentContainer);
         carouselContent.appendChild(carouselItem);
-        });
+
+         // Add click event to open full thought
+    carouselItem.addEventListener('click', () => {
+        displayFullThought(item.content, item.imgSrc);
+      });
     });
 }
-        
- // Add click event to open full thought
-        carouselItem.addEventListener('click', () => {
-            displayFullThought(item.content, item.imgSrc);
-            
+                                  
 function displayFullThought(content, imgSrc) {
     const modal = document.createElement('div');
     modal.className = 'modal';
