@@ -969,14 +969,19 @@ function getTagValue(bar, criteria) {
 
     tags.forEach(tag => {
         const tagText = tag.textContent.replace('#', '');
+        // Ensure the dob value is parsed as an integer
         if (criteria === 'dob' && !isNaN(tagText)) {
-            value = tagText;
+            value = parseInt(tagText, 10); // Parse the dob value as an integer
         } else if (criteria === 'country' && isNaN(tagText)) {
             value = tagText;
         } else if (criteria === 'tags' && tagText) {
             value = tagText;
         }
     });
+
+    console.log(`Criteria: ${criteria}, Value: ${value}`);
+    return value;
+}
 
     console.log(`Criteria: ${criteria}, Value: ${value}`);
     return value;
