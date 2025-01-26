@@ -269,101 +269,91 @@
         }
 
         .carousel-button {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background-color: #ff0000;
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            border: none;
-            cursor: pointer;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            font-size: 24px;
-            transition: transform 0.2s, background-color 0.2s;
-        }
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #ff0000;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-size: 24px;
+    transition: transform 0.2s, background-color 0.2s;
+}
 
-        .carousel-button:hover {
-            background-color: #cc0000;
-            transform: scale(1.1);
-        }
+.carousel-button:hover {
+    background-color: #cc0000;
+    transform: scale(1.1);
+}
 
-        .carousel-container {
-            display: none;
-            position: fixed;
-            top: 20%;
-            left: 10%;
-            width: 80%;
-            max-width: 600px;
-            background: rgba(0, 0, 0, 0.8);
-            color: #fff;
-            padding: 20px;
-            border-radius: 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            z-index: 1000;
-            text-align: center;
-        }
+    .carousel-container {
+    display: none;
+    position: fixed;
+    top: 20%;
+    left: 10%;
+    width: 80%;
+    max-width: 600px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    text-align: center;
+}
 
-        .carousel {
-            display: flex;
-            overflow-x: auto;
-            gap: 20px;
-            padding: 10px;
-        }
+.carousel {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding: 10px;
+}
 
-        .carousel-item {
-            flex: 0 0 auto;
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            gap: 20px;
-            background: #fff;
-            color: #000;
-            border-radius: 10px;
-            padding: 10px;
-            text-align: left;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            cursor: pointer;
-            position: relative;
-        }
+.carousel-item {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+    background: #fff;
+    color: #000;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: left;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
 
-        .carousel-item:hover .carousel-text {
-            opacity: 1;
-        }
+.carousel-item img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
 
-        .carousel-text {
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
-            right: 10px;
-            background: rgba(0, 0, 0, 0.7);
-            color: #fff;
-            padding: 10px;
-            border-radius: 5px;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .carousel-close {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: #ff0000;
-            color: #fff;
-            border: none;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            font-size: 18px;
-            cursor: pointer;
-            text-align: center;
-            line-height: 30px;
-        }
+.carousel-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #ff0000;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 30px;
+}
 
         @media (max-width: 768px) {
             .top-bar input[type="text"], .bottom-bar input {
@@ -391,18 +381,6 @@
                 font-size: 12px;
             }
         }
-
-        /* New styles for the Puma 2030 Goals button */
-        .puma-button {
-            background-color: #000;
-            color: #fff;
-            padding: 5px 10px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 14px;
-            margin-left: 10px;
-            text-decoration: none;
-        }
     </style>
 </head>
 <body>
@@ -425,15 +403,16 @@
         <button onclick="addBar()">Save to VisionVault</button>
     </div>
     
-    <!-- Carousel Container -->
-    <div class="carousel-container" id="carouselContainer">
-        <button class="carousel-close" onclick="toggleCarousel()">×</button>
-        <h3>Top 5 Most Liked Thoughts</h3>
-        <div class="carousel-content" id="carouselContent">No thoughts to display.</div>
-    </div>
+<!-- Carousel Container -->
+<div class="carousel-container" id="carouselContainer">
+    <button class="carousel-close" onclick="toggleCarousel()">×</button>
+    <h3>Top 5 Most Liked Thoughts</h3>
+    <div class="carousel-content" id="carouselContent">No thoughts to display.</div>
+</div>
 
-    <!-- Add a button to show the carousel -->
-    <button class="carousel-button" onclick="showCarousel()">❤️</button>
+
+<!-- Add a button to show the carousel -->
+<button class="carousel-button" onclick="showCarousel()">❤️</button>
 
     <script>
         function startCounting() {
@@ -442,19 +421,19 @@
             let currentNumber = 1948;
             const endNumber = 2040;
             
-            // Show 1948 for 3 seconds before starting the count
-            setTimeout(() => {
-                const interval = setInterval(() => {
-                    counter.textContent = currentNumber;
+    // Show 1948 for 3 seconds before starting the count
+    setTimeout(() => {
+            const interval = setInterval(() => {
+                counter.textContent = currentNumber;
 
-                    if (currentNumber === endNumber) {
-                        clearInterval(interval);
-                        flashLogo();
-                    } else {
-                        currentNumber++;
-                    }
-                }, 50);
-            }, 3000); // 3 seconds delay
+                if (currentNumber === endNumber) {
+                    clearInterval(interval);
+                    flashLogo();
+                } else {
+                    currentNumber++;
+                }
+            }, 50);
+         }, 3000); // 3 seconds delay
         }
 
         function flashLogo() {
@@ -463,13 +442,13 @@
             let toggle = true;
 
             const flashInterval = setInterval(() => {
-                if (toggle) {
-                    counter.innerHTML = '<img src="Screenshot 2025-01-07 at 16.47.43.png" alt="PUMA Logo" style="width: 500px; height: auto;">';
-                } else {
-                    counter.textContent = "2040";
-                }
-                toggle = !toggle;
-            }, 1000);
+            if (toggle) {
+                counter.innerHTML = '<img src="Screenshot 2025-01-07 at 16.47.43.png" alt="PUMA Logo" style="width: 500px; height: auto;">';
+            } else {
+                counter.textContent = "2040";
+            }
+            toggle = !toggle;
+        }, 1000);
 
             setTimeout(() => {
                 clearInterval(flashInterval);
@@ -537,15 +516,8 @@
                 likeCount.textContent = parseInt(likeCount.textContent) + 1;
             });
 
-            const pumaButton = document.createElement('a');
-            pumaButton.className = 'puma-button';
-            pumaButton.href = 'https://about.puma.com/en/sustainability/standards/2030-targets';
-            pumaButton.target = '_blank';
-            pumaButton.textContent = '2030 Goals';
-
             timestampLikeContainer.appendChild(timestampDiv);
             timestampLikeContainer.appendChild(likeContainer);
-            timestampLikeContainer.appendChild(pumaButton);
 
             const thoughtContent = document.createElement('div');
             thoughtContent.className = 'bar-content';
@@ -589,24 +561,64 @@
         }
 
         function showCarousel() {
-            const carouselContainer = document.getElementById('carouselContainer');
-            if (carouselContainer.style.display === 'none' || carouselContainer.style.display === '') {
-                updateCarousel(); // Populate the carousel
-                carouselContainer.style.display = 'block';
-            } else {
-                carouselContainer.style.display = 'none';
-            }
-        }
+    const carouselContainer = document.getElementById('carouselContainer');
+    if (carouselContainer.style.display === 'none' || carouselContainer.style.display === '') {
+        updateCarousel(); // Populate the carousel
+        carouselContainer.style.display = 'block';
+    } else {
+        carouselContainer.style.display = 'none';
+    }
+}
+function updateCarousel() {
+    const carouselContent = document.getElementById('carouselContent');
+    carouselContent.innerHTML = ''; // Clear existing items
 
-        function updateCarousel() {
-            const carouselContent = document.getElementById('carouselContent');
-            carouselContent.innerHTML = ''; // Clear existing items
+    // Fetch all the thoughts and sort them by likes
+    const bars = Array.from(document.querySelectorAll('.bar'));
+    const topBars = bars
+        .map(bar => {
+            const likeCount = parseInt(bar.querySelector('.like-container span').textContent, 10);
+            const content = bar.querySelector('.bar-content')?.textContent || '';
+            const imgSrc = bar.querySelector('img')?.src || '';
+            return { likeCount, content, imgSrc };
+        })
+        .sort((a, b) => b.likeCount - a.likeCount)
+        .slice(0, 5); // Take top 5
 
-            // Fetch all the thoughts and sort them by likes
-            const bars = Array.from(document.querySelectorAll('.bar'));
-            const topBars = bars
-                .map(bar => {
-                    const
+    // Populate carousel with the top 5 items
+topBars.forEach(item => {
+    const carouselItem = document.createElement('div');
+    carouselItem.className = 'carousel-item';
+
+     // Container for horizontal layout
+    const contentContainer = document.createElement('div');
+    contentContainer.style.display = 'flex';
+    contentContainer.style.flexDirection = 'row';
+    contentContainer.style.alignItems = 'center';
+    contentContainer.style.gap = '10px';
+
+        if (item.imgSrc) {
+        const img = document.createElement('img');
+        img.src = item.imgSrc;
+        img.style.width = '50px'; // Adjust image size as needed
+        img.style.height = '50px';
+        img.style.borderRadius = '5px';
+        contentContainer.appendChild(img);
+    }
+
+       const text = document.createElement('p');
+    text.textContent = item.content;
+    text.style.margin = '0';
+    contentContainer.appendChild(text);
+
+        const likes = document.createElement('span');
+    likes.innerHTML = `❤️ ${item.likeCount}`;
+    likes.style.margin = '0';
+    likes.style.fontWeight = 'bold';
+    contentContainer.appendChild(likes);
+
+        carouselItem.appendChild(contentContainer);
+    carouselContent.appendChild(carouselItem);
 });
 }
     </script>
