@@ -951,6 +951,8 @@ function organizeBy(criteria) {
         sortedBars = bars.sort((a, b) => getTagValue(a, 'tags').localeCompare(getTagValue(b, 'tags')));
     }
 
+    console.log('Sorted Bars:', sortedBars);
+
     sortedBars.forEach(bar => {
         const barClone = bar.cloneNode(true);
         barClone.style.position = 'static'; // Ensure they are static within the grid
@@ -976,6 +978,7 @@ function getTagValue(bar, criteria) {
         }
     });
 
+    console.log(`Criteria: ${criteria}, Value: ${value}`);
     return value;
 }
 
