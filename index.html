@@ -958,12 +958,13 @@ function getTagValue(bar, criteria) {
     let value = '';
 
     tags.forEach(tag => {
-        if (criteria === 'dob' && !isNaN(tag.textContent.replace('#', ''))) {
-            value = tag.textContent.replace('#', '');
-        } else if (criteria === 'country' && isNaN(tag.textContent.replace('#', ''))) {
-            value = tag.textContent.replace('#', '');
-        } else if (criteria === 'tags' && !isNaN(tag.textContent.replace('#', ''))) {
-            value = tag.textContent.replace('#', '');
+        const tagText = tag.textContent.replace('#', '');
+        if (criteria === 'dob' && !isNaN(tagText)) {
+            value = tagText;
+        } else if (criteria === 'country' && isNaN(tagText)) {
+            value = tagText;
+        } else if (criteria === 'tags' && !isNaN(tagText)) {
+            value = tagText;
         }
     });
 
