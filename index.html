@@ -612,11 +612,11 @@
     </div>
 
 <!-- Add a button to show the carousel -->
-<button class="carousel-button" onclick="showCarousel()">❤️</button>
-<button class="extra-button" onclick="window.open('https://about.puma.com/en/sustainability/our-targets/vision-2030')">🔗</button>
+<button class="carousel-button" id="carouselButton" style="display: none;">❤️</button>
+<button class="extra-button" id="extraButton" style="display: none;" onclick="window.open('https://about.puma.com/en/sustainability/our-targets/vision-2030')">🔗</button>
 
-    <!-- Add this button for organizing thoughts -->
-<button class="organize-button" onclick="showOrganizedThoughts()">📋</button>
+<!-- Add this button for organizing thoughts -->
+<button class="organize-button" id="organizeButton" style="display: none;">📋</button>
 
 <!-- Add a modal container for displaying organized thoughts -->
 <div class="organize-container" id="organizeContainer">
@@ -636,7 +636,7 @@
     let currentNumber = 1948;
     const endNumber = 2040;
 
-   // Show 1948 for 3 seconds before starting the count
+    // Show 1948 for 3 seconds before starting the count
     setTimeout(() => {
         startFlashingImages();
 
@@ -667,14 +667,21 @@ function flashLogo() {
         toggle = !toggle;
     }, 1000);
 
-   setTimeout(() => {
+    setTimeout(() => {
         clearInterval(flashInterval);
         counter.textContent = "2040";
         openingScreen.classList.add("fade-out");
         setTimeout(() => {
             openingScreen.style.display = "none";
+            showMainPlatformButtons(); // Show the buttons on the main platform
         }, 1000);
     }, 5000);
+}
+
+function showMainPlatformButtons() {
+    document.getElementById('carouselButton').style.display = 'flex';
+    document.getElementById('extraButton').style.display = 'flex';
+    document.getElementById('organizeButton').style.display = 'flex';
 }
 
 function startFlashingImages() {
@@ -697,7 +704,7 @@ function startFlashingImages() {
         image.style.left = `${x}px`;
         image.style.top = `${y}px`;
     }
-    
+
     images.forEach((image, index) => {
         function flashImage() {
             moveImageRandomly(image);
@@ -714,6 +721,8 @@ function startFlashingImages() {
 document.addEventListener('DOMContentLoaded', () => {
     startCounting();  // Correctly call startCounting function
 });
+
+// Rest of your existing JavaScript code
         
 function addBar() {
     const thoughtInput = document.getElementById('thoughtInput');
