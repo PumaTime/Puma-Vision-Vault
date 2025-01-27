@@ -696,7 +696,7 @@
 </div>
     
     <!-- Add this button for help -->
-<button class="help-button" id="helpButton">❔</button>
+<button class="help-button" id="helpButton" style="display: none;">❔</button>
 
 <!-- Add a modal container for displaying instructions -->
 <div class="help-container" id="helpContainer">
@@ -770,6 +770,7 @@ function showMainPlatformButtons() {
     document.getElementById('carouselButton').style.display = 'flex';
     document.getElementById('extraButton').style.display = 'flex';
     document.getElementById('organizeButton').style.display = 'flex';
+    document.getElementById('helpButton').style.display = 'flex';
 }
 
 function startFlashingImages() {
