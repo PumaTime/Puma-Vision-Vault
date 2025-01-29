@@ -515,42 +515,20 @@
 
 .organized-thoughts-grid {
     display: grid;
-    grid-template-columns: repeat(20, 1fr); /* 20 columns */
-    gap: 10px;
-    padding: 20px;
-    overflow-y: auto; /* Enable vertical scrolling */
-    max-height: 80vh; /* Limit the height of the grid */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
 }
 
 .organized-thoughts-grid .bar {
-    position: static; /* Make bars static within the grid */
-    width: 100%; /* Full width of grid cell */
-    height: auto; /* Auto height */
-    background: lightgray;
-    text-align: center;
-    padding: 10px;
-    word-break: break-word;
-    overflow: hidden;
-    transition: transform 0.3s ease-in-out, background 0.3s ease-in-out, z-index 0.3s ease-in-out;
-}
-
-.organized-thoughts-grid .bar:hover {
-    z-index: 10;
-    transform: scale(1.1); /* Slightly enlarge on hover */
-}
-
-.organized-thoughts-grid .bar img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    transition: opacity 0.3s ease-in-out;
-}
-
-.organized-thoughts-grid .bar-content,
-.organized-thoughts-grid .tags-container,
-.organized-thoughts-grid .timestamp-like {
-    display: block; /* Ensure content is visible */
-    opacity: 1; /* Full opacity */
+    background: #fff;
+    color: #000;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    position: static; /* Ensure they are static within the grid */
+    width: auto; /* Adjust width to fit grid */
+    left: auto;
+    top: auto;
 }
         .help-button {
     position: fixed;
@@ -1044,21 +1022,17 @@ function displayFullThought(content, imgSrc) {
     modal.appendChild(modalContent);
     document.body.appendChild(modal);
     
-  }document.addEventListener('DOMContentLoaded', () => {
-    startCounting();  // Correctly call startCounting function
-    loadThoughts();   // Load thoughts from local storage
+  }
+        function showOrganizedThoughts() {
+    const organizeContainer = document.getElementById('organizeContainer');
+    organizeContainer.style.display = 'block';
+    organizeBy('dob'); // Default organization by Year
+}
 
-    // Add event listeners
-    document.getElementById('helpButton').addEventListener('click', showHelp);
-    document.getElementById('helpCloseButton').addEventListener('click', closeHelp);
-    document.getElementById('organizeButton').addEventListener('click', showOrganizedThoughts);
-    document.getElementById('organizeClose').addEventListener('click', closeOrganizedThoughts);
-    document.querySelectorAll('.organize-tabs button').forEach(button => {
-        button.addEventListener('click', (event) => {
-            organizeBy(event.target.textContent.toLowerCase());
-        });
-    });
-});
+function closeOrganizedThoughts() {
+    const organizeContainer = document.getElementById('organizeContainer');
+    organizeContainer.style.display = 'none';
+}
 
 function organizeBy(criteria) {
     const organizedThoughtsGrid = document.getElementById('organizedThoughtsGrid');
@@ -1080,7 +1054,7 @@ function organizeBy(criteria) {
     sortedBars.forEach(bar => {
         const barClone = bar.cloneNode(true);
         barClone.style.position = 'static'; // Ensure they are static within the grid
-        barClone.style.width = '100%'; // Full width of grid cell
+        barClone.style.width = 'auto'; // Adjust width to fit grid
         barClone.style.left = 'auto';
         barClone.style.top = 'auto';
         organizedThoughtsGrid.appendChild(barClone);
@@ -1094,7 +1068,7 @@ function getTagValue(bar, criteria) {
     tags.forEach(tag => {
         const tagText = tag.textContent.replace('#', '');
         if (criteria === 'dob' && !isNaN(tagText)) {
-            value = parseInt(tagText, 10); // Parse the dob value as an integer
+            value = tagText;
         } else if (criteria === 'country' && isNaN(tagText)) {
             value = tagText;
         } else if (criteria === 'tags' && tagText) {
@@ -1105,6 +1079,36 @@ function getTagValue(bar, criteria) {
     console.log(`Criteria: ${criteria}, Value: ${value}`);
     return value;
 }
+
+// Example usage to initialize the event listeners
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('.organize-button').addEventListener('click', showOrganizedThoughts);
+    document.querySelector('.organize-close').addEventListener('click', closeOrganizedThoughts);
+    document.querySelectorAll('.organize-tabs button').forEach(button => {
+        button.addEventListener('click', (event) => {
+            organizeBy(event.target.textContent.toLowerCase());
+        });
+    });
+});
+        // Show the help modal
+function showHelp() {
+    const helpContainer = document.getElementById('helpContainer');
+    helpContainer.style.display = 'block';
+}
+
+// Hide the help modal
+function closeHelp() {
+    const helpContainer = document.getElementById('helpContainer');
+    helpContainer.style.display = 'none';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Add event listener to the help button
+    document.getElementById('helpButton').addEventListener('click', showHelp);
+    
+    // Add event listener to the close button inside the help modal
+    document.getElementById('helpCloseButton').addEventListener('click', closeHelp);
+});
     </script>
     
 </body>
