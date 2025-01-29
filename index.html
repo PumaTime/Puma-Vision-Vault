@@ -682,12 +682,16 @@
 <button class="extra-button" id="extraButton" style="display: none;" onclick="window.open('https://about.puma.com/en/sustainability/our-targets/vision-2030')">🔗</button>
 
 <!-- Add this button for organizing thoughts -->
-<button class="organize-button" id="organizeButton">📋</button>
+<button class="organize-button" id="organizeButton" style="display: none;">📋</button>
 
 <!-- Add a modal container for displaying organized thoughts -->
 <div class="organize-container" id="organizeContainer">
-    <button class="organize-close" id="organizeCloseButton">×</button>
-    <!-- Remove the organize-tabs if not needed -->
+    <button class="organize-close" onclick="closeOrganizedThoughts()">×</button>
+    <div class="organize-tabs">
+        <button onclick="organizeBy('dob')">Year</button>
+        <button onclick="organizeBy('country')">Country</button>
+        <button onclick="organizeBy('tags')">Tag</button>
+    </div>
     <div class="organized-thoughts-grid" id="organizedThoughtsGrid"></div>
 </div>
     
@@ -1019,21 +1023,10 @@ function displayFullThought(content, imgSrc) {
     document.body.appendChild(modal);
     
   }
-        document.addEventListener('DOMContentLoaded', () => {
-    startCounting();  // Correctly call startCounting function
-    loadThoughts();   // Load thoughts from local storage
-
-    // Add event listeners
-    document.getElementById('helpButton').addEventListener('click', showHelp);
-    document.getElementById('helpCloseButton').addEventListener('click', closeHelp);
-    document.getElementById('organizeButton').addEventListener('click', showOrganizedThoughts);
-    document.getElementById('organizeCloseButton').addEventListener('click', closeOrganizedThoughts);
-});
-
-function showOrganizedThoughts() {
+        function showOrganizedThoughts() {
     const organizeContainer = document.getElementById('organizeContainer');
     organizeContainer.style.display = 'block';
-    organizeBy('tags'); // Default organization by Tags
+    organizeBy('dob'); // Default organization by Year
 }
 
 function closeOrganizedThoughts() {
@@ -1048,14 +1041,20 @@ function organizeBy(criteria) {
     const bars = Array.from(document.querySelectorAll('.bar'));
     let sortedBars;
 
-    if (criteria === 'tags') {
+    if (criteria === 'dob') {
+        sortedBars = bars.sort((a, b) => parseInt(getTagValue(a, 'dob')) - parseInt(getTagValue(b, 'dob')));
+    } else if (criteria === 'country') {
+        sortedBars = bars.sort((a, b) => getTagValue(a, 'country').localeCompare(getTagValue(b, 'country')));
+    } else if (criteria === 'tags') {
         sortedBars = bars.sort((a, b) => getTagValue(a, 'tags').localeCompare(getTagValue(b, 'tags')));
     }
+
+    console.log('Sorted Bars:', sortedBars);
 
     sortedBars.forEach(bar => {
         const barClone = bar.cloneNode(true);
         barClone.style.position = 'static'; // Ensure they are static within the grid
-        barClone.style.width = '100%'; // Full width of grid cell
+        barClone.style.width = 'auto'; // Adjust width to fit grid
         barClone.style.left = 'auto';
         barClone.style.top = 'auto';
         organizedThoughtsGrid.appendChild(barClone);
@@ -1068,15 +1067,30 @@ function getTagValue(bar, criteria) {
 
     tags.forEach(tag => {
         const tagText = tag.textContent.replace('#', '');
-        if (criteria === 'tags' && tagText) {
+        if (criteria === 'dob' && !isNaN(tagText)) {
+            value = tagText;
+        } else if (criteria === 'country' && isNaN(tagText)) {
+            value = tagText;
+        } else if (criteria === 'tags' && tagText) {
             value = tagText;
         }
     });
 
+    console.log(`Criteria: ${criteria}, Value: ${value}`);
     return value;
 }
 
-// Show the help modal
+// Example usage to initialize the event listeners
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('.organize-button').addEventListener('click', showOrganizedThoughts);
+    document.querySelector('.organize-close').addEventListener('click', closeOrganizedThoughts);
+    document.querySelectorAll('.organize-tabs button').forEach(button => {
+        button.addEventListener('click', (event) => {
+            organizeBy(event.target.textContent.toLowerCase());
+        });
+    });
+});
+        // Show the help modal
 function showHelp() {
     const helpContainer = document.getElementById('helpContainer');
     helpContainer.style.display = 'block';
