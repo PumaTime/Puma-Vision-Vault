@@ -943,14 +943,14 @@ function addBar() {
         }
 
         function showCarousel() {
-            const carouselContainer = document.getElementById('carouselContainer');
-            if (carouselContainer.style.display === 'none' || carouselContainer.style.display === '') {
-                updateCarousel(); // Populate the carousel
-                carouselContainer.style.display = 'block';
-            } else {
-                carouselContainer.style.display = 'none';
-            }
-        }
+    const carouselContainer = document.getElementById('carouselContainer');
+    if (carouselContainer.style.display === 'none' || carouselContainer.style.display === '') {
+        updateCarousel(); // Populate the carousel
+        carouselContainer.style.display = 'block';
+    } else {
+        carouselContainer.style.display = 'none';
+    }
+}
 
 function updateCarousel() {
     const carouselContent = document.getElementById('carousel');
@@ -973,7 +973,7 @@ function updateCarousel() {
         const carouselItem = document.createElement('div');
         carouselItem.className = 'carousel-item';
 
-       // Container for vertical stacking of image, text, and likes
+        // Container for vertical stacking of image, text, and likes
         const contentContainer = document.createElement('div');
         contentContainer.style.display = 'flex';
         contentContainer.style.flexDirection = 'column';
