@@ -700,7 +700,7 @@
     </div>
 
 <!-- Add a button to show the carousel -->
-<button class="carousel-button" id="carouselButton" style="display: flex;">❤️</button>
+<button class="carousel-button" id="carouselButton" style="display: none;">❤️</button>
 <button class="extra-button" id="extraButton" style="display: none;" onclick="window.open('https://about.puma.com/en/sustainability/our-targets/vision-2030')">🔗</button>
 
 <!-- Add this button for organizing thoughts -->
@@ -827,7 +827,10 @@ function startFlashingImages() {
         }
         setTimeout(flashImage, index * 1000); // Stagger start times based on index
     });
-}      
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    startCounting();  // Correctly call startCounting function
 });
 
 // Rest of your existing JavaScript code
