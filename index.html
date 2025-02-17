@@ -700,7 +700,7 @@
     </div>
 
 <!-- Add a button to show the carousel -->
-<button class="carousel-button" id="carouselButton" style="display: none;">❤️</button>
+<button class="carousel-button" id="carouselButton" style="display: flex;">❤️</button>
 <button class="extra-button" id="extraButton" style="display: none;" onclick="window.open('https://about.puma.com/en/sustainability/our-targets/vision-2030')">🔗</button>
 
 <!-- Add this button for organizing thoughts -->
@@ -831,6 +831,7 @@ function startFlashingImages() {
 
 document.addEventListener('DOMContentLoaded', () => {
     startCounting();  // Correctly call startCounting function
+    
 });
 
 // Rest of your existing JavaScript code
@@ -968,12 +969,12 @@ function updateCarousel() {
         .sort((a, b) => b.likeCount - a.likeCount)
         .slice(0, 5); // Take top 5
 
-    // Populate carousel with the top 5 items
+    / Populate carousel with the top 5 items
     topBars.forEach(item => {
         const carouselItem = document.createElement('div');
         carouselItem.className = 'carousel-item';
 
-       // Container for vertical stacking of image, text, and likes
+        // Container for vertical stacking of image, text, and likes
         const contentContainer = document.createElement('div');
         contentContainer.style.display = 'flex';
         contentContainer.style.flexDirection = 'column';
@@ -988,7 +989,7 @@ function updateCarousel() {
             img.style.borderRadius = '5px';
             contentContainer.appendChild(img);
         }
-        
+
         // Truncate content to a few words
         const truncatedContent = item.content.split(' ').slice(0, 5).join(' ') + '...';
         const text = document.createElement('p');
@@ -1044,11 +1045,12 @@ function displayFullThought(content, imgSrc) {
     modal.appendChild(modalContent);
     document.body.appendChild(modal);
     
-  }document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('DOMContentLoaded', () => {
     startCounting();  // Correctly call startCounting function
     loadThoughts();   // Load thoughts from local storage
 
     // Add event listeners
+    document.getElementById('carouselButton').addEventListener('click', showCarousel);
     document.getElementById('helpButton').addEventListener('click', showHelp);
     document.getElementById('helpCloseButton').addEventListener('click', closeHelp);
     document.getElementById('organizeButton').addEventListener('click', showOrganizedThoughts);
