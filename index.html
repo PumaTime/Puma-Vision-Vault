@@ -806,6 +806,7 @@ function startFlashingImages() {
     });
 }
 
+<script>
 document.addEventListener('DOMContentLoaded', () => {
     startCounting();  // Correctly call startCounting function
     loadThoughts();   // Load thoughts from local storage
@@ -814,119 +815,18 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('carouselButton').addEventListener('click', showCarousel); // Add event listener for carousel button
     document.getElementById('helpButton').addEventListener('click', showHelp);
     document.getElementById('helpCloseButton').addEventListener('click', closeHelp);
+
+    // Add event listeners for organizing thoughts
+    document.querySelector('.organize-button').addEventListener('click', showOrganizedThoughts);
+    document.querySelector('.organize-close').addEventListener('click', closeOrganizedThoughts);
+    document.querySelectorAll('.organize-tabs button').forEach(button => {
+        button.addEventListener('click', (event) => {
+            organizeBy(event.target.textContent.toLowerCase());
+        });
+    });
 });
 
-
-// Rest of your existing JavaScript code
-        
-function addBar() {
-    const thoughtInput = document.getElementById('thoughtInput');
-    const tagsInput = document.getElementById('tagsInput');
-    const imageUpload = document.getElementById('imageUpload');
-    const dobInput = document.getElementById('dobInput');
-    const countrySelect = document.getElementById('countrySelect'); // Updated to use dropdown
-
-    if (thoughtInput.value.trim() === '' && !imageUpload.files[0]) {
-        alert('Please enter your thoughts or upload an image.');
-        return;
-    }
-
-    const barContainer = document.getElementById('barContainer');
-
-    const bar = document.createElement('div');
-    bar.className = 'bar';
-    bar.style.background = getRandomColor();
-    bar.style.top = `${Math.random() * 80}%`;
-    bar.style.left = `${Math.random() * 80}%`;
-
-    if (imageUpload.files[0]) {
-        const img = document.createElement('img');
-        img.src = URL.createObjectURL(imageUpload.files[0]);
-        bar.appendChild(img);
-    }
-
-    const timestampLikeContainer = document.createElement('div');
-    timestampLikeContainer.className = 'timestamp-like';
-
-    const timestampDiv = document.createElement('div');
-    const timestamp = new Date();
-    const formattedTimestamp = timestamp
-        .toISOString()
-        .slice(2, 10)
-        .replace(/-/g, '') +
-        timestamp.toTimeString().slice(0, 5).replace(/:/g, '');
-    timestampDiv.className = 'timestamp';
-    timestampDiv.textContent = formattedTimestamp;
-
-    const likeContainer = document.createElement('div');
-    likeContainer.className = 'like-container';
-
-    const likeIcon = document.createElement('div');
-    likeIcon.className = 'like-icon';
-
-    const likeCount = document.createElement('span');
-    likeCount.textContent = '0';
-
-    likeContainer.appendChild(likeIcon);
-    likeContainer.appendChild(likeCount);
-
-    likeContainer.addEventListener('click', () => {
-        likeCount.textContent = parseInt(likeCount.textContent) + 1;
-    });
-
-    timestampLikeContainer.appendChild(timestampDiv);
-    timestampLikeContainer.appendChild(likeContainer);
-
-    const thoughtContent = document.createElement('div');
-    thoughtContent.className = 'bar-content';
-    thoughtContent.textContent = thoughtInput.value;
-
-    const tagsDiv = document.createElement('div');
-    tagsDiv.className = 'tags-container';
-    const tags = tagsInput.value.split(',').map(tag => tag.trim());
-    tags.forEach(tag => {
-        if (tag) {
-            const tagElement = document.createElement('span');
-            tagElement.className = 'tag';
-            tagElement.textContent = `#${tag}`;
-            tagsDiv.appendChild(tagElement);
-        }
-    });
-
-    if (dobInput.value.trim() !== '') {
-        const dobTag = document.createElement('span');
-        dobTag.className = 'tag';
-        dobTag.textContent = `#${dobInput.value}`;
-        tagsDiv.appendChild(dobTag);
-    }
-
-    if (countrySelect.value !== '') { // Update to use the selected option from the dropdown
-        const countryTag = document.createElement('span');
-        countryTag.className = 'tag';
-        countryTag.textContent = `#${countrySelect.options[countrySelect.selectedIndex].text}`;
-        tagsDiv.appendChild(countryTag);
-    }
-
-    bar.appendChild(timestampLikeContainer);
-    bar.appendChild(thoughtContent);
-    bar.appendChild(tagsDiv);
-
-    barContainer.appendChild(bar);
-
-    thoughtInput.value = '';
-    tagsInput.value = '';
-    imageUpload.value = '';
-    dobInput.value = '';
-    countrySelect.selectedIndex = 0; // Reset the dropdown
-}
-        function getRandomColor() {
-            const hue = Math.random() * 360;
-            const saturation = 70 + Math.random() * 30;
-            const lightness = 50 + Math.random() * 20;
-            return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
-        }
-
-        function showCarousel() {
+function showCarousel() {
     const carouselContainer = document.getElementById('carouselContainer');
     if (carouselContainer.style.display === 'none' || carouselContainer.style.display === '') {
         updateCarousel(); // Populate the carousel
@@ -996,7 +896,7 @@ function updateCarousel() {
         });
     });
 }
-                                  
+
 function displayFullThought(content, imgSrc) {
     const modal = document.createElement('div');
     modal.className = 'modal';
@@ -1027,94 +927,7 @@ function displayFullThought(content, imgSrc) {
 
     modal.appendChild(modalContent);
     document.body.appendChild(modal);
-    
-  }
-        function showOrganizedThoughts() {
-    const organizeContainer = document.getElementById('organizeContainer');
-    organizeContainer.style.display = 'block';
-    organizeBy('dob'); // Default organization by Year
 }
-
-function closeOrganizedThoughts() {
-    const organizeContainer = document.getElementById('organizeContainer');
-    organizeContainer.style.display = 'none';
-}
-
-function organizeBy(criteria) {
-    const organizedThoughtsGrid = document.getElementById('organizedThoughtsGrid');
-    organizedThoughtsGrid.innerHTML = ''; // Clear existing content
-
-    const bars = Array.from(document.querySelectorAll('.bar'));
-    let sortedBars;
-
-    if (criteria === 'dob') {
-        sortedBars = bars.sort((a, b) => parseInt(getTagValue(a, 'dob')) - parseInt(getTagValue(b, 'dob')));
-    } else if (criteria === 'country') {
-        sortedBars = bars.sort((a, b) => getTagValue(a, 'country').localeCompare(getTagValue(b, 'country')));
-    } else if (criteria === 'tags') {
-        sortedBars = bars.sort((a, b) => getTagValue(a, 'tags').localeCompare(getTagValue(b, 'tags')));
-    }
-
-    console.log('Sorted Bars:', sortedBars);
-
-    sortedBars.forEach(bar => {
-        const barClone = bar.cloneNode(true);
-        barClone.style.position = 'static'; // Ensure they are static within the grid
-        barClone.style.width = 'auto'; // Adjust width to fit grid
-        barClone.style.left = 'auto';
-        barClone.style.top = 'auto';
-        organizedThoughtsGrid.appendChild(barClone);
-    });
-}
-
-function getTagValue(bar, criteria) {
-    const tags = Array.from(bar.querySelectorAll('.tag'));
-    let value = '';
-
-    tags.forEach(tag => {
-        const tagText = tag.textContent.replace('#', '');
-        if (criteria === 'dob' && !isNaN(tagText)) {
-            value = tagText;
-        } else if (criteria === 'country' && isNaN(tagText)) {
-            value = tagText;
-        } else if (criteria === 'tags' && tagText) {
-            value = tagText;
-        }
-    });
-
-    console.log(`Criteria: ${criteria}, Value: ${value}`);
-    return value;
-}
-
-// Example usage to initialize the event listeners
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelector('.organize-button').addEventListener('click', showOrganizedThoughts);
-    document.querySelector('.organize-close').addEventListener('click', closeOrganizedThoughts);
-    document.querySelectorAll('.organize-tabs button').forEach(button => {
-        button.addEventListener('click', (event) => {
-            organizeBy(event.target.textContent.toLowerCase());
-        });
-    });
-});
-        // Show the help modal
-function showHelp() {
-    const helpContainer = document.getElementById('helpContainer');
-    helpContainer.style.display = 'block';
-}
-
-// Hide the help modal
-function closeHelp() {
-    const helpContainer = document.getElementById('helpContainer');
-    helpContainer.style.display = 'none';
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    // Add event listener to the help button
-    document.getElementById('helpButton').addEventListener('click', showHelp);
-    
-    // Add event listener to the close button inside the help modal
-    document.getElementById('helpCloseButton').addEventListener('click', closeHelp);
-});
-    </script>
+</script>
 </body>
 </html>
