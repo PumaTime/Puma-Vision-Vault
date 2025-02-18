@@ -806,6 +806,12 @@ function startFlashingImages() {
         setTimeout(flashImage, index * 1000); // Stagger start times based on index
     });
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    startCounting();  // Correctly call startCounting function
+});
+
+// Rest of your existing JavaScript code
         
 function addBar() {
     const thoughtInput = document.getElementById('thoughtInput');
@@ -1074,6 +1080,16 @@ function getTagValue(bar, criteria) {
     return value;
 }
 
+// Example usage to initialize the event listeners
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('.organize-button').addEventListener('click', showOrganizedThoughts);
+    document.querySelector('.organize-close').addEventListener('click', closeOrganizedThoughts);
+    document.querySelectorAll('.organize-tabs button').forEach(button => {
+        button.addEventListener('click', (event) => {
+            organizeBy(event.target.textContent.toLowerCase());
+        });
+    });
+});
         // Show the help modal
 function showHelp() {
     const helpContainer = document.getElementById('helpContainer');
@@ -1087,22 +1103,13 @@ function closeHelp() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    startCounting();  // Correctly call startCounting function
-    loadThoughts();   // Load thoughts from local storage
-
-    // Add event listeners
-    document.getElementById('carouselButton').addEventListener('click', showCarousel); // Add event listener for carousel button
+    // Add event listener to the help button
     document.getElementById('helpButton').addEventListener('click', showHelp);
+    
+    // Add event listener to the close button inside the help modal
     document.getElementById('helpCloseButton').addEventListener('click', closeHelp);
-    document.querySelector('.organize-button').addEventListener('click', showOrganizedThoughts);
-    document.querySelector('.organize-close').addEventListener('click', closeOrganizedThoughts);
-    document.querySelectorAll('.organize-tabs button').forEach(button => {
-        button.addEventListener('click', (event) => {
-            organizeBy(event.target.textContent.toLowerCase());
-        });
-    });
 });
-</script>
+    </script>
     
 </body>
 </html>
