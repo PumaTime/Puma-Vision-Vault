@@ -806,17 +806,6 @@ function startFlashingImages() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    startCounting();  // Correctly call startCounting function
-    loadThoughts();   // Load thoughts from local storage
-
-    // Add event listeners
-    document.getElementById('carouselButton').addEventListener('click', showCarousel); // Add event listener for carousel button
-    document.getElementById('helpButton').addEventListener('click', showHelp);
-    document.getElementById('helpCloseButton').addEventListener('click', closeHelp);
-});
-
-
 // Rest of your existing JavaScript code
         
 function addBar() {
@@ -925,6 +914,28 @@ function addBar() {
             const lightness = 50 + Math.random() * 20;
             return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
         }
+
+        document.addEventListener('DOMContentLoaded', () => {
+    startCounting();  // Correctly call startCounting function
+    loadThoughts();   // Load thoughts from local storage
+
+    // Add event listeners
+    document.getElementById('carouselButton').addEventListener('click', showCarousel); // Add event listener for carousel button
+    document.getElementById('helpButton').addEventListener('click', showHelp);
+    document.getElementById('helpCloseButton').addEventListener('click', closeHelp);
+
+    // Add event listeners for organizing thoughts
+    document.querySelector('.organize-button').addEventListener('click', showOrganizedThoughts);
+    document.querySelector('.organize-close').addEventListener('click', closeOrganizedThoughts);
+    document.querySelectorAll('.organize-tabs button').forEach(button => {
+        button.addEventListener('click', (event) => {
+            organizeBy(event.target.textContent.toLowerCase());
+        });
+    });
+    
+    // Make the heart button visible (optional: after opening screen)
+    document.getElementById('carouselButton').style.display = 'flex';
+});
 
         function showCarousel() {
     const carouselContainer = document.getElementById('carouselContainer');
