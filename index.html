@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puma Vision Vault</title>
+    <style>
+        @font-face {
+            font-family: 'DINCondensedBold';
+            src: url('DINCondensedBold.woff2') format('woff2');
+        }
+
+        @font-face {
+            font-family: 'DigitalFont';
+            src: url('digital-7.ttf') format('truetype');
+        }
+
+        body {
+            font-family: 'DINCondensedBold', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #CCCCCC;
+            color: #000;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100vh;
+        }
+
+/* Opening Screen Styles */
+.opening-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    color: #fff;
+}
+
+.opening-screen .counter {
+    font-family: 'DigitalFont', sans-serif;
+    text-align: center;
+    font-size: 6rem;
+    font-weight: bold;
+}
+
+.opening-screen.flashing {
+    animation: flashText 1s ease-in-out infinite alternate;
+}
+
+@keyframes flashText {
+    0% {
+        color: #ff0000;
+    }
+    100% {
+        color: #00ff00;
+    }
+}
+
+.fade-out {
+    animation: fadeOut 1s ease-in-out forwards;
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+.flashing-images {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none; /* Make sure images don't interfere with other elements */
+}
+
+.flashing-image {
+    position: absolute;
+    width: 100px; /* Adjust size as needed */
+    height: 100px;
+    display: none; /* Initially hidden */
+}
+        .top-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+            padding: 20px;
+            border-radius: 50px;
+            margin: 10px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .top-bar input[type="text"] {
+            width: 45%;
+            padding: 10px;
+            margin: 0 10px;
+            border: 2px solid #000;
+            border-radius: 20px;
+            font-size: 16px;
+        }
+
+        .top-bar input[type="file"] {
+            display: none;
+        }
+
+        .upload-label {
+            background-color: #000;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+            position: relative;
+            overflow: auto;
+            padding: 20px;
+        }
+
+        .bar {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            border-radius: 2;
+            padding: 20px 10px 20px 10px;
+            animation: float 5s infinite ease-in-out;
+            transition: transform 0.3s ease-in-out, background 0.3s ease-in-out, width 0.3s ease-in-out, height 0.3s ease-in-out, z-index 0.3s ease-in-out;
+            overflow: hidden;
+            word-break: break-word;
+            width: 120px;
+            height: 0px;
+            background: lightgray;
+            text-align: center;
+            z-index: 1;
+        }
+
+        .bar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .bar-content,
+        .tags-container {
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .bar:hover img,
+        .bar:hover .bar-content,
+        .bar:hover .tags-container {
+            opacity: 1;
+        }
+
+        .bar:hover {
+            z-index: 10;
+            width: auto;
+            height: auto;
+            max-width: 90%;
+            padding: 30px;
+            white-space: normal;
+            overflow: auto;
+        }
+
+        .timestamp-like {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            padding: 5px;
+        }
+
+        .timestamp {
+            font-family: 'DigitalFont', sans-serif;
+            font-size: 14px;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .like-container {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .like-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+            background-image: url('puma1.png'); /* Replace with actual image path */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 5px;
+            font-size: 12px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .tag {
+            background-color: #f0f0f0;
+            color: #000;
+            padding: 5px 10px;
+            border-radius: 15px;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .bottom-bar {
+    display: flex;
+    justify-content: center; /* Center the elements */
+    align-items: center;
+    background: #000;
+    padding: 20px;
+    border-radius: 50px;
+    margin: 10px;
+    box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
+}
+        
+.bottom-bar select,
+.bottom-bar input,
+.bottom-bar button {
+    padding: 10px;
+    border: 2px solid #000;
+    border-radius: 50px;
+    font-size: 16px;
+    width: 20%; /* Ensure equal width and spacing */
+    text-align: center;
+    margin: 0 5px; /* Add margin to space out elements */
+}
+
+.bottom-bar button {
+    background: #ff0000;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.bottom-bar button:hover {
+    background: #cc0000;
+}
+
+.carousel-button,
+.extra-button {
+    position: fixed;
+    bottom: 20px;
+    background-color: #ff0000;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-size: 24px;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.carousel-button {
+    left: 20px;
+}
+
+.extra-button {
+    left: 100px; /* Adjust this value if needed to position correctly */
+}
+
+.carousel-button:hover,
+.extra-button:hover {
+    background-color: #cc0000;
+    transform: scale(1.1);
+}
+
+    .carousel-container {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);    
+    width: 90%;
+    max-width: 1000px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    text-align: center;
+}
+
+.carousel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 10px;
+}
+
+.carousel-item {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    background: #fff;
+    color: #000;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    position: relative;
+    width: 150px;
+}
+        
+.carousel-item:hover .carousel-text {
+    opacity: 1;
+}
+        
+.carousel-item img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+        .carousel-text {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.carousel-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #ff0000;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 30px;
+}
+        /* Modal styles */
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 2000;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 600px;
+    width: 80%;
+    text-align: center;
+    position: relative;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #ff0000;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 30px;
+}
+    .organize-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #ff0000;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-size: 24px;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.organize-button:hover {
+    background-color: #cc0000;
+    transform: scale(1.1);
+}
+
+.organize-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 20px;
+    box-sizing: border-box;
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.organize-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #ff0000;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 30px;
+}
+
+.organize-tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.organize-tabs button {
+    margin: 0 10px;
+    padding: 10px 20px;
+    background: #fff;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.organize-tabs button:hover {
+    background: #ddd;
+}
+
+.organized-thoughts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.organized-thoughts-grid .bar {
+    background: #fff;
+    color: #000;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    position: static; /* Ensure they are static within the grid */
+    width: auto; /* Adjust width to fit grid */
+    left: auto;
+    top: auto;
+}
+        .help-button {
+    position: fixed;
+    bottom: 20px;
+    right: 100px; /* Adjust this value to position next to the organize button */
+    background-color: #ff0000;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-size: 24px;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.help-button:hover {
+    background-color: #cc0000;
+    transform: scale(1.1);
+}
+
+.help-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 20px;
+    box-sizing: border-box;
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.help-content {
+    background-color: #fff;
+    color: #000;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: auto;
+    position: relative;
+    text-align: left;
+}
+
+.help-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #ff0000;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 30px;
+}
+
+        @media (max-width: 768px) {
+            .top-bar input[type="text"], .bottom-bar input {
+                width: 70%;
+                font-size: 14px;
+            }
+
+            .bar {
+                width: 40%;
+                max-width: 50%;
+                padding: 15px;
+            }
+
+            .top-bar, .bottom-bar {
+                flex-direction: column;
+                padding: 15px;
+            }
+
+            .bottom-bar button {
+                width: 100%;
+                font-size: 14px;
+            }
+
+            .timestamp-like {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Opening Screen -->
+    <div id="openingScreen" class="opening-screen">
+    <div id="counter" class="counter">1948</div>
+    <div class="flashing-images">
+        <img src="Rudolf_Dassler.jpg" alt="Flashing Image" class="flashing-image">
+        <img src="BALLET .png" alt="Flashing Image" class="flashing-image">
+        <img src="carbon-puma-asap-rocky-3.jpg" alt="Flashing Image" class="flashing-image">
+        <img src="COLOR.png" alt="Flashing Image" class="flashing-image">
+        <img src="MSPRT.png" alt="Flashing Image" class="flashing-image">
+        <img src="POOL.png" alt="Flashing Image" class="flashing-image">
+        <img src="RETRO.png" alt="Flashing Image" class="flashing-image">
+        <img src="RUN PUMA.png" alt="Flashing Image" class="flashing-image">
+        <img src="SOCKS.png" alt="Flashing Image" class="flashing-image">
+        <img src="SPEED.png" alt="Flashing Image" class="flashing-image">
+    </div>
+</div>
+    <div class="top-bar">
+        <input id="thoughtInput" type="text" placeholder="Enter your thoughts about the future in 2040">
+        <input id="tagsInput" type="text" placeholder="Add Tags: Zero-Waste Design, Well-Being, Gender Equity, Climate" style="font-style: italic;">
+        <label for="imageUpload" class="upload-label">Upload Image</label>
+        <input id="imageUpload" type="file" accept="image/*">
+    </div>
+
+    <div class="main-content" id="barContainer"></div>
+
+    <div class="bottom-bar">
+        <select id="countrySelect">
+        <option value="" disabled selected>Select Country</option>
+        <option value="USA">United States</option>
+        <option value="CAN">Canada</option>
+        <option value="GBR">United Kingdom</option>
+        <option value="AUS">Australia</option>
+        <option value="DEU">Germany</option>
+        <option value="FRA">France</option>
+        <option value="ITA">Italy</option>
+        <option value="JPN">Japan</option>
+        <option value="CHN">China</option>
+        <option value="IND">India</option>
+        <!-- Add more countries as needed -->
+    </select>
+    <input id="dobInput" type="number" placeholder="Year of Birth">
+    <button onclick="addBar()">Save to VisionVault</button>
+</div>
+    
+<!-- Carousel Container -->
+<div class="carousel-container" id="carouselContainer">
+    <button class="carousel-close" onclick="showCarousel()">×</button>
+    <h3>Top 5 Most Liked Thoughts</h3>
+    <div class="carousel" id="carousel">No thoughts to display.</div>
+</div>
+
+<!-- Button to show the carousel -->
+<button class="carousel-button" id="carouselButton" style="display: none;">❤️</button>
+<button class="extra-button" id="extraButton" style="display: none;" onclick="window.open('https://about.puma.com/en/sustainability/our-targets/vision-2030')">🔗</button>
+<!-- Add this button for organizing thoughts -->
+<button class="organize-button" id="organizeButton" style="display: none;">📋</button>
+
+<!-- Add a modal container for displaying organized thoughts -->
+<div class="organize-container" id="organizeContainer">
+    <button class="organize-close" onclick="closeOrganizedThoughts()">×</button>
+    <div class="organize-tabs">
+        <button onclick="organizeBy('dob')">Year</button>
+        <button onclick="organizeBy('country')">Country</button>
+        <button onclick="organizeBy('tags')">Tag</button>
+    </div>
+    <div class="organized-thoughts-grid" id="organizedThoughtsGrid"></div>
+</div>
+    
+    <!-- Add this button for help -->
+<button class="help-button" id="helpButton" style="display: none;">❔</button>
+
+<!-- Add a modal container for displaying instructions -->
+<div class="help-container" id="helpContainer">
+    <div class="help-content">
+        <button class="help-close" id="helpCloseButton">×</button>
+        <h2>Dream Big with Puma's VisionVault!</h2>
+        <ol>
+            <li>Share your vision about the future of Puma in the input field.</li>
+            <li>Add tags to make your ideas easyto find.#SustainabilityGoals</li>
+            <li>Add some eye candy: upload an image to accompany your thoughts.</li>
+            <li>Select your country from the dropdown menu.</li>
+            <li>Enter your year of birth - Puma celebrates all generations of dreamers.</li>
+            <li>Click the "Save to VisionVault" button to save your thoughts.</li>
+            <li>Use the organize button to sort thoughts by year, country, or tags.</li>
+            <li>Click the heart button to view the top 5 most liked thoughts.</li>
+            <li>Hover over other thought bubbles and get inspired for the future.</li>
+            <li> Click the ❤️ to give your faviourte thoughts a like.</li>
+        </ol>
+    </div>
+</div>
+    <script>
+        function startCounting() {
+    const counter = document.getElementById('counter');
+    const openingScreen = document.getElementById('openingScreen');
+    let currentNumber = 1948;
+    const endNumber = 2040;
+
+    // Show 1948 for 3 seconds before starting the count
+    setTimeout(() => {
+        startFlashingImages();
+
+        const interval = setInterval(() => {
+            counter.textContent = currentNumber;
+
+            if (currentNumber === endNumber) {
+                clearInterval(interval);
+                flashLogo();
+            } else {
+                currentNumber++;
+            }
+        }, 50);
+    }, 3000); // 3 seconds delay
+}
+function flashLogo() {
+    const counter = document.getElementById('counter');
+    const openingScreen = document.getElementById('openingScreen');
+    let toggle = true;
+
+    const flashInterval = setInterval(() => {
+        if (toggle) {
+            counter.innerHTML = '<img src="puma portal.png" alt="PUMA Logo" style="width: 500px; height: auto;">';
+        } else {
+            counter.textContent = "2040";
+        }
+        toggle = !toggle;
+    }, 1000);
+
+    setTimeout(() => {
+        clearInterval(flashInterval);
+        counter.textContent = "2040";
+        openingScreen.classList.add("fade-out");
+        setTimeout(() => {
+            openingScreen.style.display = "none";
+            showMainPlatformButtons(); // Show the buttons on the main platform
+        }, 1000);
+    }, 5000);
+}
+
+function showMainPlatformButtons() {
+    document.getElementById('carouselButton').style.display = 'flex';
+    document.getElementById('extraButton').style.display = 'flex';
+    document.getElementById('organizeButton').style.display = 'flex';
+    document.getElementById('helpButton').style.display = 'flex';
+}
+
+function startFlashingImages() {
+    const images = document.querySelectorAll('.flashing-image');
+    const counter = document.getElementById('counter');
+    const counterRect = counter.getBoundingClientRect();
+
+    function moveImageRandomly(image) {
+        let x, y;
+
+        // Ensure the image does not overlap with the counter
+        do {
+            x = Math.random() * (window.innerWidth - 100); // Adjust for image size
+            y = Math.random() * (window.innerHeight - 100); // Adjust for image size
+        } while (
+            x < counterRect.right && x + 100 > counterRect.left &&
+            y < counterRect.bottom && y + 100 > counterRect.top
+        );
+
+        image.style.left = `${x}px`;
+        image.style.top = `${y}px`;
+    }
+
+    images.forEach((image, index) => {
+        function flashImage() {
+            moveImageRandomly(image);
+            image.style.display = 'block'; // Show image
+            setTimeout(() => {
+                image.style.display = 'none'; // Hide image after 3 seconds
+                setTimeout(flashImage, 3000); // Move image again after another 3 seconds
+            }, 3000);
+        }
+        setTimeout(flashImage, index * 1000); // Stagger start times based on index
+    });
+}
+
+// Rest of your existing JavaScript code
+        
+function addBar() {
+    const thoughtInput = document.getElementById('thoughtInput');
+    const tagsInput = document.getElementById('tagsInput');
+    const imageUpload = document.getElementById('imageUpload');
+    const dobInput = document.getElementById('dobInput');
+    const countrySelect = document.getElementById('countrySelect'); // Updated to use dropdown
+
+    if (thoughtInput.value.trim() === '' && !imageUpload.files[0]) {
+        alert('Please enter your thoughts or upload an image.');
+        return;
+    }
+
+    const barContainer = document.getElementById('barContainer');
+
+    const bar = document.createElement('div');
+    bar.className = 'bar';
+    bar.style.background = getRandomColor();
+    bar.style.top = `${Math.random() * 80}%`;
+    bar.style.left = `${Math.random() * 80}%`;
+
+    if (imageUpload.files[0]) {
+        const img = document.createElement('img');
+        img.src = URL.createObjectURL(imageUpload.files[0]);
+        bar.appendChild(img);
+    }
+
+    const timestampLikeContainer = document.createElement('div');
+    timestampLikeContainer.className = 'timestamp-like';
+
+    const timestampDiv = document.createElement('div');
+    const timestamp = new Date();
+    const formattedTimestamp = timestamp
+        .toISOString()
+        .slice(2, 10)
+        .replace(/-/g, '') +
+        timestamp.toTimeString().slice(0, 5).replace(/:/g, '');
+    timestampDiv.className = 'timestamp';
+    timestampDiv.textContent = formattedTimestamp;
+
+    const likeContainer = document.createElement('div');
+    likeContainer.className = 'like-container';
+
+    const likeIcon = document.createElement('div');
+    likeIcon.className = 'like-icon';
+
+    const likeCount = document.createElement('span');
+    likeCount.textContent = '0';
+
+    likeContainer.appendChild(likeIcon);
+    likeContainer.appendChild(likeCount);
+
+    likeContainer.addEventListener('click', () => {
+        likeCount.textContent = parseInt(likeCount.textContent) + 1;
+    });
+
+    timestampLikeContainer.appendChild(timestampDiv);
+    timestampLikeContainer.appendChild(likeContainer);
+
+    const thoughtContent = document.createElement('div');
+    thoughtContent.className = 'bar-content';
+    thoughtContent.textContent = thoughtInput.value;
+
+    const tagsDiv = document.createElement('div');
+    tagsDiv.className = 'tags-container';
+    const tags = tagsInput.value.split(',').map(tag => tag.trim());
+    tags.forEach(tag => {
+        if (tag) {
+            const tagElement = document.createElement('span');
+            tagElement.className = 'tag';
+            tagElement.textContent = `#${tag}`;
+            tagsDiv.appendChild(tagElement);
+        }
+    });
+
+    if (dobInput.value.trim() !== '') {
+        const dobTag = document.createElement('span');
+        dobTag.className = 'tag';
+        dobTag.textContent = `#${dobInput.value}`;
+        tagsDiv.appendChild(dobTag);
+    }
+
+    if (countrySelect.value !== '') { // Update to use the selected option from the dropdown
+        const countryTag = document.createElement('span');
+        countryTag.className = 'tag';
+        countryTag.textContent = `#${countrySelect.options[countrySelect.selectedIndex].text}`;
+        tagsDiv.appendChild(countryTag);
+    }
+
+    bar.appendChild(timestampLikeContainer);
+    bar.appendChild(thoughtContent);
+    bar.appendChild(tagsDiv);
+
+    barContainer.appendChild(bar);
+
+    thoughtInput.value = '';
+    tagsInput.value = '';
+    imageUpload.value = '';
+    dobInput.value = '';
+    countrySelect.selectedIndex = 0; // Reset the dropdown
+}
+        function getRandomColor() {
+            const hue = Math.random() * 360;
+            const saturation = 70 + Math.random() * 30;
+            const lightness = 50 + Math.random() * 20;
+            return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+    startCounting();  // Correctly call startCounting function
+
+
+    // Add event listeners
+    document.getElementById('carouselButton').addEventListener('click', showCarousel); // Add event listener for carousel button
+    document.getElementById('helpButton').addEventListener('click', showHelp);
+    document.getElementById('helpCloseButton').addEventListener('click', closeHelp);
+
+    // Add event listeners for organizing thoughts
+    document.querySelector('.organize-button').addEventListener('click', showOrganizedThoughts);
+    document.querySelector('.organize-close').addEventListener('click', closeOrganizedThoughts);
+    document.querySelectorAll('.organize-tabs button').forEach(button => {
+        button.addEventListener('click', (event) => {
+            organizeBy(event.target.textContent.toLowerCase());
+        });
+    });
+  
+});
+
+        function showCarousel() {
+    const carouselContainer = document.getElementById('carouselContainer');
+    if (carouselContainer.style.display === 'none' || carouselContainer.style.display === '') {
+        updateCarousel(); // Populate the carousel
+        carouselContainer.style.display = 'block';
+    } else {
+        carouselContainer.style.display = 'none';
+    }
+}
+
+function updateCarousel() {
+    const carouselContent = document.getElementById('carousel');
+    carouselContent.innerHTML = ''; // Clear existing items
+
+    // Fetch all the thoughts and sort them by likes
+    const bars = Array.from(document.querySelectorAll('.bar'));
+    const topBars = bars
+        .map(bar => {
+            const likeCount = parseInt(bar.querySelector('.like-container span').textContent, 10);
+            const content = bar.querySelector('.bar-content')?.textContent || '';
+            const imgSrc = bar.querySelector('img')?.src || '';
+            return { likeCount, content, imgSrc };
+        })
+        .sort((a, b) => b.likeCount - a.likeCount)
+        .slice(0, 5); // Take top 5
+
+    // Populate carousel with the top 5 items
+    topBars.forEach(item => {
+        const carouselItem = document.createElement('div');
+        carouselItem.className = 'carousel-item';
+
+        // Container for vertical stacking of image, text, and likes
+        const contentContainer = document.createElement('div');
+        contentContainer.style.display = 'flex';
+        contentContainer.style.flexDirection = 'column';
+        contentContainer.style.alignItems = 'center';
+        contentContainer.style.gap = '10px';
+
+        if (item.imgSrc) {
+            const img = document.createElement('img');
+            img.src = item.imgSrc;
+            img.style.width = '50px'; // Adjust image size as needed
+            img.style.height = '50px';
+            img.style.borderRadius = '5px';
+            contentContainer.appendChild(img);
+        }
+
+        // Truncate content to a few words
+        const truncatedContent = item.content.split(' ').slice(0, 5).join(' ') + '...';
+        const text = document.createElement('p');
+        text.textContent = truncatedContent;
+        text.style.margin = '0';
+        contentContainer.appendChild(text);
+
+        // Add like count
+        const likes = document.createElement('span');
+        likes.innerHTML = `❤️ ${item.likeCount}`;
+        likes.style.margin = '0';
+        likes.style.fontWeight = 'bold';
+        contentContainer.appendChild(likes);
+
+        carouselItem.appendChild(contentContainer);
+        carouselContent.appendChild(carouselItem);
+
+        // Add click event to open full thought
+        carouselItem.addEventListener('click', () => {
+            displayFullThought(item.content, item.imgSrc);
+        });
+    });
+}
+                                  
+function displayFullThought(content, imgSrc) {
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+
+    const modalContent = document.createElement('div');
+    modalContent.className = 'modal-content';
+
+    if (imgSrc) {
+        const img = document.createElement('img');
+        img.src = imgSrc;
+        img.style.width = '100%';
+        img.style.height = 'auto';
+        img.style.borderRadius = '5px';
+        modalContent.appendChild(img);
+    }
+
+    const text = document.createElement('p');
+    text.textContent = content;
+    modalContent.appendChild(text);
+
+    const closeButton = document.createElement('span');
+    closeButton.className = 'close-button';
+    closeButton.innerHTML = '&times;';
+    closeButton.addEventListener('click', () => {
+        document.body.removeChild(modal);
+    });
+    modalContent.appendChild(closeButton);
+
+    modal.appendChild(modalContent);
+    document.body.appendChild(modal);
+    
+  }
+        function showOrganizedThoughts() {
+    const organizeContainer = document.getElementById('organizeContainer');
+    organizeContainer.style.display = 'block';
+    organizeBy('dob'); // Default organization by Year
+}
+
+function closeOrganizedThoughts() {
+    const organizeContainer = document.getElementById('organizeContainer');
+    organizeContainer.style.display = 'none';
+}
+
+function organizeBy(criteria) {
+    const organizedThoughtsGrid = document.getElementById('organizedThoughtsGrid');
+    organizedThoughtsGrid.innerHTML = ''; // Clear existing content
+
+    const bars = Array.from(document.querySelectorAll('.bar'));
+    let sortedBars;
+
+    if (criteria === 'dob') {
+        sortedBars = bars.sort((a, b) => parseInt(getTagValue(a, 'dob')) - parseInt(getTagValue(b, 'dob')));
+    } else if (criteria === 'country') {
+        sortedBars = bars.sort((a, b) => getTagValue(a, 'country').localeCompare(getTagValue(b, 'country')));
+    } else if (criteria === 'tags') {
+        sortedBars = bars.sort((a, b) => getTagValue(a, 'tags').localeCompare(getTagValue(b, 'tags')));
+    }
+
+    console.log('Sorted Bars:', sortedBars);
+
+    sortedBars.forEach(bar => {
+        const barClone = bar.cloneNode(true);
+        barClone.style.position = 'static'; // Ensure they are static within the grid
+        barClone.style.width = 'auto'; // Adjust width to fit grid
+        barClone.style.left = 'auto';
+        barClone.style.top = 'auto';
+        organizedThoughtsGrid.appendChild(barClone);
+    });
+}
+
+function getTagValue(bar, criteria) {
+    const tags = Array.from(bar.querySelectorAll('.tag'));
+    let value = '';
+
+    tags.forEach(tag => {
+        const tagText = tag.textContent.replace('#', '');
+        if (criteria === 'dob' && !isNaN(tagText)) {
+            value = tagText;
+        } else if (criteria === 'country' && isNaN(tagText)) {
+            value = tagText;
+        } else if (criteria === 'tags' && tagText) {
+            value += tagText + ' '; // Concatenate all tags for sorting
+        }
+    });
+
+    console.log(`Criteria: ${criteria}, Value: ${value.trim()}`);
+    return value.trim();
+}
+
+// Example usage to initialize the event listeners
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('.organize-button').addEventListener('click', showOrganizedThoughts);
+    document.querySelector('.organize-close').addEventListener('click', closeOrganizedThoughts);
+    document.querySelectorAll('.organize-tabs button').forEach(button => {
+        button.addEventListener('click', (event) => {
+            organizeBy(event.target.textContent.toLowerCase());
+        });
+    });
+});
+        // Show the help modal
+function showHelp() {
+    const helpContainer = document.getElementById('helpContainer');
+    helpContainer.style.display = 'block';
+}
+
+// Hide the help modal
+function closeHelp() {
+    const helpContainer = document.getElementById('helpContainer');
+    helpContainer.style.display = 'none';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Add event listener to the help button
+    document.getElementById('helpButton').addEventListener('click', showHelp);
+    
+    // Add event listener to the close button inside the help modal
+    document.getElementById('helpCloseButton').addEventListener('click', closeHelp);
+});
+    </script>
+</body>
+</html>
